@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#0E1117">
-<title>Tech Empire V2.8 — Côte d'Ivoire</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Tech Empire V3.0 — Afrique</title>
 <style>
 :root{
   --orange:#FF7A18;--orange-soft:#FF9445;--vert:#00A65A;--vert-soft:#23C37B;--blanc:#FFFFFF;
@@ -251,13 +253,17 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
   .grid2{grid-template-columns:repeat(4,1fr)}
 }
 
-/* ===== V2.8 — Gouvernement & scénarios ===== */
+/* ===== V3.0 — Gouvernement & scénarios ===== */
 .gov-card{border:1px solid rgba(86,214,255,.25);background:linear-gradient(145deg,rgba(86,214,255,.08),var(--card));}
 .gov-status{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .gov-project{border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;margin:10px 0;background:rgba(255,255,255,.025)}
 .gov-project h4{margin:0 0 5px;font-size:14px}.gov-project p{font-size:12px;color:var(--txt2);margin:0 0 10px}
 .gov-badge{display:inline-block;padding:5px 9px;border-radius:999px;background:rgba(86,214,255,.1);font-size:11px}
 .gov-timeline{border-left:2px solid rgba(86,214,255,.22);padding-left:14px;margin-top:12px}.gov-event{margin:0 0 13px}.gov-event b{display:block}.gov-event small{color:var(--txt2)}
+/* ===== V3.0 ===== */
+#event-alert{position:fixed;right:18px;top:18px;z-index:120;display:none;align-items:center;gap:10px;max-width:360px;padding:13px 14px;border:1px solid rgba(255,77,94,.75);border-radius:16px;background:linear-gradient(145deg,rgba(255,77,94,.22),#1b212b 70%);box-shadow:0 16px 45px rgba(0,0,0,.45);cursor:pointer;animation:eventPulse 1.5s infinite}.event-alert-dot{color:#ff4d5e;font-size:20px;line-height:1}.event-alert-arrow{font-size:25px;margin-left:auto}.event-alert-tx{display:block;color:var(--txt2);font-size:12px;margin-top:2px}@keyframes eventPulse{0%,100%{box-shadow:0 16px 45px rgba(0,0,0,.45),0 0 0 rgba(255,77,94,0)}50%{box-shadow:0 16px 45px rgba(0,0,0,.45),0 0 0 8px rgba(255,77,94,.10)}}
+.event-bg{position:fixed;inset:0;background:rgba(5,8,12,.78);backdrop-filter:blur(8px);z-index:130;display:none;align-items:center;justify-content:center;padding:18px}.event-bg.on{display:flex}.event-card{width:min(620px,100%);max-height:90vh;overflow:auto;background:linear-gradient(155deg,#202936,#151a22);border:1px solid rgba(86,214,255,.28);border-radius:22px;padding:20px;box-shadow:0 28px 80px rgba(0,0,0,.55)}.event-head{display:flex;gap:12px;align-items:center}.event-head>span{font-size:38px}.event-kicker{font-size:10px;color:var(--bleu);font-weight:800;letter-spacing:1px}.event-dialogue{background:rgba(255,255,255,.035);border-left:3px solid var(--bleu);border-radius:10px;padding:12px;margin:14px 0;line-height:1.6;font-size:14px}.event-question{margin:10px 0;padding:11px;border-radius:12px;background:rgba(255,255,255,.04)}
+.hardware-card{border:1px solid rgba(255,122,24,.25);background:linear-gradient(145deg,rgba(255,122,24,.08),var(--card))}.component-list{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.component-list span{font-size:11px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--txt2)}
 </style>
 </head>
 <body>
@@ -268,9 +274,15 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
     <div class="brandmark">🚀</div>
     <div class="tricolore"><i></i><i></i><i></i></div>
     <h1>Bienvenue dans<br>TECH EMPIRE 🇨🇮</h1>
-    <p class="lead">Construisez votre entreprise technologique, développez vos produits, gagnez de l'argent et devenez l'un des plus grands entrepreneurs du pays — puis de l'Afrique de l'Ouest.</p>
-    <button class="btn" onclick="go('s-profile')">COMMENCER</button>
-    <button class="btn ghost sm" id="btn-continue" style="margin-top:10px;display:none" onclick="resume()">Reprendre ma partie</button>
+    <p class="lead">Construisez votre entreprise technologique, développez vos produits, gagnez de l'argent et devenez un grand groupe africain, de la Côte d'Ivoire à l'Afrique de l'Est.</p>
+    <button class="btn" onclick="go('s-profile')">🆕 CRÉER UNE NOUVELLE ENTREPRISE</button>
+    <div class="card" style="margin-top:12px;text-align:left">
+      <h3>💾 Vous avez déjà une sauvegarde ?</h3>
+      <p style="margin:0 0 12px;color:var(--txt2);font-size:13px">Importez votre sauvegarde Tech Empire ici. Votre progression, votre entreprise, votre niveau et vos pays seront restaurés directement, sans repasser par la création du joueur.</p>
+      <button class="btn ghost sm" onclick="document.getElementById('f-welcome-import').click()">⬆️ IMPORTER MA SAUVEGARDE</button>
+      <input type="file" id="f-welcome-import" accept="application/json,.json,.txt" hidden onchange="importSaveFile(this,true)">
+    </div>
+    <button class="btn ghost sm" id="btn-continue" style="margin-top:10px;display:none" onclick="resume()">▶️ Reprendre la partie locale</button>
   </div>
 </section>
 
@@ -333,14 +345,23 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
     <h1 style="font-size:26px">FÉLICITATIONS !</h1>
     <p class="lead" id="cer-tx" style="margin-bottom:0"></p>
     <div class="title-card">
-      <div style="font-size:11px;color:var(--txt2);letter-spacing:1px;font-weight:700">TITRE OBTENU</div>
-      <div class="t">👑 MAGNAT DE LA TECHNOLOGIE 🇨🇮</div>
+      <div style="font-size:11px;color:var(--txt2);letter-spacing:1px;font-weight:700">NOUVELLE ÉTAPE</div>
+      <div class="t" id="cer-title">🏆 FIN DE LA PREMIÈRE PARTIE</div>
       <div class="recap" id="cer-recap"></div>
     </div>
-    <p class="lead" style="font-size:14px">Vous n'avez plus un seul concurrent sérieux en Côte d'Ivoire. Le marché national est saturé : pour continuer à grandir, il faut franchir les frontières.</p>
-    <button class="btn green" onclick="startExport()">🌍 EXPORTER MON ENTREPRISE</button>
+    <p class="lead" id="cer-sub" style="font-size:14px"></p>
+    <button class="btn green" id="cer-btn" onclick="startEastExpansion()">🌍 COMMENCER LA DEUXIÈME PARTIE</button>
   </div>
 </section>
+
+<!-- ALERTES D'ÉVÉNEMENTS : aucune cloche, l'alerte apparaît directement à l'écran -->
+<div id="event-alert" onclick="openCurrentEvent()"><div class="event-alert-dot">●</div><div><b id="event-alert-title">Nouvel événement</b><span id="event-alert-tx">Cliquez pour participer.</span></div><span class="event-alert-arrow">›</span></div>
+<div class="event-bg" id="event-bg"><div class="event-card">
+  <div class="event-head"><span id="ev-icon">🎤</span><div><div class="event-kicker" id="ev-kicker">ÉVÉNEMENT</div><h2 id="ev-title">Interview</h2></div></div>
+  <p id="ev-intro"></p><div class="event-dialogue" id="ev-dialogue"></div>
+  <textarea id="ev-answer" class="field" rows="4" placeholder="Écrivez votre réponse avec votre clavier..."></textarea>
+  <div class="row" style="margin-top:10px"><button class="btn ghost sm" onclick="closeEvent()">Plus tard</button><button class="btn sm" id="ev-send" onclick="submitEventAnswer()">Répondre →</button></div>
+</div></div>
 
 <!-- JEU -->
 <div id="app">
@@ -464,7 +485,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 
     <!-- MARCHÉ AFRIQUE DE L'OUEST -->
     <section class="sect" id="v-market">
-      <div class="h"><h2>Marché</h2><span class="pill" id="pill-mkt">Afrique de l'Ouest</span></div>
+      <div class="h"><h2>Marché</h2><span class="pill" id="pill-mkt">Afrique</span></div>
       <div id="mkt-locked" class="locked" style="display:none">
         <div class="em">🌍</div>
         <h3>Expansion régionale verrouillée</h3>
@@ -499,7 +520,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
       <div id="cy-body"></div>
     </section>
 
-    <!-- GOUVERNEMENT V2.8 -->
+    <!-- GOUVERNEMENT V3.0 -->
     <section class="sect" id="v-gov">
       <div class="h"><h2>🏛️ Gouvernement</h2><span class="pill" id="gov-pill">0 demandes</span></div>
       <div class="card gov-card"><h3>📜 Conseil des gouvernements</h3><p id="gov-intro">Les gouvernements observent votre implantation. Une entreprise qui devient utile au pays peut recevoir des demandes d'investissement public.</p></div>
@@ -624,7 +645,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 
     <!-- PROGRESSION -->
     <section class="sect" id="v-prog">
-      <div class="h"><h2>Progression</h2><span class="pill" id="pg-pill">Niveau 1 / 20</span></div>
+      <div class="h"><h2>Progression</h2><span class="pill" id="pg-pill">Niveau 1 / 40</span></div>
       <div class="card">
         <h3 id="pg-name">Startup</h3>
         <p id="pg-desc">Créer son entreprise.</p>
@@ -632,11 +653,19 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
         <p style="margin-top:8px;font-size:12px" id="pg-xptx">0 / 100 XP</p>
       </div>
       <div class="card">
-        <h3 style="margin-bottom:10px">🗺️ Les 20 niveaux</h3>
+        <h3 style="margin-bottom:10px">🗺️ Les 40 niveaux</h3>
         <ul class="steps" id="pg-list"></ul>
       </div>
     </section>
 
+    <!-- FABRICATION & HARDWARE -->
+    <section class="sect" id="v-hardware">
+      <div class="h"><h2>🧰 Laboratoire matériel</h2><span class="pill g">Niveau 21+</span></div>
+      <div id="hw-locked" class="locked"><div class="em">🔒</div><h3>Laboratoire verrouillé</h3><p>À partir du niveau 21, votre groupe peut concevoir ses propres consoles, ordinateurs, tablettes et machines.</p></div>
+      <div id="hw-open" style="display:none"><div class="card hl"><h3>🏭 Construire un appareil</h3><p>Chaque machine utilise de vrais composants : processeur, RAM, GPU, SSD, écran, Wi‑Fi, batterie, carte mère et refroidissement.</p></div><div id="hw-catalog"></div><div class="h" style="margin-top:18px"><h2 style="font-size:17px">🔧 Fabrications en cours</h2></div><div id="hw-builds"></div><div class="h" style="margin-top:18px"><h2 style="font-size:17px">🟢 Machines commercialisées</h2></div><div id="hw-live"></div></div>
+    </section>
+    <!-- MARKETING -->
+    <section class="sect" id="v-marketing"><div class="h"><h2>📢 Marketing</h2><span class="pill">Niveau 21+</span></div><div class="card hl"><h3>📣 Développer la marque</h3><p>Campagnes, relations presse et lancement de produits sur les nouveaux marchés africains.</p></div><div id="mk-list"></div></section>
     <!-- À VENIR -->
     <section class="sect" id="v-soon">
       <div class="h"><h2 id="soon-ti">Bientôt</h2></div>
@@ -650,8 +679,8 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
         <ul class="steps">
           <li class="done"><span class="n">✓</span><span class="t">V1 — Joueur, entreprise, tutoriel, tableau de bord, banque, contrats ivoiriens<small>Terminée</small></span></li>
           <li class="done"><span class="n">✓</span><span class="t">V2 — Export Afrique de l'Ouest, produits, employés, automatisation<small>Version actuelle</small></span></li>
-          <li class="now"><span class="n">3</span><span class="t">V3 — Crédits bancaires, marketing, événements aléatoires</span></li>
-          <li><span class="n">4</span><span class="t">V4 — Jeux vidéo, consoles TEKBOX, trophées, fin de jeu niveau 20</span></li>
+          <li class="now"><span class="n">3</span><span class="t">V3.0 — Marketing, matériel, événements et Afrique de l’Est</span></li>
+          <li><span class="n">4</span><span class="t">V3.0 — Consoles, ordinateurs, événements, journalistes et Afrique de l’Est</span></li>
         </ul>
       </div>
     </section>
@@ -686,7 +715,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
           <button class="btn sm" onclick="exportSave()">⬇️ Exporter ma sauvegarde</button>
           <button class="btn ghost sm" onclick="document.getElementById('f-import').click()">⬆️ Importer une sauvegarde</button>
         </div>
-        <input type="file" id="f-import" accept="application/json,.json" hidden onchange="importSaveFile(this)">
+        <input type="file" id="f-import" accept="application/json,.json,.txt" hidden onchange="importSaveFile(this)">
       </div>
       <div class="card">
         <h3>🔁 Recommencer</h3>
@@ -696,7 +725,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
       </div>
       <div class="card">
         <h3>ℹ️ À propos</h3>
-        <p>Tech Empire — Côte d'Ivoire · Version 2.8<br>Jeu de simulation d'entreprise technologique. Montants, cartes, banques et pays traités de manière entièrement fictive.</p>
+        <p>Tech Empire — Afrique · Version 3.0<br>Jeu de simulation d'entreprise technologique. Montants, cartes, banques et pays traités de manière entièrement fictive.</p>
       </div>
     </section>
   </main>
@@ -737,6 +766,9 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 const KEY = "techEmpireCI_v1";
 const DAY_MS = 75000;              /* 1 jour de jeu = 75 secondes */
 const CI_END_LEVEL = 10;           /* fin de la phase Côte d'Ivoire */
+const WEST_END_LEVEL = 20;
+const EAST_START_LEVEL = 21;
+const MAX_LEVEL = 40;
 const MONTH = 31;                  /* 31 jours de jeu = 1 mois, jour de paie */
 
 /* ================= DONNÉES ================= */
@@ -759,13 +791,17 @@ const TUTO = [
   {e:"💻", t:"Développez des produits", x:"Logiciels, applications, sites web, SaaS : au niveau 10, votre atelier de développement s'ouvre."},
   {e:"👨‍💼", t:"Recrutez des employés", x:"Développeurs, designers, ingénieurs, commerciaux. Seul on va vite, à plusieurs on construit un empire."},
   {e:"🌍", t:"Exportez vers l'Afrique de l'Ouest", x:"Quand la Côte d'Ivoire n'aura plus de concurrent à vous opposer, il faudra franchir les frontières — et convaincre d'autres gouvernements."},
-  {e:"🏆", t:"Atteignez le niveau 20", x:"De la petite startup d'Abidjan à la multinationale. 20 niveaux vous séparent du titre de Magnat."}
+  {e:"🏆", t:"Atteignez le niveau 40", x:"De la petite startup d'Abidjan à la multinationale. 40 niveaux vous séparent du titre de Titan technologique africain."}
 ];
 const LEVELS = [
   "Startup","Premier contrat sérieux","Atelier reconnu","Petite structure","Studio installé",
   "Acteur du marché","Référence d'Abidjan","Leader régional","Poids lourd national","Magnat ivoirien 🇨🇮",
   "Expansion ouest-africaine 🌍","Premiers produits exportés","Automatisation 🤖","Gros investissements","Cloud & IA",
-  "Division gaming 🎮","Grande entreprise technologique","Empire numérique","Multinationale","🏆 Empire technologique"
+  "Division gaming 🎮","Grande entreprise technologique","Empire numérique","Multinationale","🏆 Empire ouest-africain",
+  "Passage à l'Est 🌍","Première implantation est-africaine","Partenaire kényan","Marché tanzanien","Hub technologique régional",
+  "Usine intelligente","Console TEKBOX en production","Ordinateur AfriTech en production","Écosystème matériel","Leader tech d'Afrique de l'Est",
+  "Campus de développeurs","Centre de recherche","Cloud panafricain","Groupe multimarché","Chaîne industrielle",
+  "Marque panafricaine","Réseau d'innovation","Conglomérat technologique","Empire africain","🏆 TITAN TECHNOLOGIQUE AFRICAIN"
 ];
 const POOL = [
   {e:"🌐",t:"Site vitrine pour un restaurant",d:"Un maquis de Cocody veut enfin être visible sur Google.",c:15000,g:52000,x:26,s:32},
@@ -785,15 +821,32 @@ const POOL = [
 ];
 /* ---- V2 ---- */
 const COUNTRIES = [
-  {k:"tg",f:"🇹🇬",n:"Togo",cost:700000,mkt:0.75,seuil:45,r:"Lomé exige que votre entreprise forme d'abord des développeurs togolais avant d'accorder la moindre licence."},
-  {k:"bj",f:"🇧🇯",n:"Bénin",cost:850000,mkt:0.85,seuil:50,r:"Le ministère du Numérique demande une implantation locale réelle et refuse tout contrat signé depuis l'étranger."},
-  {k:"bf",f:"🇧🇫",n:"Burkina Faso",cost:950000,mkt:0.9,seuil:52,r:"Les autorités imposent un audit de conformité complet avant d'autoriser un opérateur étranger."},
-  {k:"ne",f:"🇳🇪",n:"Niger",cost:900000,mkt:0.8,seuil:50,r:"Niamey veut des garanties sur l'emploi local avant de lever les restrictions sur les services numériques."},
-  {k:"ml",f:"🇲🇱",n:"Mali",cost:1100000,mkt:1.0,seuil:55,r:"Bamako réclame un partenariat avec une société malienne et refuse pour l'instant l'hébergement hors du pays."},
-  {k:"gn",f:"🇬🇳",n:"Guinée",cost:1200000,mkt:1.0,seuil:56,r:"Conakry conditionne l'agrément à une présence visible sur le terrain, pas seulement à un bureau sur le papier."},
-  {k:"sn",f:"🇸🇳",n:"Sénégal",cost:1800000,mkt:1.4,seuil:62,r:"Dakar protège son écosystème tech : la concurrence locale est forte et l'agrément se mérite."},
-  {k:"gh",f:"🇬🇭",n:"Ghana",cost:2400000,mkt:1.7,seuil:68,r:"Accra applique des règles strictes sur les données et n'ouvre son marché qu'aux acteurs déjà reconnus."},
-  {k:"ng",f:"🇳🇬",n:"Nigeria",cost:4200000,mkt:2.6,seuil:76,r:"Le plus gros marché de la région, et le plus fermé : Abuja ne délivre sa licence qu'aux entreprises solidement établies."}
+  {k:"tg",region:"west",f:"🇹🇬",n:"Togo",cost:700000,mkt:0.75,seuil:45,r:"Lomé exige que votre entreprise forme d'abord des développeurs togolais avant d'accorder la moindre licence."},
+  {k:"bj",region:"west",f:"🇧🇯",n:"Bénin",cost:850000,mkt:0.85,seuil:50,r:"Le ministère du Numérique demande une implantation locale réelle et refuse tout contrat signé depuis l'étranger."},
+  {k:"bf",region:"west",f:"🇧🇫",n:"Burkina Faso",cost:950000,mkt:0.9,seuil:52,r:"Les autorités imposent un audit de conformité complet avant d'autoriser un opérateur étranger."},
+  {k:"ne",region:"west",f:"🇳🇪",n:"Niger",cost:900000,mkt:0.8,seuil:50,r:"Niamey veut des garanties sur l'emploi local avant de lever les restrictions sur les services numériques."},
+  {k:"ml",region:"west",f:"🇲🇱",n:"Mali",cost:1100000,mkt:1.0,seuil:55,r:"Bamako réclame un partenariat avec une société malienne et refuse pour l'instant l'hébergement hors du pays."},
+  {k:"gn",region:"west",f:"🇬🇳",n:"Guinée",cost:1200000,mkt:1.0,seuil:56,r:"Conakry conditionne l'agrément à une présence visible sur le terrain, pas seulement à un bureau sur le papier."},
+  {k:"sn",region:"west",f:"🇸🇳",n:"Sénégal",cost:1800000,mkt:1.4,seuil:62,r:"Dakar protège son écosystème tech : la concurrence locale est forte et l'agrément se mérite."},
+  {k:"gh",region:"west",f:"🇬🇭",n:"Ghana",cost:2400000,mkt:1.7,seuil:68,r:"Accra applique des règles strictes sur les données et n'ouvre son marché qu'aux acteurs déjà reconnus."},
+  {k:"ng",region:"west",f:"🇳🇬",n:"Nigeria",cost:4200000,mkt:2.6,seuil:76,r:"Le plus gros marché de la région, et le plus fermé : Abuja ne délivre sa licence qu'aux entreprises solidement établies."}
+,
+  {k:"ke",region:"east",f:"🇰🇪",n:"Kenya",cost:5200000,mkt:2.4,seuil:70,r:"Nairobi exige une présence locale, des emplois qualifiés et un partenariat avec l'écosystème numérique."},
+  {k:"tz",region:"east",f:"🇹🇿",n:"Tanzanie",cost:4300000,mkt:2.0,seuil:64,r:"Dodoma demande une implantation réelle et des investissements visibles dans les compétences locales."},
+  {k:"ug",region:"east",f:"🇺🇬",n:"Ouganda",cost:3600000,mkt:1.7,seuil:60,r:"Kampala demande une équipe locale et un programme de formation avant les grands contrats."},
+  {k:"rw",region:"east",f:"🇷🇼",n:"Rwanda",cost:4800000,mkt:2.2,seuil:68,r:"Kigali veut des projets numériques concrets et une contribution au développement des talents."},
+  {k:"bi",region:"east",f:"🇧🇮",n:"Burundi",cost:2600000,mkt:1.1,seuil:52,r:"Bujumbura privilégie les entreprises qui investissent dans les compétences et les infrastructures locales."},
+  {k:"ss",region:"east",f:"🇸🇸",n:"Soudan du Sud",cost:3000000,mkt:1.2,seuil:55,r:"Juba demande des garanties opérationnelles et des investissements adaptés aux besoins locaux."},
+  {k:"et",region:"east",f:"🇪🇹",n:"Éthiopie",cost:6500000,mkt:2.3,seuil:72,r:"Addis-Abeba demande une implantation structurée, des emplois et un transfert de compétences."},
+  {k:"so",region:"east",f:"🇸🇴",n:"Somalie",cost:2800000,mkt:1.4,seuil:58,r:"Mogadiscio demande un partenaire local et des garanties de continuité de service."},
+  {k:"dj",region:"east",f:"🇩🇯",n:"Djibouti",cost:3400000,mkt:1.5,seuil:60,r:"Djibouti privilégie les projets numériques connectés aux infrastructures régionales."},
+  {k:"er",region:"east",f:"🇪🇷",n:"Érythrée",cost:3200000,mkt:1.3,seuil:57,r:"Asmara demande une implantation encadrée et un engagement durable sur le marché local."},
+  {k:"sd",region:"east",f:"🇸🇩",n:"Soudan",cost:3900000,mkt:1.6,seuil:60,r:"Khartoum demande une implantation progressive et des garanties de continuité."},
+  {k:"sc",region:"east",f:"🇸🇨",n:"Seychelles",cost:3000000,mkt:1.8,seuil:62,r:"Victoria privilégie les services numériques à forte valeur ajoutée et les investissements locaux."},
+  {k:"km",region:"east",f:"🇰🇲",n:"Comores",cost:2200000,mkt:1.0,seuil:50,r:"Moroni demande un projet numérique visible et une équipe locale."},
+  {k:"mu",region:"east",f:"🇲🇺",n:"Maurice",cost:5600000,mkt:2.1,seuil:70,r:"Port-Louis exige une gouvernance solide et des standards élevés pour les acteurs technologiques."},
+  {k:"mg",region:"east",f:"🇲🇬",n:"Madagascar",cost:4100000,mkt:1.8,seuil:63,r:"Antananarivo demande des emplois locaux et des projets numériques à impact durable."},
+  {k:"mz",region:"east",f:"🇲🇿",n:"Mozambique",cost:4500000,mkt:1.9,seuil:64,r:"Maputo demande une présence locale et des investissements dans les compétences numériques."}
 ];
 const ACTIONS = [
   {k:"radio",e:"📻",t:"Campagne radio & réseaux",d:"Faire connaître votre marque au grand public.",c:130000,p:7,min:0},
@@ -933,7 +986,7 @@ function blank(){
     governments:{history:[], totalProjects:0},
     month:1, payDue:null, lateDays:0,
     loans:[], loanAlertPending:false, autoDeployed:[], dealCooldown:{},
-    billsDue:null, billLateDays:0, musicMuted:false, autoTier:0, autoUpgrade:null
+    billsDue:null, billLateDays:0, musicMuted:false, autoTier:0, autoUpgrade:null, eastCeremonyPending:false, events:[], nextEventDay:7, activeEvent:null, eventHistory:[], marketing:[], hardwareBuilds:[], hardwareLive:[], marketingUnlocked:false, hardwareUnlocked:false
   };
 }
 const xpNeeded = l => Math.round(100 * Math.pow(1.38, l-1));
@@ -941,7 +994,8 @@ const fmt = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g," ") +
 const shortF = n => n>=1000000 ? (n/1000000).toFixed(n>=10000000?0:1).replace(".",",")+" M" : fmt(n).replace(" FCFA","");
 const $ = id => document.getElementById(id);
 const CT = k => COUNTRIES.find(c=>c.k===k);
-const isExport = () => S.phase==="export";
+const isExport = () => S.phase==="export" || S.phase==="east";
+const isEast = () => S.phase==="east";
 const hasTech = k => !!(S.techs[k] && S.techs[k].done);
 
 /* ---------- bonus employés ---------- */
@@ -1055,11 +1109,10 @@ function startGame(){
   const bm=$("btn-music"); if(bm) bm.textContent = S.musicMuted ? "🔇 Réactiver la musique" : "🔊 Couper la musique";
 }
 function resume(){
-  if(!S.tutoDone){ go(S.company?"s-tuto":(S.player?"s-company":"s-profile")); if(S.company){tutoStep=0;renderTuto();} return; }
-  if(S.level>=CI_END_LEVEL && !S.ceremony){ showCeremony(); return; }
-  startGame();
+  if(S.eastCeremonyPending||(S.level>=EAST_START_LEVEL&&S.phase!=="east")){S.eastCeremonyPending=true;showEastCeremony();return;}
+  if(!S.tutoDone){go(S.company?"s-tuto":(S.player?"s-company":"s-profile"));if(S.company){tutoStep=0;renderTuto();}return;}startGame();
 }
-
+/* ================= HORLOGE ================= */
 /* ================= HORLOGE ================= */
 let clockOn=false;
 function startClock(){
@@ -1079,12 +1132,13 @@ function newDay(){
   /* revenus des produits développés manuellement */
   const pr=Math.round(productIncome(false));
   if(pr>0){ S.cash+=pr; S.revenue+=pr; log("📦","Revenus des produits",pr,"cash"); lines.push("Produits : +"+fmt(pr)); }
+  const hr=Math.round(hardwareIncome()); if(hr>0){ S.cash+=hr; S.revenue+=hr; log("🧰","Revenus des machines",hr,"cash"); lines.push("Machines : +"+fmt(hr)); }
 
   /* studios automatiques : développent et publient seuls, versent leurs revenus en banque */
   if(hasTech("auto") && (S.autoDeployed||[]).length){
     tickAutoStudios(lines);
   }
-  /* V2.8 — demandes gouvernementales scénarisées */
+  /* V3.0 — demandes gouvernementales scénarisées */
   COUNTRIES.forEach(c=>maybeGovernment(c.k,lines));
   /* fin de mois : la paie devient exigible */
   if(S.day % MONTH === 0 && payroll()>0 && !S.payDue){
@@ -1127,6 +1181,7 @@ function newDay(){
   }
   syncCI();
   processLoans(lines);
+  maybeEvent(lines);
   S.lastDaily = lines.length ? "Jour "+S.day+" · "+lines.join(" · ") : null;
   saveGame(); render();
   if(S.loanAlertPending) showLoanAlertModal();
@@ -1205,7 +1260,7 @@ function quitStaff(){
 
 function tickAll(){
   if(!S || !$("app").classList.contains("on")) return;
-  tickMissions(); tickProducts(); tickTechs(); tickAutoUpgrade();
+  tickMissions(); tickProducts(); tickTechs(); tickAutoUpgrade(); if(S.hardwareBuilds&&S.hardwareBuilds.length&&$("v-hardware")&&$("v-hardware").classList.contains("on")) renderHardware();
 }
 
 /* ================= CONTRATS CÔTE D'IVOIRE ================= */
@@ -1258,35 +1313,33 @@ function deliver(id){
 }
 function addXp(x){
   S.xp+=x;
-  while(S.level<20 && S.xp>=xpNeeded(S.level)){
+  while(S.level<MAX_LEVEL && S.xp>=xpNeeded(S.level)){
     S.xp-=xpNeeded(S.level); S.level++;
-    if(S.level===CI_END_LEVEL && S.phase==="ci"){ setTimeout(showCeremony,700); return; }
-    setTimeout(()=>{ toast("⭐ Niveau "+S.level+" — "+LEVELS[S.level-1]); burst(110); },400);
+    if(S.level===CI_END_LEVEL && S.phase==="ci"){
+      S.phase="export"; S.title="Magnat ivoirien 🇨🇮"; S.rep=Math.min(100,S.rep+4); saveGame();
+      setTimeout(()=>{toast("🌍 Niveau 10 atteint : l'Afrique de l'Ouest est maintenant ouverte.");burst(100);},500);
+    }
+    if(S.level===EAST_START_LEVEL && !S.eastCeremonyPending && S.phase!=="east"){
+      S.eastCeremonyPending=true; saveGame(); setTimeout(showEastCeremony,700); return;
+    }
+    setTimeout(()=>{toast("⭐ Niveau "+S.level+" — "+(LEVELS[S.level-1]||"Nouvelle étape"));burst(110);},400);
   }
-  if(S.level>=20){ S.xp=Math.min(S.xp,xpNeeded(20)); }
+  if(S.level>=MAX_LEVEL) S.xp=Math.min(S.xp,xpNeeded(MAX_LEVEL));
 }
-
-/* ================= CÉRÉMONIE & EXPORT ================= */
-function showCeremony(){
+function showEastCeremony(){
   const val=companyValue();
-  $("cer-tx").textContent = S.company+" est désormais la première entreprise technologique de Côte d'Ivoire. Plus personne, d'Abidjan à Korhogo, ne vous conteste le marché.";
-  $("cer-recap").innerHTML =
-    '<div><div class="k">Valeur</div><div class="v">'+shortF(val)+'</div></div>'+
-    '<div><div class="k">Patrimoine</div><div class="v">'+shortF(S.cash+S.bank)+'</div></div>'+
-    '<div><div class="k">Chiffre d\'affaires</div><div class="v">'+shortF(S.revenue)+'</div></div>'+
-    '<div><div class="k">Réputation</div><div class="v">'+Math.round(S.rep)+' / 100</div></div>';
-  go("s-cer");
-  setTimeout(()=>burst(180),300);
+  $("cer-tx").textContent="Bravo, "+S.player+". Fondateur de "+S.company+", vous avez terminé la première partie du jeu.";
+  $("cer-title").textContent="🏆 FIN DE LA PREMIÈRE PARTIE";
+  $("cer-sub").textContent="Vous avez terminé la Côte d'Ivoire et l'Afrique de l'Ouest. Cliquez maintenant pour commencer la deuxième partie : l'expansion vers l'Afrique de l'Est.";
+  $("cer-btn").textContent="🌍 COMMENCER LA DEUXIÈME PARTIE";
+  $("cer-recap").innerHTML='<div><div class="k">Fondateur</div><div class="v">'+S.player+'</div></div><div><div class="k">Entreprise</div><div class="v">'+S.company+'</div></div><div><div class="k">Valeur</div><div class="v">'+shortF(val)+'</div></div><div><div class="k">Niveau</div><div class="v">'+S.level+' / '+MAX_LEVEL+'</div></div>';
+  go("s-cer"); setTimeout(()=>burst(180),300);
 }
-function startExport(){
-  S.phase="export"; S.ceremony=true; S.title="Magnat de la technologie 🇨🇮";
-  if(S.level<11){ S.level=11; S.xp=0; }
-  S.rep=Math.min(100,S.rep+10);
-  log("🌍","Export de l'entreprise vers l'Afrique de l'Ouest",0,"co");
-  saveGame(); startGame(); nav("v-market");
-  toast("🌍 L'Afrique de l'Ouest s'ouvre à vous");
-}
+function startEastExpansion(){S.phase="east";S.eastCeremonyPending=false;S.ceremony=true;S.title="Titan technologique africain 🌍";if(S.level<EAST_START_LEVEL){S.level=EAST_START_LEVEL;S.xp=0;}S.rep=Math.min(100,S.rep+10);log("🌍","Début de l'expansion vers l'Afrique de l'Est",0,"co");saveGame();startGame();nav("v-market");toast("🌍 L'Afrique de l'Est est maintenant ouverte");}
+function showCeremony(){showEastCeremony();}
+function startExport(){S.phase="export";S.ceremony=true;S.title="Magnat de la technologie 🇨🇮";if(S.level<11){S.level=11;S.xp=0;}S.rep=Math.min(100,S.rep+10);log("🌍","Export de l'entreprise vers l'Afrique de l'Ouest",0,"co");saveGame();startGame();nav("v-market");toast("🌍 L'Afrique de l'Ouest s'ouvre à vous");}
 
+/* ================= PAYS ================= */
 /* ================= PAYS ================= */
 function cData(k){
   if(!S.countries[k]) S.countries[k] = (k==="ci")
@@ -1310,6 +1363,9 @@ function licenseActive(k){
 }
 function installCountry(k){
   const c=CT(k), d=cData(k);
+  if(!c){toast("Pays introuvable");return;}
+  if(c.region==="east" && (!isEast() || S.level<EAST_START_LEVEL)){toast("🌍 L'Afrique de l'Est sera disponible à partir du niveau 21.");return;}
+  if(c.region!=="east" && !isExport()){toast("🌍 Export régional non débloqué");return;}
   if(d.installed) return;
   if(S.cash<c.cost){ toast("Trésorerie insuffisante"); return; }
   S.cash-=c.cost; S.expenses+=c.cost; d.installed=true; d.spent+=c.cost;
@@ -1360,12 +1416,16 @@ const GOV_SCENES=[
 function govState(k){ const d=cData(k); if(k==="ci") return null; d.gov=d.gov||{request:null,pending:null,level:0,projects:[],lastDay:0}; if(d.gov.pending===undefined) d.gov.pending=null; return d.gov; }
 function maybeGovernment(k,lines){
   if(k==="ci"||!isExport()) return; const d=cData(k), g=govState(k);
-  if(!d.installed||!licenseActive(k)||S.level<12) return;
+  const minLevel=CT(k)&&CT(k).region==="east"?22:12;
+  if(!d.installed||!licenseActive(k)||S.level<minLevel) return;
   if(g.request||g.pending) return; /* une seule interaction en attente à la fois */
   const candidate=GOV_SCENES.find(sc=>sc.min<=S.level && !(g.acceptedScenes||[]).includes(sc.id) && !(g.declinedScenes||[]).includes(sc.id));
   if(candidate && S.day-(g.lastDay||0)>=3){
     g.request={scene:candidate.id,title:candidate.title,text:candidate.text,project:candidate.project||null,createdDay:S.day}; g.lastDay=S.day;
     S.governments=S.governments||{history:[],totalProjects:0};
+  S.events=S.events||[]; S.eventHistory=S.eventHistory||[]; S.nextEventDay=S.nextEventDay||7; S.activeEvent=S.activeEvent||null;
+  S.hardwareBuilds=S.hardwareBuilds||[]; S.hardwareLive=S.hardwareLive||[]; S.marketing=S.marketing||[];
+  S.hardwareUnlocked=!!(S.hardwareUnlocked||S.level>=EAST_START_LEVEL); S.marketingUnlocked=!!(S.marketingUnlocked||S.level>=EAST_START_LEVEL);
     S.governments.history.unshift({day:S.day,country:k,type:"request",title:candidate.title,text:candidate.text});
     lines.push("🏛️ "+CT(k).n+" : nouvelle demande gouvernementale — "+candidate.title);
     toast("🏛️ Le gouvernement de "+CT(k).n+" vous convoque");
@@ -2043,6 +2103,7 @@ function pulseStat(id){
   el.classList.remove("pulse"); void el.offsetWidth; el.classList.add("pulse");
 }
 function render(){
+  if(S.level>=EAST_START_LEVEL){S.hardwareUnlocked=true;S.marketingUnlocked=true;}
   const val=companyValue(), net=S.revenue-S.expenses, exp=isExport();
   if(_lastCash!==null && S.cash!==_lastCash) pulseStat("st-cash");
   if(_lastBank!==null && S.bank!==_lastBank) pulseStat("st-bank");
@@ -2104,7 +2165,7 @@ function render(){
       : (!Object.values(S.countries).some(c=>c.licensed) ? "Gagnez en popularité dans votre pays d'accueil jusqu'à obtenir la licence d'exploitation."
       : (!S.products.length ? "Développez votre premier produit technologique dans l'atelier."
       : (!hasTech("auto") ? "Recherchez le moteur d'automatisation pour que la Côte d'Ivoire travaille sans vous."
-      : "Déployez vos produits dans toute la région et visez le niveau 20.")))));
+      : "Déployez vos produits dans toute la région et visez le niveau 40.")))));
 
   /* contrats CI */
   const showCI = !hasTech("auto");
@@ -2121,7 +2182,7 @@ function render(){
   $("co-logo").innerHTML = S.logoImg ? '<img src="'+S.logoImg+'">' : S.logo;
   $("co-name").textContent=S.company;
   $("co-sub").textContent="Fondée par "+S.player+" · Abidjan 🇨🇮"+(S.title?" · "+S.title:"");
-  $("co-lvl").textContent=S.level+" / 20";
+  $("co-lvl").textContent=S.level+" / "+MAX_LEVEL;
   $("co-val").textContent=shortF(val);
   $("co-rep").textContent=Math.round(S.rep)+" / 100";
   $("co-ca").textContent=shortF(S.revenue);
@@ -2144,13 +2205,15 @@ function render(){
   $("mkt-locked").style.display = exp?"none":"block";
   $("mkt-open").style.display = exp?"block":"none";
   if(exp){
+    $("pill-mkt").textContent=isEast()?"Afrique de l'Est":"Afrique de l'Ouest";
     const ciD=cData("ci");
     $("mkt-ci").innerHTML = (hasTech("auto")
       ? "Marché saturé, automatisé par le moteur OPS-1. Revenus versés automatiquement en banque : "+fmt(autoIncome())+" / jour."
       : "Marché saturé : vous n'avez plus de concurrent. Vos contrats se signent encore à la main depuis le tableau de bord.")
       + '<br>Popularité : <b>'+Math.round(ciD.pop)+' / 100</b> · '+totalStaff("ci")+' employé(s)'
       + '<span class="popbar ok" style="display:block"><i style="width:'+Math.min(100,ciD.pop)+'%"></i></span>';
-    $("ctry-list").innerHTML = COUNTRIES.map(c=>{
+    const visibleCountries=COUNTRIES.filter(c=>isEast()?c.region==="east":c.region!=="east");
+    $("ctry-list").innerHTML = visibleCountries.map(c=>{
       const d=cData(c.k);
       const st = !d.installed ? "Non implanté · marché ×"+c.mkt.toFixed(2)
         : (d.licensed ? (licenseActive(c.k) ? "✅ Licence active · popularité "+Math.round(d.pop)+" / 100"
@@ -2209,17 +2272,20 @@ function render(){
   $("fi-tot").textContent=shortF(S.cash+S.bank);
   renderHist($("fin-hist"), S.history, "Aucune opération enregistrée.");
 
-  $("pg-pill").textContent="Niveau "+S.level+" / 20";
+  $("pg-pill").textContent="Niveau "+S.level+" / "+MAX_LEVEL;
   $("pg-name").textContent="Niveau "+S.level+" — "+LEVELS[S.level-1];
-  $("pg-desc").textContent = S.level>=20 ? "🏆 Vous êtes devenu un véritable empire technologique." : "Prochain palier : "+LEVELS[S.level]+".";
+  $("pg-desc").textContent = S.level>=MAX_LEVEL ? "🏆 Vous avez atteint le sommet de Tech Empire." : (S.level>=EAST_START_LEVEL ? "🌍 Afrique de l'Est : construisez votre empire matériel et panafricain." : "Prochain palier : "+(LEVELS[S.level]||"nouvelle étape")+".");
   $("pg-xp").style.width=Math.min(100,(S.xp/need)*100)+"%";
   $("pg-xptx").textContent=Math.round(S.xp)+" / "+need+" XP";
   $("pg-list").innerHTML = LEVELS.map((n,i)=>{
     const cl = i+1<S.level ? "done" : (i+1===S.level ? "now" : "");
     const mk = i+1<S.level ? "✓" : (i+1);
-    const zone = i+1<=CI_END_LEVEL ? "Côte d'Ivoire 🇨🇮" : "Afrique de l'Ouest 🌍";
+    const zone = i+1<=CI_END_LEVEL ? "Côte d'Ivoire 🇨🇮" : (i+1<=WEST_END_LEVEL ? "Afrique de l'Ouest 🌍" : "Afrique de l'Est 🌍");
     return '<li class="'+cl+'"><span class="n">'+mk+'</span><span class="t">'+n+'<small>Niveau '+(i+1)+' · '+zone+'</small></span></li>';
   }).join("");
+  if($("v-hardware")) renderHardware();
+  if($("v-marketing")) renderMarketing();
+  showEventAlert();
 }
 function renderMissions(){
   const w=$("missions");
@@ -2397,24 +2463,52 @@ function renderHist(el, list, emptyTx){
   ).join("");
 }
 
+/* ================= V3.0 — HARDWARE / MARKETING / ÉVÉNEMENTS ================= */
+const HARDWARE_CATALOG=[
+ {k:"console",e:"🎮",name:"TEKBOX ONE",type:"Console de jeu",cost:8500000,dur:12,rev:520000,components:["AMD Ryzen 7 9800X3D","AMD Radeon RX 9070 XT","32 Go DDR5","Samsung 990 PRO 2 To NVMe","Wi‑Fi 7","SSD M.2 PCIe 4.0","Refroidissement liquide AIO"]},
+ {k:"pro",e:"🖥️",name:"AfriTech Workstation X1",type:"Ordinateur professionnel",cost:9800000,dur:14,rev:610000,components:["AMD Ryzen 9 9950X","NVIDIA GeForce RTX 5070","64 Go DDR5","Samsung 990 PRO 2 To NVMe","Carte mère X870","Wi‑Fi 7","USB‑C 20 Gb/s"]},
+ {k:"laptop",e:"💻",name:"AfriTech Book 15",type:"Ordinateur portable",cost:6200000,dur:10,rev:390000,components:["AMD Ryzen AI 9 HX 370","32 Go LPDDR5X","SSD NVMe 1 To","Écran OLED 15,6 pouces","Wi‑Fi 7","USB‑C","Batterie lithium‑ion"]},
+ {k:"tablet",e:"📱",name:"AfriTab Pro 12",type:"Tablette",cost:4800000,dur:9,rev:310000,components:["SoC ARM moderne","12 Go LPDDR5X","OLED 12,1 pouces","UFS 256 Go","Wi‑Fi 7","USB‑C","Batterie lithium‑ion"]}
+];
+const MARKETING_CAMPAIGNS=[
+ {k:"digital",e:"📱",t:"Campagne numérique panafricaine",d:"Publicités web et réseaux sociaux ciblées sur le nouveau marché.",c:700000,rep:2,pop:7,xp:90},
+ {k:"press",e:"📰",t:"Relations presse",d:"Dossier de presse et présence dans les médias technologiques.",c:950000,rep:3,pop:9,xp:120},
+ {k:"influencer",e:"🎥",t:"Créateurs tech locaux",d:"Partenariats avec des créateurs et médias spécialisés.",c:1300000,rep:4,pop:12,xp:160},
+ {k:"launch",e:"🚀",t:"Lancement officiel du produit",d:"Événement de lancement dans la capitale du marché choisi.",c:2200000,rep:6,pop:16,xp:240}
+];
+const EVENT_POOL=[
+ {k:"conference",e:"🎤",title:"Invitation à une conférence tech",intro:"Votre entreprise est invitée à prendre la parole devant des investisseurs, développeurs et journalistes.",questions:["Quel problème votre entreprise cherche-t-elle à résoudre ?","Pourquoi avez-vous choisi de vous développer en Afrique ?"]},
+ {k:"press",e:"📰",title:"Des journalistes veulent vous interviewer",intro:"Des journalistes arrivent dans votre bureau. Ils veulent comprendre votre stratégie et votre vision.",questions:["Comment fonctionne votre entreprise et d'où vient votre modèle économique ?","Quel est votre prochain grand projet ?","Comment comptez-vous créer des emplois locaux ?"]},
+ {k:"investor",e:"💼",title:"Rencontre avec un investisseur",intro:"Un investisseur régional souhaite comprendre votre groupe avant de proposer un partenariat.",questions:["Pourquoi devrait-il investir dans votre entreprise ?"]}
+];
+function renderHardware(){
+ const unlocked=S.level>=EAST_START_LEVEL;$("hw-locked").style.display=unlocked?"none":"block";$("hw-open").style.display=unlocked?"block":"none";if(!unlocked)return;
+ $("hw-catalog").innerHTML=HARDWARE_CATALOG.map(h=>'<div class="card hardware-card"><div class="h"><h3>'+h.e+' '+h.name+'</h3><span class="pill">'+h.type+'</span></div><p>'+h.components.join(" · ")+'</p><div class="tags"><span class="tag cost">Prototype '+fmt(h.cost)+'</span><span class="tag">'+h.dur+' s</span><span class="tag pay">+'+fmt(h.rev)+'/jour</span></div><button class="btn sm" '+(S.cash>=h.cost?'':'disabled')+' onclick="startHardware(\''+h.k+'\')">'+(S.cash>=h.cost?'Construire le prototype':'Trésorerie insuffisante')+'</button></div>').join("");
+ $("hw-builds").innerHTML=S.hardwareBuilds.length?S.hardwareBuilds.map(b=>{const h=HARDWARE_CATALOG.find(x=>x.k===b.k),done=Date.now()-b.started>=h.dur*1000;return '<div class="mission"><div class="em">'+h.e+'</div><div class="bd"><div class="ti">'+h.name+'</div><div class="de">'+h.type+'</div><div class="component-list">'+h.components.map(c=>'<span>'+c+'</span>').join("")+'</div><div class="prog"><i style="width:'+Math.min(100,(Date.now()-b.started)/(h.dur*10))+'%"></i></div><p>'+(done?'Prototype prêt à être validé.':'Assemblage et tests en cours…')+'</p>'+(done?'<button class="btn green sm" onclick="releaseHardware('+b.id+')">🚀 Valider et commercialiser</button>':'')+'</div></div>';}).join(""):'<div class="empty">Aucune fabrication en cours.</div>';
+ $("hw-live").innerHTML=S.hardwareLive.length?S.hardwareLive.map(h=>'<div class="mission"><div class="em">'+h.e+'</div><div class="bd"><div class="ti">'+h.name+' <span class="tag pay">Produit actif</span></div><div class="de">'+h.type+'</div><div class="component-list">'+h.components.map(c=>'<span>'+c+'</span>').join("")+'</div><div class="tags"><span class="tag pay">'+fmt(h.rev)+' / jour</span></div></div></div>').join(""):'<div class="empty">Aucune machine commercialisée.</div>';
+}
+function startHardware(k){if(S.level<EAST_START_LEVEL){toast("🔒 Les machines se débloquent au niveau 21");return;}const h=HARDWARE_CATALOG.find(x=>x.k===k);if(!h)return;if(S.cash<h.cost){toast("Trésorerie insuffisante — "+fmt(h.cost));return;}S.cash-=h.cost;S.expenses+=h.cost;S.hardwareBuilds.push({id:S.nextId++,k,started:Date.now()});log(h.e,"Prototype lancé — "+h.name,-h.cost,"co");addXp(180);saveGame();render();toast("🧰 Prototype "+h.name+" en fabrication");}
+function releaseHardware(id){const b=S.hardwareBuilds.find(x=>x.id===id);if(!b)return;const h=HARDWARE_CATALOG.find(x=>x.k===b.k);if(!h)return;if(Date.now()-b.started<h.dur*1000){toast("Le prototype n'est pas encore terminé");return;}S.hardwareBuilds=S.hardwareBuilds.filter(x=>x.id!==id);S.hardwareLive.unshift({...h,launchDay:S.day});log(h.e,"Machine commercialisée — "+h.name,0,"co");addXp(300);burst(90);saveGame();render();toast("🚀 "+h.name+" est maintenant commercialisée");}
+function hardwareIncome(){return (S.hardwareLive||[]).reduce((a,h)=>a+h.rev,0);}
+function renderMarketing(){const unlocked=S.level>=EAST_START_LEVEL;$("mk-list").innerHTML=unlocked?MARKETING_CAMPAIGNS.map(m=>'<div class="mission"><div class="em">'+m.e+'</div><div class="bd"><div class="ti">'+m.t+'</div><div class="de">'+m.d+'</div><div class="tags"><span class="tag cost">'+fmt(m.c)+'</span><span class="tag pay">+'+m.pop+' popularité</span><span class="tag">+'+m.xp+' XP</span></div><button class="btn sm" '+(S.cash>=m.c?'':'disabled')+' onclick="runMarketing(\''+m.k+'\')">'+(S.cash>=m.c?'Lancer la campagne':'Trésorerie insuffisante')+'</button></div></div>').join(""):'<div class="locked"><div class="em">🔒</div><h3>Marketing verrouillé</h3><p>Débloqué au niveau 21.</p></div>';}
+function runMarketing(k){if(S.level<EAST_START_LEVEL){toast("🔒 Marketing débloqué au niveau 21");return;}const m=MARKETING_CAMPAIGNS.find(x=>x.k===k);if(!m||S.cash<m.c)return;const targets=COUNTRIES.filter(c=>cData(c.k).installed&&licenseActive(c.k));S.cash-=m.c;S.expenses+=m.c;S.rep=Math.min(100,S.rep+m.rep);targets.forEach(c=>{const d=cData(c.k);d.pop=Math.min(100,d.pop+m.pop*(c.region==="east"?1.05:0.8));});S.marketing.push({day:S.day,k});log(m.e,"Campagne marketing — "+m.t,-m.c,"co");addXp(m.xp);saveGame();render();toast("📢 Campagne lancée avec succès");}
+function showEventAlert(){const e=S.activeEvent;if(!e){$("event-alert").style.display="none";return;}$("event-alert-title").textContent=e.title;$("event-alert-tx").textContent="Cliquez pour participer maintenant.";$("event-alert").style.display="flex";}
+function maybeEvent(lines){if(S.activeEvent||S.day<(S.nextEventDay||7)||S.level<5)return;const pool=EVENT_POOL.filter(e=>!S.eventHistory.slice(-4).some(h=>h.k===e.k));const e=pool[Math.floor(Math.random()*pool.length)]||EVENT_POOL[0];S.activeEvent={...e,step:0,answers:[]};S.nextEventDay=S.day+5+Math.floor(Math.random()*6);S.events.push({day:S.day,k:e.k,title:e.title});lines.push("📣 "+e.title);showEventAlert();toast("🔴 "+e.title);}
+function openCurrentEvent(){if(!S.activeEvent)return;const e=S.activeEvent;$("event-bg").classList.add("on");$("ev-icon").textContent=e.e;$("ev-kicker").textContent=e.k==="press"?"INTERVIEW PRESSE":"ÉVÉNEMENT PROFESSIONNEL";$("ev-title").textContent=e.title;$("ev-intro").textContent=e.intro;renderEventQuestion();}
+function renderEventQuestion(){const e=S.activeEvent;if(!e)return;const q=e.questions[e.step];$("ev-dialogue").innerHTML='<b>Journaliste / intervenant :</b><div class="event-question">'+q+'</div>'+(e.answers||[]).map(a=>'<div style="margin:8px 0;color:var(--txt2)"><b>Vous :</b> '+a+'</div>').join("");$("ev-answer").value="";$("ev-answer").focus();$("ev-send").textContent=e.step===e.questions.length-1?"Terminer l'entretien ✓":"Répondre →";}
+function submitEventAnswer(){const e=S.activeEvent;if(!e)return;const ans=$("ev-answer").value.trim();if(ans.length<8){toast("Écrivez une réponse un peu plus développée");return;}e.answers=e.answers||[];e.answers.push(ans);e.step++;if(e.step<e.questions.length){renderEventQuestion();return;}const score=Math.min(10,2+Math.floor(ans.length/40)+(ans.match(/emploi|jeune|local|Afrique|client|produit|innovation|technolog/gi)||[]).length);S.rep=Math.min(100,S.rep+score/2);addXp(100+score*20);S.eventHistory.unshift({day:S.day,k:e.k,title:e.title,answers:e.answers,score});log(e.e,e.title+" — entretien terminé",0,"co");S.activeEvent=null;$("event-bg").classList.remove("on");$("event-alert").style.display="none";saveGame();render();toast("🎤 Entretien terminé · réputation +"+(score/2).toFixed(1));}
+function closeEvent(){if(!S.activeEvent){$("event-bg").classList.remove("on");return;}$("event-bg").classList.remove("on");showEventAlert();}
+
 /* ================= NAVIGATION ================= */
 function buildNav(){
-  const items = isExport()
-    ? [["v-dash","🏠","Bureau"],["v-prod","💻","Produits"],["v-market","🌍","Marché"],["v-gov","🏛️","Gouv."],["v-bank","🏦","Banque"]]
-    : [["v-dash","🏠","Tableau"],["v-company","🏢","Entreprise"],["v-bank","🏦","Banque"],["v-prog","🏆","Niveaux"]];
-  $("nav").innerHTML = items.map((it,i)=>'<button data-v="'+it[0]+'" class="'+(i===0?"on":"")+'"><span class="e">'+it[1]+'</span>'+it[2]+'</button>').join("")
-    +'<button onclick="openSheet()"><span class="e">☰</span>Plus</button>';
+  const items=isEast()?[['v-dash','🏠','Bureau'],['v-hardware','🧰','Machines'],['v-market','🌍','Marché'],['v-gov','🏛️','Gouv.'],['v-bank','🏦','Banque']]:isExport()?[['v-dash','🏠','Bureau'],['v-prod','💻','Produits'],['v-market','🌍','Marché'],['v-gov','🏛️','Gouv.'],['v-bank','🏦','Banque']]:[['v-dash','🏠','Tableau'],['v-company','🏢','Entreprise'],['v-bank','🏦','Banque'],['v-prog','🏆','Niveaux']];
+  $("nav").innerHTML=items.map((it,i)=>'<button data-v="'+it[0]+'" class="'+(i===0?'on':'')+'"><span class="e">'+it[1]+'</span>'+it[2]+'</button>').join('')+'<button onclick="openSheet()"><span class="e">☰</span>Plus</button>';
   document.querySelectorAll("nav.bottom button[data-v]").forEach(b=>b.onclick=()=>nav(b.dataset.v));
-
-  const m=[["v-dash","🏠","Tableau de bord"],["v-company","🏢","Entreprise"],["v-prod","💻","Produits"],["v-staff","👨‍💼","Employés"],
-    ["v-pay","💸","Paie"],["v-charges","🧾","Charges"],["v-bank","🏦","Banque"],["v-fin","📊","Finance"],["v-hist","🕘","Historique"],["v-tech","🧪","Technologies"],
-    ["v-market","🌍","Marché"],["v-gov","🏛️","Gouvernement"],["v-prog","🏆","Progression"],["v-set","⚙️","Paramètres"]];
-  $("menu").innerHTML = m.map(x=>{
-    const dis = !isExport() && ["v-prod","v-tech","v-market"].indexOf(x[0])>=0;
-    return '<button class="'+(dis?"dis":"")+'" onclick="nav(\''+x[0]+'\')"><span class="e">'+x[1]+'</span>'+x[2]+'</button>';
-  }).join("")+'<button onclick="soon(\'marketing\')" class="dis"><span class="e">📢</span>Marketing</button>'
-   +'<button onclick="soon(\'gaming\')" class="dis"><span class="e">🎮</span>Jeux vidéo</button>';
+  const m=[['v-dash','🏠','Tableau de bord'],['v-company','🏢','Entreprise'],['v-prod','💻','Produits'],['v-staff','👨‍💼','Employés'],['v-pay','💸','Paie'],['v-charges','🧾','Charges'],['v-bank','🏦','Banque'],['v-fin','📊','Finance'],['v-hist','🕘','Historique'],['v-tech','🧪','Technologies'],['v-market','🌍','Marché'],['v-gov','🏛️','Gouvernement'],['v-hardware','🧰','Machines & consoles'],['v-marketing','📢','Marketing'],['v-prog','🏆','Progression'],['v-set','⚙️','Paramètres']];
+  $("menu").innerHTML=m.map(x=>{const dis=(x[0]==='v-hardware'||x[0]==='v-marketing')&&S.level<21;const westOnly=!isExport()&&!isEast()&&['v-prod','v-tech','v-market','v-gov'].includes(x[0]);return '<button class="'+((dis||westOnly)?'dis':'')+'" onclick="nav(\''+x[0]+'\')"><span class="e">'+x[1]+'</span>'+x[2]+(dis?' <small style="opacity:.6">Niv.21</small>':'')+'</button>';}).join('');
 }
+
+
 function nav(id){
   const already = $(id) && $(id).classList.contains("on");
   document.querySelectorAll(".sect").forEach(s=>s.classList.remove("on"));
@@ -2425,13 +2519,15 @@ function nav(id){
   if(id==="v-hist") renderFullHist();
   if(id==="v-charges") renderCharges();
   if(id==="v-gov") renderGovernment();
+  if(id==="v-hardware") renderHardware();
+  if(id==="v-marketing") renderMarketing();
   if(id!=="v-ctry") render();
 }
 function openSheet(){ $("sheet-bg").classList.add("on"); $("sheet").classList.add("on"); }
 function closeSheet(){ $("sheet-bg").classList.remove("on"); $("sheet").classList.remove("on"); }
 const SOON={
   marketing:{e:"📢",h:"Marketing",p:"Campagnes publicitaires, budget de communication et notoriété par pays pour faire décoller vos ventes. Prévu pour la V3, avec les crédits bancaires et les événements aléatoires."},
-  gaming:{e:"🎮",h:"Jeux vidéo & consoles",p:"Studios de jeux Android, iOS, PC et console, puis votre propre machine : TEKBOX ONE, TEKBOX PRO et TEKBOX X. Prévu pour la V4, avec la fin de jeu au niveau 20."}
+  gaming:{e:"🎮",h:"Jeux vidéo & consoles",p:"Studios de jeux Android, iOS, PC et console, puis votre propre machine : TEKBOX ONE, TEKBOX PRO et TEKBOX X. Disponible dans V3.0 à partir du niveau 21, avec progression jusqu’au niveau 40."}
 };
 function soon(k){
   const d=SOON[k];
@@ -2526,7 +2622,7 @@ document.addEventListener("visibilitychange",()=>{
   else if(S && $("app") && $("app").classList.contains("on")) MUSIC.resume();
 });
 
-/* V2.8 — activation musique après interaction utilisateur (politique autoplay navigateur) */
+/* V3.0 — activation musique après interaction utilisateur (politique autoplay navigateur) */
 ["pointerdown","keydown","touchstart"].forEach(ev=>document.addEventListener(ev,()=>{ try{ if(S && !S.musicMuted) MUSIC.start(); }catch(e){} },{once:false,passive:true}));
 
 /* ================= DÉMARRAGE ================= */
@@ -2575,24 +2671,18 @@ function exportSave(){
     toast("💾 Sauvegarde exportée");
   }catch(e){ toast("Échec de l'export de la sauvegarde"); }
 }
-function importSaveFile(input){
-  const file=input.files && input.files[0]; if(!file) return;
+function importSaveFile(input,fromWelcome){
+  const file=input.files&&input.files[0];if(!file)return;
   const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      const data=JSON.parse(e.target.result);
-      if(!data || typeof data!=="object" || !data.player || !data.company){ toast("Fichier de sauvegarde invalide"); return; }
-      S=Object.assign(blank(),data);
-      normalizeState();
-      saveGame();
-      toast("✅ Sauvegarde importée — "+S.company+" (niveau "+S.level+")");
-      if(S.tutoDone){ refillMissions(); if(S.level>=CI_END_LEVEL && !S.ceremony) showCeremony(); else startGame(); }
-      else go(S.company?"s-tuto":(S.player?"s-company":"s-profile"));
-    }catch(err){ toast("Impossible de lire ce fichier de sauvegarde"); }
-    finally{ input.value=""; }
-  };
-  reader.onerror=()=>{ toast("Impossible de lire ce fichier"); input.value=""; };
-  reader.readAsText(file);
+  reader.onload=e=>{try{
+    const data=JSON.parse(String(e.target.result||"").replace(/^\uFEFF/,""));
+    if(!data||typeof data!=="object"||!data.player||!data.company){toast("Fichier de sauvegarde Tech Empire invalide");return;}
+    S=Object.assign(blank(),data);normalizeState();saveGame();toast("✅ Sauvegarde importée — "+S.company+" (niveau "+S.level+")");
+    if(S.eastCeremonyPending||(S.level>=EAST_START_LEVEL&&S.phase!=="east")){S.eastCeremonyPending=true;showEastCeremony();}
+    else if(S.tutoDone){refillMissions();startGame();}
+    else go(S.company?"s-tuto":(S.player?"s-company":"s-profile"));
+  }catch(err){toast("Impossible de lire cette sauvegarde. Utilisez le fichier JSON exporté par Tech Empire.");}finally{input.value="";}};
+  reader.onerror=()=>{toast("Impossible de lire le fichier");input.value="";};reader.readAsText(file);
 }
 
 (function init(){
@@ -2606,10 +2696,11 @@ function importSaveFile(input){
     $("in-player").value=S.player; $("in-company").value=S.company||"";
     $("prev-avatar").innerHTML = S.photo ? '<img src="'+S.photo+'">' : S.avatar;
     $("prev-logo").innerHTML = S.logoImg ? '<img src="'+S.logoImg+'">' : S.logo;
-    if(S.tutoDone){ refillMissions(); if(S.level>=CI_END_LEVEL && !S.ceremony) showCeremony(); else startGame(); }
+    if(S.tutoDone){ refillMissions(); if(S.eastCeremonyPending || (S.level>=EAST_START_LEVEL && S.phase!=="east")){ S.eastCeremonyPending=true; showEastCeremony(); } else startGame(); }
   }
   document.addEventListener("keydown",e=>{ if(e.key==="Escape"){closeModal();closeSheet();} });
 })();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}
 </script>
 </body>
 </html>
