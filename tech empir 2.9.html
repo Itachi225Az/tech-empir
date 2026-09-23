@@ -1,0 +1,2615 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#0E1117">
+<title>Tech Empire V2.8 — Côte d'Ivoire</title>
+<style>
+:root{
+  --orange:#FF7A18;--orange-soft:#FF9445;--vert:#00A65A;--vert-soft:#23C37B;--blanc:#FFFFFF;
+  --bg:#0E1117;--bg2:#151A22;--card:#1B212B;--card2:#222A36;--line:#2C3542;
+  --txt:#EDF1F6;--txt2:#9AA7B8;--danger:#FF4D5E;--gold:#E8B93B;--bleu:#4C9BFF;
+  --r:16px;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#1C2431 0%,var(--bg) 60%);color:var(--txt);
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:none}
+input,select{font-family:inherit}
+
+.screen{display:none;min-height:100%;padding:calc(24px + var(--sat)) 18px calc(24px + var(--sab))}
+.screen.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.center{display:flex;flex-direction:column;justify-content:center;min-height:calc(100vh - 40px);max-width:520px;margin:0 auto}
+
+.brandmark{width:78px;height:78px;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:38px;
+  background:linear-gradient(140deg,var(--orange),#ff5e00);box-shadow:0 18px 40px rgba(255,122,24,.28);margin-bottom:22px}
+h1{font-size:30px;line-height:1.15;margin:0 0 12px;letter-spacing:-.5px}
+h2{font-size:22px;margin:0 0 6px;letter-spacing:-.3px}
+.lead{color:var(--txt2);font-size:15px;line-height:1.6;margin:0 0 26px}
+.tricolore{display:flex;gap:5px;margin-bottom:20px}
+.tricolore i{height:5px;width:34px;border-radius:4px;display:block}
+.tricolore i:nth-child(1){background:var(--orange)}
+.tricolore i:nth-child(2){background:var(--blanc)}
+.tricolore i:nth-child(3){background:var(--vert)}
+
+.btn{width:100%;padding:16px;border-radius:14px;font-size:16px;font-weight:700;color:#fff;
+  background:linear-gradient(135deg,var(--orange),#FF5E00);box-shadow:0 10px 26px rgba(255,94,0,.25);transition:.15s}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--txt2);box-shadow:none}
+.btn.green{background:linear-gradient(135deg,var(--vert-soft),var(--vert));box-shadow:0 10px 26px rgba(0,166,90,.22)}
+.btn.blue{background:linear-gradient(135deg,#5EA8FF,#2E6FD0);box-shadow:0 10px 26px rgba(76,155,255,.22)}
+.btn.sm{padding:12px;font-size:14px;border-radius:12px}
+.btn.xs{padding:9px 12px;font-size:12px;border-radius:10px;width:auto}
+.btn:disabled{opacity:.42;box-shadow:none}
+.row{display:flex;gap:10px}
+
+label.lbl{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.9px;color:var(--txt2);margin:20px 0 8px;font-weight:700}
+.field{width:100%;padding:15px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line);color:var(--txt);font-size:16px;outline:none}
+.field:focus{border-color:var(--orange)}
+.hint{font-size:12px;color:var(--txt2);margin-top:8px}
+
+.picks{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.pick{aspect-ratio:1;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:26px;display:flex;align-items:center;justify-content:center;color:var(--txt)}
+.pick.sel{border-color:var(--orange);background:rgba(255,122,24,.13);box-shadow:0 0 0 2px rgba(255,122,24,.25) inset}
+.avatar-big{width:96px;height:96px;border-radius:50%;background:var(--card2);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:46px;overflow:hidden;margin:0 auto}
+.avatar-big img{width:100%;height:100%;object-fit:cover}
+.logo-big{width:96px;height:96px;border-radius:26px;background:var(--card2);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:44px;overflow:hidden;margin:0 auto}
+.logo-big img{width:100%;height:100%;object-fit:cover}
+.cat{font-size:12px;color:var(--txt2);margin:16px 0 8px;font-weight:700}
+
+.tuto{max-width:500px;margin:0 auto;text-align:center;min-height:calc(100vh - 40px);display:flex;flex-direction:column;justify-content:center}
+.tuto .ico{font-size:64px;margin-bottom:18px}
+.dots{display:flex;gap:7px;justify-content:center;margin:26px 0}
+.dots span{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.dots span.on{background:var(--orange);width:22px;border-radius:5px}
+
+#app{display:none;padding-bottom:calc(86px + var(--sab))}
+#app.on{display:block}
+header.top{position:sticky;top:0;z-index:40;padding:calc(12px + var(--sat)) 16px 12px;
+  background:rgba(14,17,23,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.ident{display:flex;align-items:center;gap:11px}
+.av{width:42px;height:42px;border-radius:50%;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden;flex:0 0 auto;border:1px solid var(--line)}
+.av img{width:100%;height:100%;object-fit:cover}
+.ident .nm{font-weight:700;font-size:15px}
+.ident .co{font-size:12px;color:var(--txt2);display:flex;align-items:center;gap:6px}
+.lvl{margin-left:auto;text-align:right}
+.lvl b{display:block;font-size:13px;color:var(--gold)}
+.lvl small{font-size:11px;color:var(--txt2)}
+.xpbar{height:5px;border-radius:4px;background:var(--line);margin-top:10px;overflow:hidden}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--gold));border-radius:4px;transition:width .5s}
+
+main{padding:16px}
+.sect{display:none}
+.sect.on{display:block;animation:fade .25s ease}
+.h{display:flex;align-items:center;gap:8px;margin:0 0 14px}
+.h h2{flex:1}
+.pill{font-size:11px;padding:5px 10px;border-radius:20px;background:var(--card2);color:var(--txt2);border:1px solid var(--line);font-weight:700}
+.pill.g{color:var(--vert-soft);border-color:rgba(35,195,123,.4)}
+.pill.o{color:var(--orange-soft);border-color:rgba(255,148,69,.4)}
+.pill.b{color:var(--bleu);border-color:rgba(76,155,255,.4)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.stat .k{font-size:11px;color:var(--txt2);text-transform:uppercase;letter-spacing:.7px;font-weight:700}
+.stat .v{font-size:19px;font-weight:800;margin-top:6px;letter-spacing:-.4px;transition:transform .25s ease,color .25s ease}
+.stat .v.pulse{animation:statPulse .7s ease}
+@keyframes statPulse{0%{transform:scale(1)}35%{transform:scale(1.16);color:var(--vert-soft)}100%{transform:scale(1)}}
+.card.auto h3{transition:transform .2s ease}
+.card.auto.ping h3{animation:pingIcon .6s ease}
+@keyframes pingIcon{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.stat .v.o{color:var(--orange-soft)}
+.stat .v.g{color:var(--vert-soft)}
+.stat .v.b{color:var(--bleu)}
+.stat .s{font-size:11px;color:var(--txt2);margin-top:4px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px}
+.card h3{margin:0 0 4px;font-size:15px}
+.card p{margin:0;font-size:13px;color:var(--txt2);line-height:1.55}
+.card.hl{border-color:rgba(255,122,24,.45);background:linear-gradient(160deg,rgba(255,122,24,.10),var(--card) 60%)}
+.card.pay{border-color:rgba(255,77,94,.5);background:linear-gradient(160deg,rgba(255,77,94,.12),var(--card) 60%)}
+.card.auto{border-color:rgba(76,155,255,.45);background:linear-gradient(160deg,rgba(76,155,255,.10),var(--card) 60%)}
+
+.mission{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.mission .em{font-size:26px;flex:0 0 auto}
+.mission .bd{flex:1;min-width:0}
+.mission .ti{font-weight:700;font-size:14px}
+.mission .de{font-size:12px;color:var(--txt2);margin:3px 0 8px;line-height:1.5}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.tag{font-size:11px;padding:4px 8px;border-radius:8px;background:var(--card2);color:var(--txt2);font-weight:700}
+.tag.pay{color:var(--vert-soft)}
+.tag.cost{color:var(--orange-soft)}
+.tag.b{color:var(--bleu)}
+.prog{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:8px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--vert),var(--vert-soft));width:0}
+.prog.b i{background:linear-gradient(90deg,#2E6FD0,#5EA8FF)}
+
+.bank-card{border-radius:20px;padding:20px;color:#fff;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#0F1A16 0%,#14312A 45%,#1F1206 100%);border:1px solid #3A3018;
+  box-shadow:0 18px 40px rgba(0,0,0,.45);margin-bottom:14px}
+.bank-card:before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,185,59,.22),transparent 65%);top:-90px;right:-70px}
+.bank-card .bk{display:flex;justify-content:space-between;align-items:center;font-weight:800;letter-spacing:1px;font-size:13px}
+.bank-card .tier{color:var(--gold);font-size:12px;border:1px solid rgba(232,185,59,.5);padding:3px 9px;border-radius:20px}
+.chip{width:42px;height:30px;border-radius:6px;background:linear-gradient(135deg,#E8C87B,#A6822F);margin:22px 0 14px;position:relative}
+.chip:after{content:"";position:absolute;inset:6px 8px;border:1px solid rgba(0,0,0,.25);border-radius:3px}
+.num{font-size:19px;letter-spacing:2.5px;font-family:"Courier New",monospace;font-weight:700}
+.bank-card .ft{display:flex;justify-content:space-between;align-items:flex-end;margin-top:16px;font-size:12px}
+.bank-card .ft b{display:block;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.bank-card small{color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.6px}
+
+.hist{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.hist .it{display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid var(--line)}
+.hist .it:last-child{border-bottom:none}
+.hist .em{width:34px;height:34px;border-radius:10px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
+.hist .bd{flex:1;min-width:0}
+.hist .bd b{display:block;font-size:13px;font-weight:700}
+.hist .bd small{color:var(--txt2);font-size:11px}
+.hist .am{font-weight:800;font-size:13px;white-space:nowrap}
+.am.pos{color:var(--vert-soft)}
+.am.neg{color:var(--danger)}
+.empty{padding:26px 16px;text-align:center;color:var(--txt2);font-size:13px}
+
+.locked{background:var(--card);border:1px dashed var(--line);border-radius:var(--r);padding:22px 16px;text-align:center}
+.locked .em{font-size:34px;opacity:.7}
+.locked h3{margin:10px 0 6px;font-size:15px}
+.locked p{font-size:13px;color:var(--txt2);margin:0;line-height:1.55}
+
+.steps{list-style:none;padding:0;margin:0}
+.steps li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px;align-items:center}
+.steps li:last-child{border-bottom:none}
+.steps .n{width:28px;height:28px;border-radius:9px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--txt2);flex:0 0 auto}
+.steps li.done .n{background:rgba(0,166,90,.16);color:var(--vert-soft)}
+.steps li.now .n{background:rgba(255,122,24,.16);color:var(--orange-soft)}
+.steps .t{flex:1}
+.steps .t small{display:block;color:var(--txt2);font-size:11px;margin-top:2px}
+
+/* pays */
+.ctry{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:10px;width:100%;text-align:left;color:var(--txt)}
+.ctry .fl{font-size:30px;flex:0 0 auto}
+.ctry .bd{flex:1;min-width:0}
+.ctry .ti{font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px}
+.ctry .de{font-size:12px;color:var(--txt2);margin-top:3px}
+.ctry .ar{color:var(--txt2);font-size:18px}
+.popbar{height:6px;border-radius:4px;background:var(--line);margin-top:8px;overflow:hidden}
+.popbar i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--gold));transition:width .4s}
+.popbar.ok i{background:linear-gradient(90deg,var(--vert),var(--vert-soft))}
+
+.seg{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px}
+.seg button{white-space:nowrap;padding:9px 14px;border-radius:11px;background:var(--card);border:1px solid var(--line);color:var(--txt2);font-size:12px;font-weight:700}
+.seg button.on{background:rgba(255,122,24,.14);border-color:var(--orange);color:var(--orange-soft)}
+
+nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:50;display:grid;grid-template-columns:repeat(5,1fr);
+  background:rgba(21,26,34,.95);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:8px 4px calc(8px + var(--sab))}
+nav.bottom button{background:none;color:var(--txt2);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:6px 2px;border-radius:12px}
+nav.bottom button .e{font-size:19px;filter:grayscale(.65);transition:.18s}
+nav.bottom button.on{color:var(--orange-soft)}
+nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
+
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:60;display:none;backdrop-filter:blur(2px)}
+.sheet-bg.on{display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:61;background:var(--bg2);border-radius:22px 22px 0 0;
+  border-top:1px solid var(--line);padding:18px 18px calc(22px + var(--sab));transform:translateY(100%);transition:.28s cubic-bezier(.2,.8,.2,1);max-height:88vh;overflow:auto}
+.sheet.on{transform:none}
+.grab{width:42px;height:4px;border-radius:4px;background:var(--line);margin:0 auto 16px}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.menu button{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 12px;color:var(--txt);
+  display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;text-align:left}
+.menu button span.e{font-size:20px}
+.menu button.dis{opacity:.5}
+
+#toast{position:fixed;left:50%;bottom:calc(100px + var(--sab));transform:translate(-50%,24px);z-index:90;
+  background:var(--card2);border:1px solid var(--line);color:var(--txt);padding:12px 18px;border-radius:14px;font-size:13px;font-weight:600;
+  box-shadow:0 14px 34px rgba(0,0,0,.5);opacity:0;transition:.25s;pointer-events:none;max-width:88vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:80;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.on{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:22px;width:100%;max-width:400px;animation:pop .25s ease;max-height:88vh;overflow:auto}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+.modal h3{margin:0 0 6px;font-size:18px}
+.modal p{margin:0;color:var(--txt2);font-size:13px;line-height:1.55}
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.quick button{flex:1;min-width:72px;padding:10px;border-radius:11px;background:var(--card);border:1px solid var(--line);color:var(--txt2);font-size:12px;font-weight:700}
+.opt{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:12px 14px;color:var(--txt);margin-bottom:8px;font-size:13px}
+.opt.sel{border-color:var(--orange);background:rgba(255,122,24,.12)}
+.opt b{display:block;font-size:14px}
+.opt small{color:var(--txt2);font-size:11px}
+
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:95;display:none}
+#confetti.on{display:block}
+#float-layer{position:fixed;inset:0;pointer-events:none;z-index:97;overflow:hidden}
+.float-num{position:absolute;left:50%;bottom:104px;transform:translate(-50%,0) scale(.85);
+  font-weight:800;font-size:13px;padding:7px 13px;border-radius:20px;white-space:nowrap;
+  background:rgba(21,26,34,.88);backdrop-filter:blur(8px);animation:floatUp 2s cubic-bezier(.2,.8,.2,1) forwards}
+.float-num.pos{color:var(--vert-soft);border:1px solid rgba(35,195,123,.5)}
+.float-num.neg{color:var(--danger);border:1px solid rgba(255,77,94,.5)}
+@keyframes floatUp{
+  0%{opacity:0;transform:translate(-50%,0) scale(.8)}
+  14%{opacity:1;transform:translate(-50%,-14px) scale(1)}
+  78%{opacity:1}
+  100%{opacity:0;transform:translate(-50%,-120px) scale(.94)}
+}
+
+/* cérémonie */
+#s-cer .center{text-align:center}
+.trophy{font-size:80px;animation:float 2.6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.title-card{background:linear-gradient(150deg,rgba(232,185,59,.16),var(--card) 65%);border:1px solid rgba(232,185,59,.45);
+  border-radius:20px;padding:20px;margin:20px 0}
+.title-card .t{color:var(--gold);font-size:20px;font-weight:800;letter-spacing:.5px}
+.recap{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;text-align:left}
+.recap div{background:rgba(255,255,255,.04);border-radius:12px;padding:10px 12px}
+.recap .k{font-size:10px;color:var(--txt2);text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+.recap .v{font-size:14px;font-weight:800;margin-top:3px}
+
+@media(min-width:720px){
+  main{max-width:760px;margin:0 auto}
+  header.top>div{max-width:760px;margin:0 auto}
+  .grid2{grid-template-columns:repeat(4,1fr)}
+}
+
+/* ===== V2.8 — Gouvernement & scénarios ===== */
+.gov-card{border:1px solid rgba(86,214,255,.25);background:linear-gradient(145deg,rgba(86,214,255,.08),var(--card));}
+.gov-status{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.gov-project{border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;margin:10px 0;background:rgba(255,255,255,.025)}
+.gov-project h4{margin:0 0 5px;font-size:14px}.gov-project p{font-size:12px;color:var(--txt2);margin:0 0 10px}
+.gov-badge{display:inline-block;padding:5px 9px;border-radius:999px;background:rgba(86,214,255,.1);font-size:11px}
+.gov-timeline{border-left:2px solid rgba(86,214,255,.22);padding-left:14px;margin-top:12px}.gov-event{margin:0 0 13px}.gov-event b{display:block}.gov-event small{color:var(--txt2)}
+</style>
+</head>
+<body>
+
+<!-- ÉCRAN 1 : BIENVENUE -->
+<section class="screen on" id="s-welcome">
+  <div class="center">
+    <div class="brandmark">🚀</div>
+    <div class="tricolore"><i></i><i></i><i></i></div>
+    <h1>Bienvenue dans<br>TECH EMPIRE 🇨🇮</h1>
+    <p class="lead">Construisez votre entreprise technologique, développez vos produits, gagnez de l'argent et devenez l'un des plus grands entrepreneurs du pays — puis de l'Afrique de l'Ouest.</p>
+    <button class="btn" onclick="go('s-profile')">COMMENCER</button>
+    <button class="btn ghost sm" id="btn-continue" style="margin-top:10px;display:none" onclick="resume()">Reprendre ma partie</button>
+  </div>
+</section>
+
+<!-- ÉCRAN 2 : PROFIL -->
+<section class="screen" id="s-profile">
+  <div class="center">
+    <div class="tricolore"><i></i><i></i><i></i></div>
+    <h2>Profil du joueur</h2>
+    <p class="lead">Comment devons-nous vous appeler ?</p>
+    <div class="avatar-big" id="prev-avatar">👨🏿‍💻</div>
+    <label class="lbl">Nom du joueur</label>
+    <input class="field" id="in-player" placeholder="Ex. : Armel" maxlength="22" autocomplete="off">
+    <label class="lbl">Choisir un avatar</label>
+    <div class="picks" id="avatars"></div>
+    <label class="lbl">Ou importer une photo</label>
+    <button class="btn ghost sm" onclick="document.getElementById('f-avatar').click()">📷 Importer une photo</button>
+    <input type="file" id="f-avatar" accept="image/*" hidden>
+    <div style="height:24px"></div>
+    <button class="btn" onclick="saveProfile()">CONTINUER →</button>
+    <div class="hint" style="text-align:center">Votre photo reste sur votre appareil.</div>
+  </div>
+</section>
+
+<!-- ÉCRAN 3 : ENTREPRISE -->
+<section class="screen" id="s-company">
+  <div class="center">
+    <div class="tricolore"><i></i><i></i><i></i></div>
+    <h2>Créez votre entreprise</h2>
+    <p class="lead">Le nom qui va bientôt faire parler de lui dans toute l'Afrique de l'Ouest.</p>
+    <div class="logo-big" id="prev-logo">💻</div>
+    <label class="lbl">Nom de l'entreprise</label>
+    <input class="field" id="in-company" placeholder="Ex. : Buyo Technologies" maxlength="26" autocomplete="off">
+    <label class="lbl">Logo de l'entreprise</label>
+    <div id="logos"></div>
+    <label class="lbl">Ou importer votre logo</label>
+    <button class="btn ghost sm" onclick="document.getElementById('f-logo').click()">🖼️ Importer un logo</button>
+    <input type="file" id="f-logo" accept="image/*" hidden>
+    <div style="height:24px"></div>
+    <button class="btn green" onclick="createCompany()">CRÉER MON ENTREPRISE</button>
+  </div>
+</section>
+
+<!-- ÉCRAN 4 : TUTORIEL -->
+<section class="screen" id="s-tuto">
+  <div class="tuto">
+    <div class="ico" id="tuto-ico">👋</div>
+    <h2 id="tuto-ti">Bienvenue dans votre entreprise</h2>
+    <p class="lead" id="tuto-tx" style="margin-bottom:0"></p>
+    <div class="dots" id="tuto-dots"></div>
+    <button class="btn" id="tuto-next" onclick="tutoNext()">SUIVANT →</button>
+    <button class="btn ghost sm" style="margin-top:10px" onclick="finishTuto()">Passer le tutoriel</button>
+  </div>
+</section>
+
+<!-- ÉCRAN : CÉRÉMONIE FIN DE LA PHASE CÔTE D'IVOIRE -->
+<section class="screen" id="s-cer">
+  <div class="center">
+    <div class="trophy">🏆</div>
+    <div class="tricolore" style="justify-content:center;margin:18px 0"><i></i><i></i><i></i></div>
+    <h1 style="font-size:26px">FÉLICITATIONS !</h1>
+    <p class="lead" id="cer-tx" style="margin-bottom:0"></p>
+    <div class="title-card">
+      <div style="font-size:11px;color:var(--txt2);letter-spacing:1px;font-weight:700">TITRE OBTENU</div>
+      <div class="t">👑 MAGNAT DE LA TECHNOLOGIE 🇨🇮</div>
+      <div class="recap" id="cer-recap"></div>
+    </div>
+    <p class="lead" style="font-size:14px">Vous n'avez plus un seul concurrent sérieux en Côte d'Ivoire. Le marché national est saturé : pour continuer à grandir, il faut franchir les frontières.</p>
+    <button class="btn green" onclick="startExport()">🌍 EXPORTER MON ENTREPRISE</button>
+  </div>
+</section>
+
+<!-- JEU -->
+<div id="app">
+  <header class="top">
+    <div>
+      <div class="ident">
+        <div class="av" id="hd-av">👨🏿‍💻</div>
+        <div style="min-width:0">
+          <div class="nm" id="hd-name">Joueur</div>
+          <div class="co"><span id="hd-logo">💻</span><span id="hd-co">Entreprise</span></div>
+        </div>
+        <div class="lvl">
+          <b id="hd-lvl">⭐ Niveau 1</b>
+          <small id="hd-day">Jour 1</small>
+        </div>
+      </div>
+      <div class="xpbar"><i id="hd-xp" style="width:0%"></i></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- TABLEAU DE BORD -->
+    <section class="sect on" id="v-dash">
+      <div class="h"><h2>Tableau de bord</h2><span class="pill" id="pill-status">Startup</span></div>
+      <div class="grid2" style="margin-bottom:14px">
+        <div class="stat"><div class="k">💰 Trésorerie</div><div class="v o" id="st-cash">0</div><div class="s">disponible maintenant</div></div>
+        <div class="stat"><div class="k">🏦 Banque</div><div class="v g" id="st-bank">0</div><div class="s">à l'abri des dépenses</div></div>
+        <div class="stat"><div class="k">📈 Valeur</div><div class="v" id="st-val">0</div><div class="s">valorisation estimée</div></div>
+        <div class="stat"><div class="k">👥 Employés</div><div class="v" id="st-emp">1</div><div class="s" id="st-emp-s">vous, le fondateur</div></div>
+      </div>
+
+      <div class="card hl" id="daily-card" style="display:none">
+        <h3>📅 Résultat journalier</h3>
+        <p id="daily-tx"></p>
+      </div>
+
+      <div class="card pay" id="pay-card" style="display:none">
+        <h3 id="pay-ti">💸 Salaires du mois à payer</h3>
+        <p id="pay-tx"></p>
+        <div style="height:12px"></div>
+        <button class="btn sm" onclick="nav('v-pay')">Payer les employés</button>
+      </div>
+
+      <div class="card pay" id="bills-card" style="display:none">
+        <h3 id="bills-ti">🧾 Charges du mois à régler</h3>
+        <p id="bills-tx"></p>
+        <div style="height:12px"></div>
+        <button class="btn sm" onclick="nav('v-charges')">Payer les charges</button>
+      </div>
+
+      <div class="card auto" id="auto-card" style="display:none">
+        <h3>🤖 Automatisation Côte d'Ivoire</h3>
+        <p id="auto-tx"></p>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Objectif actuel</h3>
+        <p id="goal-tx"></p>
+      </div>
+
+      <div id="deals-block" style="display:none">
+        <div class="h" style="margin-top:20px"><h2 style="font-size:18px">💎 Grands contrats risqués</h2></div>
+        <p class="lead" style="font-size:13px;margin-bottom:12px">De gros investisseurs proposent des contrats hors normes. Mise minimale d'un million, jusqu'à 100 % de gain en cas de réussite — mais le marché peut aussi se retourner contre vous.</p>
+        <div id="deals"></div>
+      </div>
+
+      <div id="ci-block">
+        <div class="h" style="margin-top:20px"><h2 style="font-size:18px">💼 Contrats disponibles</h2><span class="pill" id="pill-miss">0</span></div>
+        <p class="lead" style="font-size:13px;margin-bottom:12px" id="ci-intro">Avant les grands produits, on fait ce que tout le monde fait à Abidjan : on prend des contrats. Chaque contrat coûte un peu d'argent à démarrer et rapporte davantage à la livraison.</p>
+        <div id="missions"></div>
+      </div>
+    </section>
+
+    <!-- ENTREPRISE -->
+    <section class="sect" id="v-company">
+      <div class="h"><h2>Entreprise</h2></div>
+      <div class="card" style="text-align:center;padding:24px 16px">
+        <div class="logo-big" id="co-logo" style="width:74px;height:74px;font-size:34px;margin-bottom:12px">💻</div>
+        <h3 style="font-size:19px;margin-bottom:4px" id="co-name">Entreprise</h3>
+        <p id="co-sub">Fondée par —</p>
+      </div>
+      <div class="grid2">
+        <div class="stat"><div class="k">⭐ Niveau</div><div class="v" id="co-lvl">1</div></div>
+        <div class="stat"><div class="k">💎 Valeur</div><div class="v o" id="co-val">0</div></div>
+        <div class="stat"><div class="k">🌟 Réputation</div><div class="v g" id="co-rep">10 / 100</div></div>
+        <div class="stat"><div class="k">💵 Chiffre d'affaires</div><div class="v" id="co-ca">0</div></div>
+        <div class="stat"><div class="k">💸 Dépenses</div><div class="v" id="co-dep">0</div></div>
+        <div class="stat"><div class="k">📊 Bénéfices</div><div class="v g" id="co-ben">0</div></div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h3>🏢 Siège social</h3>
+        <p id="co-siege">Un bureau partagé à Abidjan.</p>
+      </div>
+      <div class="card" id="co-intl" style="display:none">
+        <h3>🌍 Implantations</h3>
+        <p id="co-intl-tx"></p>
+      </div>
+    </section>
+
+    <!-- PRODUITS -->
+    <section class="sect" id="v-prod">
+      <div class="h"><h2>Produits</h2><span class="pill b" id="pill-prod">0 en ligne</span></div>
+      <div id="prod-locked" class="locked" style="display:none">
+        <div class="em">🔒</div>
+        <h3>Atelier de développement verrouillé</h3>
+        <p>Dominez d'abord le marché ivoirien. L'atelier de développement produit s'ouvre après l'export de votre entreprise.</p>
+      </div>
+      <div id="prod-open" style="display:none">
+        <div class="card hl">
+          <h3>💡 Lancer un nouveau produit</h3>
+          <p>Choisissez une catégorie, investissez, laissez vos développeurs travailler, puis fixez votre prix avant la mise en ligne.</p>
+          <div style="height:12px"></div>
+          <button class="btn sm" onclick="openCatalog()">➕ Développer un produit</button>
+        </div>
+        <div class="h" style="margin-top:18px"><h2 style="font-size:17px">🏭 En développement</h2></div>
+        <div id="prod-dev"></div>
+        <div class="h" style="margin-top:18px"><h2 style="font-size:17px">🟢 En ligne</h2><span class="pill g" id="pill-rev">0 / jour</span></div>
+        <div id="prod-live"></div>
+      </div>
+    </section>
+
+    <!-- MARCHÉ AFRIQUE DE L'OUEST -->
+    <section class="sect" id="v-market">
+      <div class="h"><h2>Marché</h2><span class="pill" id="pill-mkt">Afrique de l'Ouest</span></div>
+      <div id="mkt-locked" class="locked" style="display:none">
+        <div class="em">🌍</div>
+        <h3>Expansion régionale verrouillée</h3>
+        <p>Devenez d'abord le leader de la technologie en Côte d'Ivoire. Une fois le marché national conquis, les frontières s'ouvrent.</p>
+      </div>
+      <div id="mkt-open" style="display:none">
+        <button class="ctry" style="width:100%" onclick="openCountry('ci')">
+          <span class="fl">🇨🇮</span><span class="bd">
+            <span class="ti">Côte d'Ivoire — marché d'origine</span>
+            <span class="de" id="mkt-ci"></span>
+          </span><span class="ar">›</span>
+        </button>
+        <p class="lead" style="font-size:13px">Dans chaque pays, le gouvernement commence par vous imposer des restrictions : vous êtes un étranger et votre entreprise n'a encore aucune crédibilité locale. Gagnez en popularité, obtenez votre licence, puis déployez vos produits.</p>
+        <div id="ctry-list"></div>
+      </div>
+    </section>
+
+    <!-- DÉTAIL PAYS -->
+    <section class="sect" id="v-ctry">
+      <button class="btn ghost xs" style="margin-bottom:12px" onclick="nav('v-market')">← Retour au marché</button>
+      <div class="card" style="text-align:center">
+        <div style="font-size:44px" id="cy-fl">🏳️</div>
+        <h3 style="font-size:19px;margin:8px 0 4px" id="cy-name">Pays</h3>
+        <p id="cy-status"></p>
+        <div class="popbar" id="cy-bar" style="margin-top:14px"><i style="width:0%"></i></div>
+        <p style="margin-top:8px;font-size:12px" id="cy-pop">Popularité 0 / 100</p>
+      </div>
+      <div class="card" id="cy-restr">
+        <h3>🏛️ Restrictions gouvernementales</h3>
+        <p id="cy-restr-tx"></p>
+      </div>
+      <div id="cy-body"></div>
+    </section>
+
+    <!-- GOUVERNEMENT V2.8 -->
+    <section class="sect" id="v-gov">
+      <div class="h"><h2>🏛️ Gouvernement</h2><span class="pill" id="gov-pill">0 demandes</span></div>
+      <div class="card gov-card"><h3>📜 Conseil des gouvernements</h3><p id="gov-intro">Les gouvernements observent votre implantation. Une entreprise qui devient utile au pays peut recevoir des demandes d'investissement public.</p></div>
+      <div id="gov-list"></div>
+      <div class="card gov-card" id="gov-history-card"><h3>📚 Chronologie</h3><div class="gov-timeline" id="gov-history"></div></div>
+    </section>
+
+    <!-- PAIE -->
+    <section class="sect" id="v-pay">
+      <div class="h"><h2>Paie</h2><span class="pill" id="pill-pay">Mois 1</span></div>
+      <div class="card" id="pay-head"><h3>🗓️ Cycle de paie</h3><p id="pay-head-tx"></p></div>
+      <div id="pay-list"></div>
+    </section>
+
+    <!-- EMPLOYÉS -->
+    <section class="sect" id="v-staff">
+      <div class="h"><h2>Employés</h2><span class="pill" id="pill-staff">1</span></div>
+      <div id="staff-locked" class="locked" style="display:none">
+        <div class="em">👨‍💼</div>
+        <h3>Recrutement verrouillé</h3>
+        <p>Tant que vous êtes seul freelance à Abidjan, vous êtes votre propre équipe. Le recrutement s'ouvre avec l'export de l'entreprise.</p>
+      </div>
+      <div id="staff-open" style="display:none">
+        <div class="seg" id="staff-tabs"></div>
+        <div class="card">
+          <h3 id="staff-br">💸 Masse salariale</h3>
+          <p id="staff-pay"></p>
+        </div>
+        <div id="staff-list"></div>
+      </div>
+    </section>
+
+    <!-- TECHNOLOGIES -->
+    <section class="sect" id="v-tech">
+      <div class="h"><h2>Technologies</h2></div>
+      <div id="tech-locked" class="locked" style="display:none">
+        <div class="em">🧪</div>
+        <h3>Laboratoire verrouillé</h3>
+        <p>Le laboratoire de recherche ouvre après l'export de votre entreprise vers l'Afrique de l'Ouest.</p>
+      </div>
+      <div id="tech-open" style="display:none"></div>
+    </section>
+
+    <!-- CHARGES -->
+    <section class="sect" id="v-charges">
+      <div class="h"><h2>Charges</h2><span class="pill" id="pill-charges">Mois 1</span></div>
+      <div class="card"><h3>🧾 Loyer, électricité, eau, impôts</h3><p id="charges-head-tx"></p></div>
+      <div id="charges-list"></div>
+    </section>
+
+    <!-- BANQUE -->
+    <section class="sect" id="v-bank">
+      <div class="h"><h2>Banque</h2><span class="pill">TECH BANK 🇨🇮</span></div>
+      <div id="bank-closed">
+        <div class="card" style="text-align:center;padding:26px 18px">
+          <div style="font-size:40px">🏦</div>
+          <h3 style="margin:12px 0 6px;font-size:17px">Ouvrez votre compte bancaire</h3>
+          <p style="margin-bottom:16px">Mettez vos bénéfices à l'abri, suivez chaque opération et recevez votre carte virtuelle Tech Bank.</p>
+          <label class="lbl" style="text-align:left">Nom sur la carte</label>
+          <input class="field" id="in-card" placeholder="Ex. : Armel Dannon" maxlength="24" autocomplete="off">
+          <div style="height:14px"></div>
+          <button class="btn green" onclick="openAccount()">CRÉER MON COMPTE</button>
+        </div>
+      </div>
+      <div id="bank-open" style="display:none">
+        <div class="seg" id="bank-tabs">
+          <button class="on" onclick="bankTab('acc',this)">💳 Compte</button>
+          <button onclick="bankTab('loan',this)">🏦 Crédits <span id="loan-badge"></span></button>
+        </div>
+        <div id="bank-acc">
+        <div class="bank-card">
+          <div class="bk"><span>TECH BANK 🇨🇮</span><span class="tier" id="bc-tier">💳 GOLD</span></div>
+          <div class="chip"></div>
+          <div class="num" id="bc-num">0000 0000 0000 0000</div>
+          <div class="ft">
+            <div><small>TITULAIRE</small><b id="bc-name">—</b></div>
+            <div style="text-align:right"><small>EXPIRE</small><b id="bc-exp">09/30</b></div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--txt2);text-align:center;margin-bottom:16px">Carte fictive propre au jeu. Aucun système bancaire réel n'est connecté.</div>
+        <div class="grid2" style="margin-bottom:12px">
+          <div class="stat"><div class="k">💰 Trésorerie</div><div class="v o" id="bk-cash">0</div></div>
+          <div class="stat"><div class="k">🏦 Solde bancaire</div><div class="v g" id="bk-bal">0</div></div>
+        </div>
+        <div class="row" style="margin-bottom:18px">
+          <button class="btn green sm" onclick="askMove('in')">➕ Déposer</button>
+          <button class="btn ghost sm" onclick="askMove('out')">➖ Retirer</button>
+        </div>
+        <div class="h"><h2 style="font-size:17px">📜 Historique</h2></div>
+        <div class="hist" id="bank-hist"></div>
+        </div>
+
+        <div id="bank-loan" style="display:none">
+          <div class="card" id="loan-alert" style="display:none;border-color:rgba(255,77,94,.55);background:linear-gradient(160deg,rgba(255,77,94,.14),var(--card) 60%)">
+            <h3>🚨 Remboursement obligatoire</h3>
+            <p id="loan-alert-tx"></p>
+          </div>
+          <div class="card">
+            <h3>🏛️ Crédit Banque Nationale</h3>
+            <p>3 prêts actifs maximum. Chaque prêt a un taux d'intérêt et un délai de remboursement. Passé ce délai, si le prêt n'est pas soldé, les intérêts restants sont multipliés par 5 et votre réputation chute chaque jour de retard.</p>
+          </div>
+          <div class="h" style="margin-top:6px"><h2 style="font-size:16px">📥 Prêts en cours</h2><span class="pill" id="loan-count">0 / 3</span></div>
+          <div id="loan-active"></div>
+          <div class="h" style="margin-top:18px"><h2 style="font-size:16px">💰 Demander un crédit</h2></div>
+          <div id="loan-offers"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCE -->
+    <section class="sect" id="v-fin">
+      <div class="h"><h2>Finance</h2></div>
+      <div class="grid2" style="margin-bottom:14px">
+        <div class="stat"><div class="k">💵 Revenus</div><div class="v g" id="fi-rev">0</div><div class="s">depuis la création</div></div>
+        <div class="stat"><div class="k">💸 Dépenses</div><div class="v" id="fi-exp" style="color:var(--danger)">0</div><div class="s">investissements inclus</div></div>
+        <div class="stat"><div class="k">📊 Bénéfice net</div><div class="v o" id="fi-net">0</div><div class="s">revenus − dépenses</div></div>
+        <div class="stat"><div class="k">🧮 Patrimoine</div><div class="v" id="fi-tot">0</div><div class="s">trésorerie + banque</div></div>
+      </div>
+      <div class="h"><h2 style="font-size:17px">🧾 Dernières opérations</h2></div>
+      <div class="hist" id="fin-hist"></div>
+    </section>
+
+    <!-- PROGRESSION -->
+    <section class="sect" id="v-prog">
+      <div class="h"><h2>Progression</h2><span class="pill" id="pg-pill">Niveau 1 / 20</span></div>
+      <div class="card">
+        <h3 id="pg-name">Startup</h3>
+        <p id="pg-desc">Créer son entreprise.</p>
+        <div class="xpbar" style="margin-top:12px"><i id="pg-xp" style="width:0%"></i></div>
+        <p style="margin-top:8px;font-size:12px" id="pg-xptx">0 / 100 XP</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:10px">🗺️ Les 20 niveaux</h3>
+        <ul class="steps" id="pg-list"></ul>
+      </div>
+    </section>
+
+    <!-- À VENIR -->
+    <section class="sect" id="v-soon">
+      <div class="h"><h2 id="soon-ti">Bientôt</h2></div>
+      <div class="locked">
+        <div class="em" id="soon-em">🔒</div>
+        <h3 id="soon-h">Module en préparation</h3>
+        <p id="soon-p"></p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h3>🛠️ Feuille de route</h3>
+        <ul class="steps">
+          <li class="done"><span class="n">✓</span><span class="t">V1 — Joueur, entreprise, tutoriel, tableau de bord, banque, contrats ivoiriens<small>Terminée</small></span></li>
+          <li class="done"><span class="n">✓</span><span class="t">V2 — Export Afrique de l'Ouest, produits, employés, automatisation<small>Version actuelle</small></span></li>
+          <li class="now"><span class="n">3</span><span class="t">V3 — Crédits bancaires, marketing, événements aléatoires</span></li>
+          <li><span class="n">4</span><span class="t">V4 — Jeux vidéo, consoles TEKBOX, trophées, fin de jeu niveau 20</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- HISTORIQUE -->
+    <section class="sect" id="v-hist">
+      <div class="h"><h2>Historique</h2><span class="pill" id="pill-hist">0</span></div>
+      <div class="seg" id="hist-tabs"></div>
+      <div class="hist" id="hist-list"></div>
+    </section>
+
+    <!-- PARAMÈTRES -->
+    <section class="sect" id="v-set">
+      <div class="h"><h2>Paramètres</h2></div>
+      <div class="card">
+        <h3>🎵 Musique d'ambiance</h3>
+        <p>Une musique douce joue pendant que vous gérez votre empire. Elle se coupe automatiquement dès que vous quittez l'onglet.</p>
+        <div style="height:12px"></div>
+        <button class="btn ghost sm" id="btn-music" onclick="toggleMusic()">🔊 Couper la musique</button>
+      </div>
+      <div class="card">
+        <h3>💾 Sauvegarde</h3>
+        <p>Votre partie est enregistrée automatiquement sur cet appareil après chaque action.</p>
+        <div style="height:12px"></div>
+        <button class="btn ghost sm" onclick="saveGame(1)">Sauvegarder maintenant</button>
+      </div>
+      <div class="card">
+        <h3>🔄 Export / Import de sauvegarde</h3>
+        <p>Votre partie reste sur cet appareil et ce site : si vous déployez le jeu sur une nouvelle adresse (Vercel, un autre dépôt...) ou changez d'appareil, elle ne vous suit pas automatiquement. Exportez-la ici, puis importez le fichier sur la nouvelle adresse pour la retrouver telle quelle.</p>
+        <div style="height:12px"></div>
+        <div class="row">
+          <button class="btn sm" onclick="exportSave()">⬇️ Exporter ma sauvegarde</button>
+          <button class="btn ghost sm" onclick="document.getElementById('f-import').click()">⬆️ Importer une sauvegarde</button>
+        </div>
+        <input type="file" id="f-import" accept="application/json,.json" hidden onchange="importSaveFile(this)">
+      </div>
+      <div class="card">
+        <h3>🔁 Recommencer</h3>
+        <p>Efface définitivement votre entreprise, votre compte bancaire et toute votre progression.</p>
+        <div style="height:12px"></div>
+        <button class="btn sm" style="background:linear-gradient(135deg,#FF4D5E,#C6233A);box-shadow:none" onclick="resetGame()">Effacer ma partie</button>
+      </div>
+      <div class="card">
+        <h3>ℹ️ À propos</h3>
+        <p>Tech Empire — Côte d'Ivoire · Version 2.8<br>Jeu de simulation d'entreprise technologique. Montants, cartes, banques et pays traités de manière entièrement fictive.</p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom" id="nav"></nav>
+</div>
+
+<div class="sheet-bg" id="sheet-bg" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="grab"></div>
+  <h2 style="font-size:17px;margin-bottom:14px">Menu principal</h2>
+  <div class="menu" id="menu"></div>
+</div>
+
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <h3 id="md-ti">Titre</h3>
+    <p id="md-tx">Texte</p>
+    <div id="md-body" style="display:none"></div>
+    <div id="md-input" style="display:none">
+      <label class="lbl">Montant (FCFA)</label>
+      <input class="field" id="md-amount" type="number" inputmode="numeric" placeholder="0">
+      <div class="quick" id="md-quick"></div>
+    </div>
+    <div class="row" style="margin-top:18px">
+      <button class="btn ghost sm" onclick="closeModal()">Annuler</button>
+      <button class="btn sm" id="md-ok">Confirmer</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<div id="float-layer"></div>
+<canvas id="confetti"></canvas>
+
+<script>
+"use strict";
+const KEY = "techEmpireCI_v1";
+const DAY_MS = 75000;              /* 1 jour de jeu = 75 secondes */
+const CI_END_LEVEL = 10;           /* fin de la phase Côte d'Ivoire */
+const MONTH = 31;                  /* 31 jours de jeu = 1 mois, jour de paie */
+
+/* ================= DONNÉES ================= */
+const AVATARS = ["👨🏿","👩🏿","👨🏾","👩🏾","🤓","👨🏿‍💻","👩🏿‍💻","🧑🏿‍💼"];
+const LOGOS = [
+  {c:"💻 Technologie", i:["💻","🖥️","⌨️","🖱️"]},
+  {c:"📱 Mobile",      i:["📱","📲","🔋","📡"]},
+  {c:"🎮 Gaming",      i:["🎮","🕹️","👾","🎯"]},
+  {c:"☁️ Cloud",       i:["☁️","🗄️","💾","🔗"]},
+  {c:"🤖 IA",          i:["🤖","🧠","⚙️","🔬"]},
+  {c:"🌐 Internet",    i:["🌐","📶","🛰️","🔌"]},
+  {c:"🔒 Cybersécurité",i:["🔒","🛡️","🔑","🧬"]},
+  {c:"⚡ Innovation",   i:["⚡","💡","🔥","✨"]},
+  {c:"🚀 Startup",     i:["🚀","📈","🏆","🌍"]}
+];
+const TUTO = [
+  {e:"👋", t:"Bienvenue dans votre entreprise", x:"Vous partez de presque rien : un nom, un logo, et 100 000 FCFA. Tout le reste, c'est vous qui allez le construire."},
+  {e:"💰", t:"Gérez votre argent", x:"La trésorerie sert à investir et à payer. Elle baisse quand vous lancez un projet, elle monte quand vous livrez."},
+  {e:"🏦", t:"Utilisez la banque", x:"Ouvrez votre compte Tech Bank, recevez votre carte virtuelle, déposez vos bénéfices et retirez-les quand vous en avez besoin."},
+  {e:"💻", t:"Développez des produits", x:"Logiciels, applications, sites web, SaaS : au niveau 10, votre atelier de développement s'ouvre."},
+  {e:"👨‍💼", t:"Recrutez des employés", x:"Développeurs, designers, ingénieurs, commerciaux. Seul on va vite, à plusieurs on construit un empire."},
+  {e:"🌍", t:"Exportez vers l'Afrique de l'Ouest", x:"Quand la Côte d'Ivoire n'aura plus de concurrent à vous opposer, il faudra franchir les frontières — et convaincre d'autres gouvernements."},
+  {e:"🏆", t:"Atteignez le niveau 20", x:"De la petite startup d'Abidjan à la multinationale. 20 niveaux vous séparent du titre de Magnat."}
+];
+const LEVELS = [
+  "Startup","Premier contrat sérieux","Atelier reconnu","Petite structure","Studio installé",
+  "Acteur du marché","Référence d'Abidjan","Leader régional","Poids lourd national","Magnat ivoirien 🇨🇮",
+  "Expansion ouest-africaine 🌍","Premiers produits exportés","Automatisation 🤖","Gros investissements","Cloud & IA",
+  "Division gaming 🎮","Grande entreprise technologique","Empire numérique","Multinationale","🏆 Empire technologique"
+];
+const POOL = [
+  {e:"🌐",t:"Site vitrine pour un restaurant",d:"Un maquis de Cocody veut enfin être visible sur Google.",c:15000,g:52000,x:26,s:32},
+  {e:"📱",t:"Petite application de livraison",d:"Un commerçant d'Adjamé veut suivre ses livreurs en temps réel.",c:35000,g:105000,x:42,s:48},
+  {e:"🛠️",t:"Dépannage informatique",d:"Un cybercafé de Yopougon a tout son parc à remettre en état.",c:8000,g:26000,x:14,s:20},
+  {e:"🎨",t:"Identité visuelle d'une marque",d:"Logo, couleurs et charte pour une jeune marque ivoirienne.",c:12000,g:38000,x:20,s:26},
+  {e:"🧾",t:"Logiciel de caisse simple",d:"Une boutique de Treichville veut arrêter le cahier et la calculatrice.",c:45000,g:132000,x:55,s:58},
+  {e:"📊",t:"Tableau de bord pour une PME",d:"Suivi des ventes et des stocks pour une société de Marcory.",c:60000,g:178000,x:70,s:66},
+  {e:"🤖",t:"Chatbot pour une boutique en ligne",d:"Répondre aux clients 24h/24 sur WhatsApp.",c:52000,g:150000,x:62,s:60},
+  {e:"🔒",t:"Audit de sécurité",d:"Une fintech naissante veut dormir tranquille.",c:75000,g:225000,x:88,s:74},
+  {e:"🎬",t:"Plateforme vidéo légère",d:"Un créateur abidjanais veut héberger ses propres vidéos.",c:90000,g:262000,x:100,s:82},
+  {e:"📚",t:"Application éducative",d:"Des exercices de maths pour les élèves de 3ème.",c:70000,g:205000,x:80,s:70},
+  {e:"🏦",t:"Portail client pour une banque",d:"Une banque de la place veut moderniser son espace client.",c:260000,g:760000,x:190,s:120},
+  {e:"🚌",t:"Billetterie en ligne pour une compagnie",d:"Réservation des cars Abidjan–Bouaké directement sur mobile.",c:180000,g:520000,x:150,s:104},
+  {e:"🏛️",t:"Plateforme pour une administration",d:"Numérisation des demandes d'actes dans une mairie.",c:420000,g:1180000,x:260,s:146},
+  {e:"⚽",t:"Application d'un club sportif",d:"Billets, actualités et boutique pour un club de Ligue 1 ivoirienne.",c:320000,g:900000,x:220,s:132}
+];
+/* ---- V2 ---- */
+const COUNTRIES = [
+  {k:"tg",f:"🇹🇬",n:"Togo",cost:700000,mkt:0.75,seuil:45,r:"Lomé exige que votre entreprise forme d'abord des développeurs togolais avant d'accorder la moindre licence."},
+  {k:"bj",f:"🇧🇯",n:"Bénin",cost:850000,mkt:0.85,seuil:50,r:"Le ministère du Numérique demande une implantation locale réelle et refuse tout contrat signé depuis l'étranger."},
+  {k:"bf",f:"🇧🇫",n:"Burkina Faso",cost:950000,mkt:0.9,seuil:52,r:"Les autorités imposent un audit de conformité complet avant d'autoriser un opérateur étranger."},
+  {k:"ne",f:"🇳🇪",n:"Niger",cost:900000,mkt:0.8,seuil:50,r:"Niamey veut des garanties sur l'emploi local avant de lever les restrictions sur les services numériques."},
+  {k:"ml",f:"🇲🇱",n:"Mali",cost:1100000,mkt:1.0,seuil:55,r:"Bamako réclame un partenariat avec une société malienne et refuse pour l'instant l'hébergement hors du pays."},
+  {k:"gn",f:"🇬🇳",n:"Guinée",cost:1200000,mkt:1.0,seuil:56,r:"Conakry conditionne l'agrément à une présence visible sur le terrain, pas seulement à un bureau sur le papier."},
+  {k:"sn",f:"🇸🇳",n:"Sénégal",cost:1800000,mkt:1.4,seuil:62,r:"Dakar protège son écosystème tech : la concurrence locale est forte et l'agrément se mérite."},
+  {k:"gh",f:"🇬🇭",n:"Ghana",cost:2400000,mkt:1.7,seuil:68,r:"Accra applique des règles strictes sur les données et n'ouvre son marché qu'aux acteurs déjà reconnus."},
+  {k:"ng",f:"🇳🇬",n:"Nigeria",cost:4200000,mkt:2.6,seuil:76,r:"Le plus gros marché de la région, et le plus fermé : Abuja ne délivre sa licence qu'aux entreprises solidement établies."}
+];
+const ACTIONS = [
+  {k:"radio",e:"📻",t:"Campagne radio & réseaux",d:"Faire connaître votre marque au grand public.",c:130000,p:7,min:0},
+  {k:"form",e:"🎓",t:"Former de jeunes développeurs",d:"Un centre de formation gratuit fait toujours bonne impression.",c:240000,p:11,min:8},
+  {k:"part",e:"🤝",t:"Partenariat avec une entreprise locale",d:"Un partenaire du pays rassure les autorités.",c:380000,p:14,min:18},
+  {k:"salon",e:"🎤",t:"Sponsoriser un salon technologique",d:"Votre logo partout pendant trois jours.",c:520000,p:16,min:30},
+  {k:"conf",e:"🏛️",t:"Déposer un dossier de conformité",d:"Avocats, audits et paperasse : la dernière ligne droite.",c:900000,p:22,min:42}
+];
+const CATALOG = [
+  {cat:"Logiciel",e:"🛡️",t:"Antivirus",c:400000,d:3,rev:62000},
+  {cat:"Logiciel",e:"📝",t:"Traitement de texte",c:320000,d:2,rev:48000},
+  {cat:"Logiciel",e:"🌐",t:"Navigateur web",c:650000,d:4,rev:96000},
+  {cat:"Logiciel",e:"🎞️",t:"Logiciel de montage",c:820000,d:5,rev:128000},
+  {cat:"Logiciel",e:"🎵",t:"Logiciel de musique",c:700000,d:4,rev:104000},
+  {cat:"Application",e:"💬",t:"Messagerie",c:900000,d:5,rev:150000},
+  {cat:"Application",e:"📲",t:"Réseau social",c:1600000,d:7,rev:268000},
+  {cat:"Application",e:"💳",t:"Application financière",c:1400000,d:6,rev:240000},
+  {cat:"Application",e:"🛵",t:"Application de livraison",c:1100000,d:5,rev:186000},
+  {cat:"Application",e:"📚",t:"Application éducative",c:750000,d:4,rev:120000},
+  {cat:"Site web",e:"🛒",t:"Boutique en ligne",c:600000,d:3,rev:98000},
+  {cat:"Site web",e:"🎬",t:"Plateforme vidéo",c:1900000,d:7,rev:310000},
+  {cat:"Site web",e:"🏫",t:"Plateforme éducative",c:1000000,d:5,rev:165000},
+  {cat:"SaaS",e:"☁️",t:"CRM Cloud",c:2200000,d:8,rev:395000},
+  {cat:"SaaS",e:"📊",t:"Suite analytics",c:2600000,d:9,rev:470000},
+  {cat:"SaaS",e:"🧾",t:"Facturation en ligne",c:1500000,d:6,rev:255000}
+];
+const TIERS = [
+  {k:"eco",t:"Économique",d:"Petit prix, gros volume. Adoption très rapide.",m:0.85,pop:2},
+  {k:"std",t:"Standard",d:"Le juste milieu, celui que choisissent la plupart des studios.",m:1,pop:1},
+  {k:"prem",t:"Premium",d:"Cher, haut de gamme. Moins de clients, plus de marge.",m:1.3,pop:0}
+];
+const STAFF = [
+  {k:"junior",e:"👨🏿‍💻",t:"Développeur junior",s:100000,d:"Code les modules simples. Indispensable sur presque tous les projets.",dev:1},
+  {k:"senior",e:"🧑🏿‍💻",t:"Développeur senior",s:300000,d:"Architecture et modules complexes. Obligatoire sur les gros produits.",dev:3},
+  {k:"design",e:"🎨",t:"Designer",s:150000,d:"Interfaces et identité visuelle. +6 % de revenus sur vos produits.",rev:0.06},
+  {k:"cm",e:"📣",t:"Community manager",s:120000,d:"Communauté et image locale. +12 % d'efficacité des actions de popularité.",pop:0.12},
+  {k:"com",e:"💼",t:"Commercial",s:180000,d:"Signe les clients. +8 % de revenus produits et de rendement automatisé.",rev:0.08,auto:0.08},
+  {k:"pm",e:"📋",t:"Chef de projet",s:350000,d:"Coordonne l'équipe et raccourcit les délais de développement.",dev:2},
+  {k:"ing",e:"⚙️",t:"Ingénieur",s:400000,d:"Serveurs et recherche. Accélère le laboratoire et l'automatisation.",res:1,auto:0.15},
+  {k:"cto",e:"🧑🏿‍🔧",t:"Directeur technique",s:900000,d:"Dirige toute la technique. Gros bonus de développement et de revenus.",dev:3,rev:0.12,res:1}
+];
+const ROLE = k => STAFF.find(s=>s.k===k);
+/* équipe minimale exigée par catégorie de produit */
+const REQ_CAT = {
+  "Logiciel":{junior:1},
+  "Site web":{junior:1,design:1},
+  "Application":{junior:2,design:1},
+  "SaaS":{senior:1,junior:2,design:1,cm:1}
+};
+/* exigences renforcées pour les produits les plus lourds */
+const REQ_PROD = {
+  "Navigateur web":{senior:1,junior:2},
+  "Logiciel de montage":{senior:1,junior:1,design:1},
+  "Réseau social":{senior:2,junior:3,design:1,cm:1},
+  "Application financière":{senior:1,junior:2,ing:1},
+  "Messagerie":{senior:1,junior:2,design:1},
+  "Plateforme vidéo":{senior:1,junior:3,ing:1},
+  "CRM Cloud":{senior:1,junior:2,design:1,com:1},
+  "Suite analytics":{senior:2,junior:2,design:1,ing:1},
+  "Facturation en ligne":{senior:1,junior:2,design:1}
+};
+function reqOf(p){ return REQ_PROD[p.t||p.key] || REQ_CAT[p.cat] || {}; }
+/* équipe exigée par un contrat, selon son budget */
+function reqMission(m){
+  if(m.c<50000) return {};
+  if(m.c<150000) return {junior:1};
+  if(m.c<300000) return {junior:2};
+  if(m.c<600000) return {junior:2,design:1};
+  return {senior:1,junior:2,design:1};
+}
+function reqText(r){
+  const ks=Object.keys(r);
+  if(!ks.length) return "Aucune équipe requise";
+  return ks.map(k=>r[k]+" × "+ROLE(k).t.toLowerCase()).join(", ");
+}
+function teamOk(r,bk){ return Object.keys(r).every(k=>staffCount(k,bk)>=r[k]); }
+function teamMissing(r,bk){
+  return Object.keys(r).filter(k=>staffCount(k,bk)<r[k])
+    .map(k=>(r[k]-staffCount(k,bk))+" × "+ROLE(k).t.toLowerCase()).join(", ");
+}
+const LOAN_OFFERS = [
+  {amt:4000000,  rate:0.10, dur:18},
+  {amt:8000000,  rate:0.12, dur:22},
+  {amt:15000000, rate:0.14, dur:28},
+  {amt:22000000, rate:0.17, dur:34},
+  {amt:30000000, rate:0.20, dur:40}
+];
+const BILL_TYPES = [
+  {k:"loyer",e:"🏠",t:"Loyer du local"},
+  {k:"elec",e:"💡",t:"Électricité (CIE)"},
+  {k:"eau",e:"🚰",t:"Eau (SODECI)"},
+  {k:"impot",e:"🏛️",t:"Impôts"}
+];
+function billsFor(bk){
+  const staff=totalStaff(bk), live=S.products.filter(p=>p.live&&p.studio===bk).length;
+  const mkt = bk==="ci" ? 1 : (CT(bk)?CT(bk).mkt:1);
+  const loyer=Math.round((80000+staff*20000)*mkt);
+  const elec=Math.round((28000+staff*8000+live*6000)*mkt);
+  const eau=Math.round((14000+staff*3000)*mkt);
+  const impot=Math.round((50000+staff*22000)*mkt*(1+S.level*0.02));
+  return {loyer,elec,eau,impot,total:loyer+elec+eau+impot};
+}
+function billsTotalDue(){ return S.billsDue ? Object.keys(S.billsDue.br).reduce((a,k)=>a+S.billsDue.br[k].total,0) : 0; }
+const DEALS = [
+  {e:"🏗️",t:"Fonds d'investissement technologique",amt:1000000,chance:0.62,mult:1.8,cool:6},
+  {e:"🛰️",t:"Contrat satellite régional",amt:2500000,chance:0.56,mult:1.85,cool:8},
+  {e:"🏦",t:"Fusion avec un fonds étranger",amt:5000000,chance:0.5,mult:1.9,cool:10},
+  {e:"🚀",t:"Méga-contrat gouvernemental",amt:10000000,chance:0.45,mult:2.0,cool:14}
+];
+const TECHS = [
+  {k:"auto",e:"🤖",t:"Moteur d'automatisation OPS-1",c:2500000,d:5,lvl:11,slots:1,
+   x:"Votre filiale ivoirienne tourne toute seule : elle signe ses contrats, les livre et verse directement les fonds sur votre compte Tech Bank. Vous n'avez plus besoin de repasser par Abidjan."},
+  {k:"cloud",e:"☁️",t:"Infrastructure cloud régionale",c:4000000,d:6,lvl:13,
+   x:"Vos serveurs sont hébergés dans la région : +25 % de revenus sur tous vos produits en ligne."},
+  {k:"cloud2",e:"☁️",t:"Infrastructure cloud régionale V2",c:6000000,d:8,lvl:14,req:"cloud",
+   x:"Doublement de la capacité serveur : +30 % de revenus supplémentaires sur tous vos produits en ligne."},
+  {k:"ia",e:"🧠",t:"Laboratoire d'intelligence artificielle",c:7000000,d:8,lvl:15,
+   x:"Recommandation, support et optimisation automatiques : +35 % de revenus produits et +50 % de rendement de l'automatisation."},
+  {k:"ia2",e:"🧠",t:"Laboratoire d'intelligence artificielle V2",c:10000000,d:9,lvl:17,req:"ia",
+   x:"Modèles affinés sur vos données régionales : encore +15 % de revenus produits et +20 % de rendement de l'automatisation."}
+];
+function autoSlots(){ if(!hasTech("auto")) return 0; return autoTierSpec(S.autoTier||1).slots; }
+
+/* ================= ÉTAT ================= */
+let S = null;
+function blank(){
+  return {
+    player:"", avatar:"👨🏿‍💻", photo:null,
+    company:"", logo:"💻", logoImg:null,
+    cash:100000, bank:0, xp:0, level:1, rep:10, employees:1,
+    revenue:0, expenses:0, day:1,
+    account:null, history:[], missions:[], nextId:1,
+    tutoDone:false, created:Date.now(),
+    /* V2 */
+    phase:"ci", ceremony:false, title:null,
+    countries:{}, products:[], staff:{}, techs:{}, autoSince:0, lastDaily:null,
+    governments:{history:[], totalProjects:0},
+    month:1, payDue:null, lateDays:0,
+    loans:[], loanAlertPending:false, autoDeployed:[], dealCooldown:{},
+    billsDue:null, billLateDays:0, musicMuted:false, autoTier:0, autoUpgrade:null
+  };
+}
+const xpNeeded = l => Math.round(100 * Math.pow(1.38, l-1));
+const fmt = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g," ") + " FCFA";
+const shortF = n => n>=1000000 ? (n/1000000).toFixed(n>=10000000?0:1).replace(".",",")+" M" : fmt(n).replace(" FCFA","");
+const $ = id => document.getElementById(id);
+const CT = k => COUNTRIES.find(c=>c.k===k);
+const isExport = () => S.phase==="export";
+const hasTech = k => !!(S.techs[k] && S.techs[k].done);
+
+/* ---------- bonus employés ---------- */
+/* ---- filiales : "ci" + chaque pays implanté ---- */
+function branches(){ return ["ci"].concat(COUNTRIES.filter(c=>cData(c.k).installed).map(c=>c.k)); }
+function brName(k){ return k==="ci" ? "🇨🇮 Côte d'Ivoire" : CT(k).f+" "+CT(k).n; }
+function brStaff(k){ const d=cData(k); if(!d.staff) d.staff={}; return d.staff; }
+function staffCount(k,bk){
+  if(bk) return brStaff(bk)[k]||0;
+  return branches().reduce((a,b)=>a+(brStaff(b)[k]||0),0);
+}
+function totalStaff(bk){ return STAFF.reduce((a,s)=>a+staffCount(s.k,bk),0); }
+function devPower(bk){ return STAFF.reduce((a,s)=>a+(s.dev||0)*staffCount(s.k,bk),0); }
+function resPower(){ return STAFF.reduce((a,s)=>a+(s.res||0)*staffCount(s.k),0); }
+function revBonus(){ let b=1+STAFF.reduce((a,s)=>a+(s.rev||0)*staffCount(s.k),0);
+  if(hasTech("cloud")) b+=0.25; if(hasTech("cloud2")) b+=0.30;
+  if(hasTech("ia")) b+=0.35; if(hasTech("ia2")) b+=0.15; return b; }
+function popBonus(bk){ return 1+STAFF.reduce((a,s)=>a+(s.pop||0)*staffCount(s.k,bk),0); }
+function autoBonus(){ let b=1+STAFF.reduce((a,s)=>a+(s.auto||0)*staffCount(s.k),0);
+  if(hasTech("ia")) b+=0.5; if(hasTech("ia2")) b+=0.20; return b; }
+function payrollOf(bk){ return STAFF.reduce((a,s)=>a+s.s*staffCount(s.k,bk),0); }
+function payroll(){ return branches().reduce((a,b)=>a+payrollOf(b),0); }
+function dueTotal(){ return S.payDue ? Object.keys(S.payDue.br).reduce((a,k)=>a+S.payDue.br[k],0) : 0; }
+
+/* ================= ÉCRANS ================= */
+function go(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));
+  $("app").classList.remove("on");
+  $(id).classList.add("on");
+  window.scrollTo(0,0);
+}
+function toast(msg){
+  const t=$("toast"); t.textContent=msg; t.classList.add("on");
+  clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("on"),2600);
+}
+
+/* ---------- onboarding ---------- */
+function buildPickers(){
+  const av=$("avatars");
+  AVATARS.forEach(a=>{
+    const b=document.createElement("button");
+    b.className="pick"+(a===S.avatar?" sel":""); b.textContent=a;
+    b.onclick=()=>{S.avatar=a;S.photo=null;document.querySelectorAll("#avatars .pick").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");$("prev-avatar").innerHTML=a;};
+    av.appendChild(b);
+  });
+  const lg=$("logos");
+  LOGOS.forEach(cat=>{
+    const h=document.createElement("div"); h.className="cat"; h.textContent=cat.c; lg.appendChild(h);
+    const g=document.createElement("div"); g.className="picks";
+    cat.i.forEach(ic=>{
+      const b=document.createElement("button");
+      b.className="pick"+(ic===S.logo?" sel":""); b.textContent=ic;
+      b.onclick=()=>{S.logo=ic;S.logoImg=null;document.querySelectorAll("#logos .pick").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");$("prev-logo").innerHTML=ic;};
+      g.appendChild(b);
+    });
+    lg.appendChild(g);
+  });
+}
+function shrink(file, cb){
+  const r=new FileReader();
+  r.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      const size=200, c=document.createElement("canvas");
+      c.width=c.height=size;
+      const ctx=c.getContext("2d");
+      const m=Math.min(img.width,img.height);
+      ctx.drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,size,size);
+      cb(c.toDataURL("image/jpeg",0.82));
+    };
+    img.onerror=()=>toast("Image illisible");
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+$("f-avatar").onchange=e=>{const f=e.target.files[0]; if(!f) return;
+  shrink(f,d=>{S.photo=d;$("prev-avatar").innerHTML='<img src="'+d+'">';document.querySelectorAll("#avatars .pick").forEach(x=>x.classList.remove("sel"));toast("Photo ajoutée ✅");});};
+$("f-logo").onchange=e=>{const f=e.target.files[0]; if(!f) return;
+  shrink(f,d=>{S.logoImg=d;$("prev-logo").innerHTML='<img src="'+d+'">';document.querySelectorAll("#logos .pick").forEach(x=>x.classList.remove("sel"));toast("Logo ajouté ✅");});};
+
+function saveProfile(){
+  const n=$("in-player").value.trim();
+  if(n.length<2){toast("Entrez votre nom pour continuer");$("in-player").focus();return;}
+  S.player=n; saveGame(); go("s-company");
+}
+function createCompany(){
+  const n=$("in-company").value.trim();
+  if(n.length<2){toast("Donnez un nom à votre entreprise");$("in-company").focus();return;}
+  S.company=n; saveGame();
+  toast("🚀 Votre entreprise vient d'être créée !");
+  burst(90);
+  setTimeout(()=>{ go("s-tuto"); tutoStep=0; renderTuto(); },900);
+}
+let tutoStep=0;
+function renderTuto(){
+  const t=TUTO[tutoStep];
+  $("tuto-ico").textContent=t.e; $("tuto-ti").textContent=t.t; $("tuto-tx").textContent=t.x;
+  $("tuto-dots").innerHTML=TUTO.map((_,i)=>'<span class="'+(i===tutoStep?"on":"")+'"></span>').join("");
+  $("tuto-next").textContent = tutoStep===TUTO.length-1 ? "🚀 COMMENCER L'AVENTURE" : "SUIVANT →";
+}
+function tutoNext(){ if(tutoStep<TUTO.length-1){tutoStep++;renderTuto();} else finishTuto(); }
+function finishTuto(){ S.tutoDone=true; refillMissions(); saveGame(); startGame(); }
+
+function startGame(){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));
+  $("app").classList.add("on");
+  window.scrollTo(0,0);
+  buildNav(); render();
+  if(!clockOn) startClock();
+  MUSIC.start();
+  const bm=$("btn-music"); if(bm) bm.textContent = S.musicMuted ? "🔇 Réactiver la musique" : "🔊 Couper la musique";
+}
+function resume(){
+  if(!S.tutoDone){ go(S.company?"s-tuto":(S.player?"s-company":"s-profile")); if(S.company){tutoStep=0;renderTuto();} return; }
+  if(S.level>=CI_END_LEVEL && !S.ceremony){ showCeremony(); return; }
+  startGame();
+}
+
+/* ================= HORLOGE ================= */
+let clockOn=false;
+function startClock(){
+  clockOn=true;
+  setInterval(()=>{ if($("app").classList.contains("on")) newDay(); }, DAY_MS);
+  setInterval(tickAll,1000);
+}
+function newDay(){
+  S.day++;
+  const lines=[];
+
+  /* intérêts d'épargne */
+  if(S.bank>0){
+    const int=Math.round(S.bank*0.004);
+    if(int>0){ S.bank+=int; S.revenue+=int; log("💹","Intérêts d'épargne",int,"bank"); lines.push("Intérêts : +"+fmt(int)); }
+  }
+  /* revenus des produits développés manuellement */
+  const pr=Math.round(productIncome(false));
+  if(pr>0){ S.cash+=pr; S.revenue+=pr; log("📦","Revenus des produits",pr,"cash"); lines.push("Produits : +"+fmt(pr)); }
+
+  /* studios automatiques : développent et publient seuls, versent leurs revenus en banque */
+  if(hasTech("auto") && (S.autoDeployed||[]).length){
+    tickAutoStudios(lines);
+  }
+  /* V2.8 — demandes gouvernementales scénarisées */
+  COUNTRIES.forEach(c=>maybeGovernment(c.k,lines));
+  /* fin de mois : la paie devient exigible */
+  if(S.day % MONTH === 0 && payroll()>0 && !S.payDue){
+    const br={}; branches().forEach(b=>{ const v=payrollOf(b); if(v>0) br[b]=v; });
+    S.payDue={month:S.month, br:br, dueDay:S.day};
+    S.lateDays=0;
+    lines.push("📅 Fin du mois "+S.month+" : "+fmt(dueTotal())+" de salaires à payer");
+    toast("💸 Fin du mois — les salaires sont à payer");
+  }
+  /* charges fixes du mois : loyer, électricité, eau, impôts */
+  if(S.day % MONTH === 0 && !S.billsDue){
+    const br={}; branches().forEach(b=>{ br[b]=billsFor(b); });
+    S.billsDue={month:S.month, br:br};
+    S.billLateDays=0;
+    lines.push("🧾 Fin du mois "+S.month+" : "+fmt(billsTotalDue())+" de charges (loyer, électricité, eau, impôts)");
+    toast("🧾 Charges du mois à régler");
+  }
+  if(S.day % MONTH === 0) S.month++;
+
+  /* retard de paiement : la réputation et la popularité chutent */
+  if(S.payDue){
+    S.lateDays++;
+    if(S.lateDays>1){
+      S.rep=Math.max(0,S.rep-1.2);
+      branches().forEach(b=>{ const d=cData(b); d.pop=Math.max(0,d.pop-1.6); });
+      lines.push("⚠️ Salaires impayés depuis "+S.lateDays+" jours : réputation et popularité en chute");
+      if(S.lateDays>=10 && S.lateDays%3===0) quitStaff();
+    }
+  }
+  /* retard sur les charges : réputation + studios automatiques mis en pause */
+  if(S.billsDue){
+    S.billLateDays++;
+    if(S.billLateDays>1){
+      S.rep=Math.max(0,S.rep-1);
+      lines.push("⚠️ Charges impayées depuis "+S.billLateDays+" jours : réputation en baisse");
+      if(S.billLateDays>=5){
+        Object.keys(S.billsDue.br).forEach(b=>{ const st=ensureAutoStudio(b); if(!st.paused){ st.paused=true; lines.push("⏸️ Studio automatique de "+brName(b)+" mis en pause (charges impayées)"); } });
+      }
+    }
+  }
+  syncCI();
+  processLoans(lines);
+  S.lastDaily = lines.length ? "Jour "+S.day+" · "+lines.join(" · ") : null;
+  saveGame(); render();
+  if(S.loanAlertPending) showLoanAlertModal();
+}
+function showLoanAlertModal(){
+  S.loanAlertPending=false;
+  $("md-ti").textContent="🚨 Remboursement de prêt obligatoire";
+  $("md-tx").textContent="La Banque Nationale réclame "+fmt(loanOwedTotal())+". Réglez vos prêts en retard pour éviter que votre réputation continue de chuter.";
+  $("md-body").style.display="block";
+  $("md-body").innerHTML = (S.loans||[]).filter(l=>l.late||S.day>=l.dueDay).map(l=>
+    '<div class="opt"><b>'+fmt(l.owed)+' dus</b><small>'+(l.late?"Intérêts déjà multipliés par 5":"Échéance dépassée")+'</small></div>').join("");
+  $("md-input").style.display="none";
+  $("md-ok").style.display="block"; $("md-ok").textContent="Aller rembourser";
+  $("md-ok").className="btn sm"; $("md-ok").style.background="";
+  $("md-ok").onclick=()=>{ closeModal(); nav("v-bank"); bankTab("loan", document.querySelector("#bank-tabs button:nth-child(2)")); };
+  $("modal-bg").classList.add("on");
+}
+/* ================= PAIE ================= */
+function payBranch(bk){
+  if(!S.payDue || !S.payDue.br[bk]) return;
+  const amt=S.payDue.br[bk];
+  if(S.cash+S.bank < amt){ toast("Fonds insuffisants — "+fmt(amt)+" nécessaires"); return; }
+  if(S.cash>=amt) S.cash-=amt; else { const r=amt-S.cash; S.cash=0; S.bank-=r; }
+  S.expenses+=amt;
+  log("💸","Salaires "+brName(bk)+" — mois "+S.payDue.month,-amt,"cash");
+  delete S.payDue.br[bk];
+  if(!Object.keys(S.payDue.br).length){
+    S.payDue=null; S.lateDays=0; S.rep=Math.min(100,S.rep+2);
+    toast("✅ Tous les salaires du mois sont payés");
+    addXp(40);
+  }else toast("Salaires payés — "+brName(bk));
+  saveGame(); render();
+}
+function payAll(){
+  if(!S.payDue) return;
+  const tot=dueTotal();
+  if(S.cash+S.bank<tot){ toast("Fonds insuffisants — "+fmt(tot)+" nécessaires"); return; }
+  Object.keys(S.payDue.br).slice().forEach(payBranch);
+}
+function payBillsBranch(bk){
+  if(!S.billsDue || !S.billsDue.br[bk]) return;
+  const amt=S.billsDue.br[bk].total;
+  if(S.cash+S.bank < amt){ toast("Fonds insuffisants — "+fmt(amt)+" nécessaires"); return; }
+  if(S.cash>=amt) S.cash-=amt; else { const r=amt-S.cash; S.cash=0; S.bank-=r; }
+  S.expenses+=amt;
+  log("🧾","Charges "+brName(bk)+" — mois "+S.billsDue.month,-amt,"charges");
+  delete S.billsDue.br[bk];
+  const st=ensureAutoStudio(bk); if(st.paused){ st.paused=false; toast("▶️ Studio automatique de "+brName(bk)+" relancé"); }
+  if(!Object.keys(S.billsDue.br).length){
+    S.billsDue=null; S.billLateDays=0; S.rep=Math.min(100,S.rep+1);
+    toast("✅ Toutes les charges du mois sont réglées");
+    addXp(30);
+  }else toast("Charges payées — "+brName(bk));
+  saveGame(); render();
+}
+function payAllBills(){
+  if(!S.billsDue) return;
+  const tot=billsTotalDue();
+  if(S.cash+S.bank<tot){ toast("Fonds insuffisants — "+fmt(tot)+" nécessaires"); return; }
+  Object.keys(S.billsDue.br).slice().forEach(payBillsBranch);
+}
+function quitStaff(){
+  const bs=branches().filter(b=>totalStaff(b)>0);
+  if(!bs.length) return;
+  const b=bs[Math.floor(Math.random()*bs.length)];
+  const st=brStaff(b);
+  const ks=Object.keys(st).filter(k=>st[k]>0);
+  if(!ks.length) return;
+  const k=ks[Math.floor(Math.random()*ks.length)];
+  st[k]--; if(!st[k]) delete st[k];
+  S.employees=1+totalStaff();
+  if(S.payDue && S.payDue.br[b]){ S.payDue.br[b]=payrollOf(b); if(!S.payDue.br[b]) delete S.payDue.br[b]; }
+  log("🚪","Démission — "+ROLE(k).t+" ("+brName(b)+")",0,"co");
+  toast("🚪 Un "+ROLE(k).t.toLowerCase()+" a démissionné : salaires impayés");
+}
+
+function tickAll(){
+  if(!S || !$("app").classList.contains("on")) return;
+  tickMissions(); tickProducts(); tickTechs(); tickAutoUpgrade();
+}
+
+/* ================= CONTRATS CÔTE D'IVOIRE ================= */
+function refillMissions(){
+  const avail = POOL.filter(p=>p.s<=unlockScore());
+  const pool = avail.length?avail:POOL.slice(0,3);
+  let guard=0;
+  while(S.missions.length<3 && guard++<40){
+    const p = pool[Math.floor(Math.random()*pool.length)];
+    if(S.missions.some(m=>m.t===p.t) && pool.length>3) continue;
+    S.missions.push({id:S.nextId++, e:p.e, t:p.t, d:p.d, c:p.c, g:p.g, x:p.x,
+      dur:Math.max(10,Math.round((16+p.c/9000)/(1+devPower("ci")*0.15))), started:0});
+  }
+}
+function unlockScore(){ return 22 + S.level*16 + S.rep/2; }
+function missionXp(m){ return Math.round(m.x*(1+(S.level-1)*0.45)); }
+
+function startMission(id){
+  const m=S.missions.find(x=>x.id===id); if(!m||m.started) return;
+  const r=reqMission(m);
+  if(!teamOk(r,"ci")){ toast("Équipe incomplète à Abidjan : "+teamMissing(r,"ci")); return; }
+  if(S.cash<m.c){ toast("Trésorerie insuffisante"); return; }
+  S.cash-=m.c; S.expenses+=m.c; m.started=Date.now();
+  log("🧾","Investissement — "+m.t,-m.c,"cash");
+  saveGame(); render(); toast("Contrat lancé ⏳");
+}
+function tickMissions(){
+  if(!S.missions) return;
+  S.missions.forEach(m=>{
+    if(!m.started) return;
+    const el=$("prog-"+m.id); if(!el) return;
+    const p=Math.min(1,(Date.now()-m.started)/(m.dur*1000));
+    el.style.width=(p*100)+"%";
+    const lb=$("lbl-"+m.id);
+    if(lb) lb.textContent = p<1 ? "Livraison dans "+Math.ceil(m.dur-(Date.now()-m.started)/1000)+" s" : "Prêt à livrer";
+    const bt=$("btn-"+m.id);
+    if(bt && p>=1 && bt.dataset.ready!=="1"){ bt.dataset.ready="1"; bt.disabled=false; bt.textContent="✅ Livrer et encaisser"; bt.className="btn green sm"; }
+  });
+}
+function deliver(id){
+  const i=S.missions.findIndex(x=>x.id===id); if(i<0) return;
+  const m=S.missions[i];
+  if(!m.started || Date.now()-m.started < m.dur*1000) return;
+  S.cash+=m.g; S.revenue+=m.g; S.rep=Math.min(100,S.rep+2);
+  log("💵","Contrat livré — "+m.t,m.g,"cash");
+  S.missions.splice(i,1);
+  addXp(missionXp(m));
+  refillMissions(); saveGame(); render();
+  toast("+"+fmt(m.g)+" encaissés 🎉");
+}
+function addXp(x){
+  S.xp+=x;
+  while(S.level<20 && S.xp>=xpNeeded(S.level)){
+    S.xp-=xpNeeded(S.level); S.level++;
+    if(S.level===CI_END_LEVEL && S.phase==="ci"){ setTimeout(showCeremony,700); return; }
+    setTimeout(()=>{ toast("⭐ Niveau "+S.level+" — "+LEVELS[S.level-1]); burst(110); },400);
+  }
+  if(S.level>=20){ S.xp=Math.min(S.xp,xpNeeded(20)); }
+}
+
+/* ================= CÉRÉMONIE & EXPORT ================= */
+function showCeremony(){
+  const val=companyValue();
+  $("cer-tx").textContent = S.company+" est désormais la première entreprise technologique de Côte d'Ivoire. Plus personne, d'Abidjan à Korhogo, ne vous conteste le marché.";
+  $("cer-recap").innerHTML =
+    '<div><div class="k">Valeur</div><div class="v">'+shortF(val)+'</div></div>'+
+    '<div><div class="k">Patrimoine</div><div class="v">'+shortF(S.cash+S.bank)+'</div></div>'+
+    '<div><div class="k">Chiffre d\'affaires</div><div class="v">'+shortF(S.revenue)+'</div></div>'+
+    '<div><div class="k">Réputation</div><div class="v">'+Math.round(S.rep)+' / 100</div></div>';
+  go("s-cer");
+  setTimeout(()=>burst(180),300);
+}
+function startExport(){
+  S.phase="export"; S.ceremony=true; S.title="Magnat de la technologie 🇨🇮";
+  if(S.level<11){ S.level=11; S.xp=0; }
+  S.rep=Math.min(100,S.rep+10);
+  log("🌍","Export de l'entreprise vers l'Afrique de l'Ouest",0,"co");
+  saveGame(); startGame(); nav("v-market");
+  toast("🌍 L'Afrique de l'Ouest s'ouvre à vous");
+}
+
+/* ================= PAYS ================= */
+function cData(k){
+  if(!S.countries[k]) S.countries[k] = (k==="ci")
+    ? {installed:true,pop:100,licensed:true,spent:0,staff:{}}
+    : {installed:false,pop:0,licensed:false,spent:0,staff:{}};
+  const d=S.countries[k];
+  if(!d.staff) d.staff={};
+  if(k!=="ci"){ d.gov=d.gov||{request:null,level:0,projects:[],lastDay:0}; }
+  return S.countries[k];
+}
+/* popularité ivoirienne : monte avec le niveau pendant la phase 1, puis reste acquise */
+function syncCI(){
+  const d=cData("ci");
+  if(!isExport() && !S.payDue) d.pop=Math.max(d.pop, Math.min(100, 8+S.level*9.5));
+  d.installed=true; d.licensed=true;
+}
+/* une licence est suspendue si la popularité s'effondre */
+function licenseActive(k){
+  const d=cData(k); if(k==="ci") return true;
+  return !!(d.installed && d.licensed && d.pop >= CT(k).seuil);
+}
+function installCountry(k){
+  const c=CT(k), d=cData(k);
+  if(d.installed) return;
+  if(S.cash<c.cost){ toast("Trésorerie insuffisante"); return; }
+  S.cash-=c.cost; S.expenses+=c.cost; d.installed=true; d.spent+=c.cost;
+  log(c.f,"Implantation — "+c.n,-c.cost,"co");
+  addXp(120); saveGame(); render(); openCountry(k);
+  toast(c.f+" Bureau ouvert. Le gouvernement vous impose ses conditions.");
+}
+function doAction(k,ak){
+  const c = k==="ci" ? {f:"🇨🇮",n:"Côte d'Ivoire",mkt:1} : CT(k);
+  const d=cData(k), a=ACTIONS.find(x=>x.k===ak);
+  const cost = k==="ci" ? Math.round(a.c*0.7) : Math.round(a.c*(0.6+c.mkt*0.7));
+  if(d.pop<a.min){ toast("Popularité encore trop faible"); return; }
+  if(S.cash<cost){ toast("Trésorerie insuffisante"); return; }
+  S.cash-=cost; S.expenses+=cost; d.spent+=cost;
+  const gain = a.p*popBonus(k)*(1-(d.pop/140));
+  d.pop=Math.min(100,d.pop+gain);
+  S.rep=Math.min(100,S.rep+0.5);
+  log(a.e,a.t+" — "+c.n,-cost,"co");
+  addXp(Math.round(a.p*2.2)); saveGame(); openCountry(k);
+  toast("+"+gain.toFixed(1)+" points de popularité "+c.f);
+}
+function askLicense(k){
+  const c=CT(k), d=cData(k);
+  if(d.pop<c.seuil){ toast("Le gouvernement exige "+c.seuil+" de popularité"); return; }
+  const cost=Math.round(c.cost*0.55);
+  if(S.cash<cost){ toast("Trésorerie insuffisante — "+fmt(cost)+" requis"); return; }
+  S.cash-=cost; S.expenses+=cost; d.licensed=true; d.spent+=cost;
+  log("📜","Licence d'exploitation — "+c.n,-cost,"co");
+  addXp(220); burst(110); saveGame(); openCountry(k);
+  toast(c.f+" Licence obtenue ! Vous pouvez déployer vos produits.");
+}
+let curCountry=null;
+const GOV_PROJECTS=[
+  {k:"road",e:"🛣️",t:"Construire une route stratégique",d:"Améliorer la circulation autour de votre implantation.",cost:650000,xp:120,rep:2,pop:5},
+  {k:"school",e:"🏫",t:"Construire une école",d:"Financer une école locale et renforcer votre ancrage social.",cost:900000,xp:170,rep:3,pop:7},
+  {k:"company",e:"🏭",t:"Créer une entreprise locale",d:"Créer une activité numérique ou industrielle avec des emplois locaux.",cost:1200000,xp:220,rep:4,pop:9},
+  {k:"devschool",e:"💻",t:"Créer une école informatique",d:"Former durablement de jeunes développeurs du pays.",cost:1500000,xp:280,rep:5,pop:10},
+  {k:"academy",e:"🧑🏾‍💻",t:"Programme national de formation",d:"Former une nouvelle génération de talents avec le gouvernement.",cost:2200000,xp:380,rep:7,pop:12}
+];
+const GOV_SCENES=[
+  {id:"welcome",min:12,title:"Le gouvernement vous convoque",text:"Votre implantation est devenue visible. Le gouvernement souhaite comprendre ce que Tech Empire peut apporter durablement au pays.",req:"Entretien officiel"},
+  {id:"road",min:13,title:"La route qui manque",text:"Les autorités vous proposent de participer au financement d'une route stratégique autour de votre zone d'activité.",project:"road"},
+  {id:"school",min:14,title:"Investir dans l'éducation",text:"Le gouvernement veut accélérer l'accès à l'éducation et vous demande de soutenir une école locale.",project:"school"},
+  {id:"jobs",min:15,title:"Créer des emplois",text:"Le président demande un projet capable de créer des emplois locaux et de faire émerger un nouveau partenaire économique.",project:"company"},
+  {id:"digital",min:16,title:"Former la prochaine génération",text:"Le ministère du Numérique propose un partenariat pour créer une école informatique et former des développeurs locaux.",project:"devschool"},
+  {id:"national",min:18,title:"Le pacte technologique",text:"Votre entreprise est désormais considérée comme un acteur stratégique. Le gouvernement vous propose un programme national de formation et d'innovation.",project:"academy"}
+];
+function govState(k){ const d=cData(k); if(k==="ci") return null; d.gov=d.gov||{request:null,pending:null,level:0,projects:[],lastDay:0}; if(d.gov.pending===undefined) d.gov.pending=null; return d.gov; }
+function maybeGovernment(k,lines){
+  if(k==="ci"||!isExport()) return; const d=cData(k), g=govState(k);
+  if(!d.installed||!licenseActive(k)||S.level<12) return;
+  if(g.request||g.pending) return; /* une seule interaction en attente à la fois */
+  const candidate=GOV_SCENES.find(sc=>sc.min<=S.level && !(g.acceptedScenes||[]).includes(sc.id) && !(g.declinedScenes||[]).includes(sc.id));
+  if(candidate && S.day-(g.lastDay||0)>=3){
+    g.request={scene:candidate.id,title:candidate.title,text:candidate.text,project:candidate.project||null,createdDay:S.day}; g.lastDay=S.day;
+    S.governments=S.governments||{history:[],totalProjects:0};
+    S.governments.history.unshift({day:S.day,country:k,type:"request",title:candidate.title,text:candidate.text});
+    lines.push("🏛️ "+CT(k).n+" : nouvelle demande gouvernementale — "+candidate.title);
+    toast("🏛️ Le gouvernement de "+CT(k).n+" vous convoque");
+  }
+}
+function acceptGovRequest(k){
+  const g=govState(k); if(!g||!g.request) return;
+  const r=g.request; g.request=null; g.level=(g.level||0)+1; S.rep=Math.min(100,S.rep+1);
+  g.acceptedScenes=g.acceptedScenes||[]; g.acceptedScenes.push(r.scene);
+  S.governments.history.unshift({day:S.day,country:k,type:"accepted",title:r.title,text:r.text});
+  if(r.project){
+    g.pending={project:r.project, scene:r.scene};
+    toast("🏛️ Demande acceptée : un projet est maintenant proposé au financement.");
+  }else{
+    toast("🏛️ Entretien officiel enregistré.");
+  }
+  saveGame(); render(); openCountry(k);
+}
+function declineGovRequest(k){
+  const g=govState(k); if(!g||!g.request) return;
+  const r=g.request; g.request=null;
+  g.declinedScenes=g.declinedScenes||[]; g.declinedScenes.push(r.scene);
+  const d=cData(k);
+  S.rep=Math.max(0,S.rep-1); d.pop=Math.max(0,d.pop-3);
+  S.governments=S.governments||{history:[],totalProjects:0};
+  S.governments.history.unshift({day:S.day,country:k,type:"declined",title:"Demande refusée — "+r.title,text:r.text});
+  log("🏛️","Demande gouvernementale refusée — "+CT(k).n,0,"gov");
+  toast("🏛️ Demande refusée. Le gouvernement de "+CT(k).n+" s'en souviendra.");
+  saveGame(); render(); openCountry(k);
+}
+function fundGovProject(k){
+  const d=cData(k), g=govState(k); if(!g||!g.pending) return;
+  const p=GOV_PROJECTS.find(x=>x.k===g.pending.project); if(!p) return;
+  if(!licenseActive(k)){toast("Licence active obligatoire");return;}
+  if(S.cash<p.cost){toast("Trésorerie insuffisante — "+fmt(p.cost));return;}
+  S.cash-=p.cost; S.expenses+=p.cost; d.spent+=p.cost; d.pop=Math.min(100,d.pop+p.pop); S.rep=Math.min(100,S.rep+p.rep);
+  g.projects.unshift({day:S.day,project:p.k,scene:g.pending.scene,cost:p.cost});
+  g.pending=null;
+  S.governments=S.governments||{history:[],totalProjects:0}; S.governments.totalProjects=(S.governments.totalProjects||0)+1;
+  S.governments.history.unshift({day:S.day,country:k,type:"project",title:p.t,text:p.d,cost:p.cost});
+  addXp(p.xp); burst(70); log(p.e,"Projet gouvernemental — "+p.t+" ("+CT(k).n+")",-p.cost,"gov");
+  toast("🏗️ Projet terminé : "+p.t); saveGame(); render(); openCountry(k);
+}
+function declineGovProject(k){
+  const d=cData(k), g=govState(k); if(!g||!g.pending) return;
+  const p=GOV_PROJECTS.find(x=>x.k===g.pending.project); if(!p) return;
+  const penalty=Math.round(p.cost*0.4);
+  if(S.cash+S.bank<penalty){ toast("Fonds insuffisants pour se désengager proprement — "+fmt(penalty)+" requis"); return; }
+  if(S.cash>=penalty) S.cash-=penalty; else { const r=penalty-S.cash; S.cash=0; S.bank-=r; }
+  S.expenses+=penalty;
+  d.pop=Math.max(0,d.pop-6); S.rep=Math.max(0,S.rep-3);
+  g.declinedScenes=g.declinedScenes||[]; if(g.pending.scene) g.declinedScenes.push(g.pending.scene);
+  g.pending=null;
+  S.governments=S.governments||{history:[],totalProjects:0};
+  S.governments.history.unshift({day:S.day,country:k,type:"declined",title:"Projet refusé — "+p.t,text:"Pénalité de rupture payée",cost:penalty});
+  log("🏛️","Projet refusé — pénalité ("+CT(k).n+")",-penalty,"gov");
+  toast("🏛️ Projet refusé. Pénalité payée : "+fmt(penalty));
+  saveGame(); render(); openCountry(k);
+}
+function renderGovernment(){
+  const el=$("gov-list"); if(!el) return; const countries=COUNTRIES.filter(c=>cData(c.k).installed);
+  if(!countries.length){el.innerHTML='<div class="locked"><div class="em">🏛️</div><h3>Aucun gouvernement à rencontrer</h3><p>Implantez votre entreprise dans un premier pays puis obtenez sa licence.</p></div>'; $("gov-pill").textContent="0 demandes"; $("gov-history").innerHTML='<div class="empty">Votre diplomatie commence avec votre première implantation.</div>'; return;}
+  let pending=0; let html="";
+  countries.forEach(c=>{const d=cData(c.k),g=govState(c.k); if(g.request||g.pending) pending++; html+='<div class="card gov-card"><div class="h"><h3>'+c.f+' '+c.n+'</h3><span class="gov-badge">Relations '+(g.level||0)+'</span></div>'
+    +'<p>'+(!licenseActive(c.k)?'📜 Licence inactive : aucune relation gouvernementale avancée.' : '🤝 Licence active · gouvernement disponible')+'</p>';
+    if(g.request){ const r=g.request; html+='<div class="gov-project"><h4>📨 '+r.title+'</h4><p>'+r.text+'</p><div class="row"><button class="btn sm green" onclick="acceptGovRequest(\''+c.k+'\')">Accepter</button><button class="btn sm ghost" onclick="declineGovRequest(\''+c.k+'\')">Refuser</button></div></div>'; }
+    if(g.pending){ const p=GOV_PROJECTS.find(x=>x.k===g.pending.project); html+='<div class="gov-project"><h4>🏗️ '+p.e+' '+p.t+'</h4><p>'+p.d+'</p><div class="tags"><span class="tag cost">'+fmt(p.cost)+'</span><span class="tag pay">+'+p.pop+' popularité</span></div><div class="row"><button class="btn sm green" onclick="fundGovProject(\''+c.k+'\')">Financer</button><button class="btn sm ghost" onclick="declineGovProject(\''+c.k+'\')">Refuser</button></div></div>'; }
+    if(g.projects&&g.projects.length){ html+='<div class="gov-project"><h4>✅ Projets réalisés</h4><p>'+g.projects.length+' investissement(s) réalisé(s) · dernier projet : '+(GOV_PROJECTS.find(x=>x.k===g.projects[0].project)?.t||'Projet')+'</p></div>'; }
+    html+='</div>'; });
+  $("gov-list").innerHTML=html; $("gov-pill").textContent=pending+" demande(s)";
+  const hist=(S.governments&&S.governments.history)||[]; $("gov-history").innerHTML=hist.length?hist.slice(0,15).map(h=>'<div class="gov-event"><b>'+h.country.toUpperCase()+' · '+h.title+'</b><small>Jour '+h.day+(h.cost?' · '+fmt(h.cost):'')+'</small></div>').join(""):'<div class="empty">Aucun événement gouvernemental pour le moment.</div>';
+}
+function openCountry(k){
+  curCountry=k;
+  const c = k==="ci" ? {f:"🇨🇮",n:"Côte d'Ivoire",mkt:1,seuil:0,cost:0,r:""} : CT(k);
+  const d=cData(k);
+  $("cy-fl").textContent=c.f; $("cy-name").textContent=c.n;
+  const bar=$("cy-bar"); bar.className="popbar ok";
+  bar.firstElementChild.style.width=Math.min(100,d.pop)+"%";
+  $("cy-pop").textContent = k==="ci" ? "Popularité "+Math.round(d.pop)+" / 100 — marché d'origine, toujours actif" : "Popularité "+Math.round(d.pop)+" / 100 · licence à partir de "+c.seuil;
+
+  if(k==="ci"){
+    $("cy-status").textContent = hasTech("auto")
+      ? "Votre studio automatique tourne en continu à Abidjan. Une popularité élevée accélère vos actions dans les autres pays."
+      : "Votre marché d'origine. Ce niveau de popularité influence votre réputation globale et l'efficacité de vos actions à l'étranger.";
+    $("cy-restr-tx").textContent = "Aucune restriction ici : vous êtes chez vous. Ces actions servent simplement à faire remonter votre popularité si elle a baissé (retards de paiement, par exemple).";
+    let html='<div class="h"><h2 style="font-size:17px">📣 Regagner en popularité</h2></div>';
+    ACTIONS.forEach(a=>{
+      const cost=Math.round(a.c*0.7);
+      const okCash=S.cash>=cost;
+      html+='<div class="mission"><div class="em">'+a.e+'</div><div class="bd"><div class="ti">'+a.t+'</div>'
+        +'<div class="de">'+a.d+'</div><div class="tags"><span class="tag cost">'+fmt(cost)+'</span><span class="tag pay">+'+a.p+' popularité</span></div>'
+        +'<button class="btn sm'+(okCash?"":" ghost")+'" '+(okCash?"":"disabled")+' onclick="doAction(\'ci\',\''+a.k+'\')">'+(okCash?"Lancer l\'action":"Trésorerie insuffisante")+'</button></div></div>';
+    });
+    $("cy-body").innerHTML=html;
+    nav("v-ctry"); return;
+  }
+
+  if(!d.installed){
+    $("cy-status").textContent="Aucune présence sur place. Marché estimé ×"+c.mkt.toFixed(2)+" par rapport à la Côte d'Ivoire.";
+    $("cy-restr-tx").textContent=c.r;
+    $("cy-body").innerHTML='<div class="card hl"><h3>🏗️ Ouvrir un bureau à '+c.n+'</h3><p>Locaux, matériel, premières démarches administratives.</p><div style="height:12px"></div>'
+      +'<button class="btn sm" onclick="installCountry(\''+k+'\')" '+(S.cash>=c.cost?"":"disabled")+'>'+(S.cash>=c.cost?"S'implanter · "+fmt(c.cost):"Trésorerie insuffisante · "+fmt(c.cost))+'</button></div>';
+    nav("v-ctry"); return;
+  }
+  const active=licenseActive(k);
+  $("cy-status").textContent = active
+    ? "✅ Licence active. Vos produits et votre automatisation fonctionnent normalement ici."
+    : (d.licensed
+        ? "⛔ Licence suspendue : votre popularité est retombée sous le seuil requis ("+c.seuil+"). Cette filiale est entièrement gelée — plus aucun revenu, plus aucune automatisation, tant que la popularité n'est pas remontée."
+        : "⚠️ Bureau ouvert, mais aucune licence : les grands contrats, les produits et l'automatisation restent interdits.");
+  $("cy-restr-tx").textContent = active
+    ? "Les restrictions sont levées. Le gouvernement vous considère désormais comme un acteur local à part entière."
+    : (d.licensed
+        ? "Remontez la popularité au-dessus de "+c.seuil+" pour réactiver automatiquement la licence."
+        : c.r+" Popularité requise : "+c.seuil+" / 100.");
+
+  const gov=govState(k);
+  let govHtml='';
+  if(gov && licenseActive(k)){
+    govHtml='<div class="card gov-card"><h3>🏛️ Gouvernement de '+c.n+'</h3><p>Relations : <b>'+gov.level+'</b> · projets réalisés : <b>'+gov.projects.length+'</b></p>';
+    if(gov.request){
+      govHtml+='<div class="gov-project"><h4>📨 '+gov.request.title+'</h4><p>'+gov.request.text+'</p>'
+        +'<div class="row"><button class="btn sm green" onclick="acceptGovRequest(\''+k+'\')">Accepter</button><button class="btn sm ghost" onclick="declineGovRequest(\''+k+'\')">Refuser</button></div></div>';
+    }else if(gov.pending){
+      const pj=GOV_PROJECTS.find(x=>x.k===gov.pending.project);
+      govHtml+='<div class="gov-project"><h4>🏗️ '+pj.e+' '+pj.t+'</h4><p>'+pj.d+'</p>'
+        +'<div class="tags"><span class="tag cost">'+fmt(pj.cost)+'</span><span class="tag pay">+'+pj.pop+' popularité</span></div>'
+        +'<div class="row"><button class="btn sm green" onclick="fundGovProject(\''+k+'\')">Financer</button><button class="btn sm ghost" onclick="declineGovProject(\''+k+'\')">Refuser</button></div></div>';
+    }else if(S.level>=12){
+      govHtml+='<p>Le gouvernement n\'a pas encore de nouvelle demande. Continuez votre progression.</p>';
+    }
+    if(gov.projects.length){ govHtml+='<div class="gov-project"><h4>✅ Projets réalisés</h4><p>'+gov.projects.length+' investissement(s) · dernier : '+(GOV_PROJECTS.find(x=>x.k===gov.projects[0].project)?.t||'Projet')+'</p></div>'; }
+    govHtml+='</div>';
+  }
+  let html=govHtml+'<div class="h"><h2 style="font-size:17px">📣 Gagner en popularité</h2></div>';
+  ACTIONS.forEach(a=>{
+    const cost=Math.round(a.c*(0.6+c.mkt*0.7));
+    const okPop=d.pop>=a.min, okCash=S.cash>=cost;
+    html+='<div class="mission"><div class="em">'+a.e+'</div><div class="bd"><div class="ti">'+a.t+'</div>'
+      +'<div class="de">'+a.d+'</div><div class="tags"><span class="tag cost">'+fmt(cost)+'</span><span class="tag pay">+'+a.p+' popularité</span>'
+      +(a.min?'<span class="tag">dès '+a.min+' pop.</span>':'')+'</div>'
+      +'<button class="btn sm'+(okPop&&okCash?"":" ghost")+'" '+(okPop&&okCash?"":"disabled")+' onclick="doAction(\''+k+'\',\''+a.k+'\')">'
+      +(!okPop?"Popularité insuffisante":(okCash?"Lancer l'action":"Trésorerie insuffisante"))+'</button></div></div>';
+  });
+  if(!d.licensed){
+    const lc=Math.round(c.cost*0.55);
+    html+='<div class="card hl" style="margin-top:14px"><h3>📜 Demander la licence d\'exploitation</h3>'
+      +'<p>Le sésame qui lève toutes les restrictions du pays. Frais de dossier : '+fmt(lc)+'.</p><div style="height:12px"></div>'
+      +'<button class="btn green sm" '+(d.pop>=c.seuil&&S.cash>=lc?"":"disabled")+' onclick="askLicense(\''+k+'\')">'
+      +(d.pop>=c.seuil?(S.cash>=lc?"Déposer la demande":"Trésorerie insuffisante"):"Popularité "+Math.round(d.pop)+" / "+c.seuil)+'</button></div>';
+  }else if(!active){
+    html+='<div class="card" style="margin-top:14px;border-color:rgba(255,77,94,.5)"><h3>⛔ Filiale gelée</h3>'
+      +'<p>Automatisation à l\'arrêt, produits déjà en ligne suspendus, aucun nouveau déploiement possible ici tant que la popularité n\'est pas remontée au-dessus de '+c.seuil+'.</p></div>';
+  }else{
+    if(hasTech("auto")){
+      const dep=(S.autoDeployed||[]).indexOf(k)>=0;
+      const slots=autoSlots(), used=(S.autoDeployed||[]).length;
+      const cost=Math.round(1500000*c.mkt);
+      html+='<div class="card'+(dep?" auto":" hl")+'" style="margin-top:14px"><h3>🤖 Automatisation</h3>'
+        +(dep?'<p>✅ Cette filiale tourne déjà seule et verse ses revenus chaque jour sur votre compte.</p>'
+             :'<p>Déployez le moteur ici pour que cette filiale signe, livre et se paie toute seule, comme la Côte d\'Ivoire. Emplacements utilisés : '+used+' / '+slots+'.</p><div style="height:10px"></div>'
+              +'<button class="btn sm'+((used<slots&&S.cash>=cost)?"":" ghost")+'" '+((used<slots&&S.cash>=cost)?"":"disabled")+' onclick="deployAutomation(\''+k+'\')">'
+              +(used>=slots?"Slots pleins":(S.cash>=cost?"Déployer · "+fmt(cost):"Trésorerie insuffisante · "+fmt(cost)))+'</button>')
+        +'</div>';
+    }
+    const live=S.products.filter(p=>p.live);
+    html+='<div class="h" style="margin-top:18px"><h2 style="font-size:17px">🚀 Déploiement des produits</h2></div>';
+    if(!live.length) html+='<div class="empty">Aucun produit en ligne à déployer pour l\'instant.</div>';
+    live.forEach(p=>{
+      const done=p.deployed.indexOf(k)>=0;
+      const cost=Math.round(p.cost*0.35*c.mkt);
+      html+='<div class="mission"><div class="em">'+p.e+'</div><div class="bd"><div class="ti">'+p.name+'</div>'
+        +'<div class="de">'+p.cat+' · revenus de base '+fmt(p.rev)+' / jour</div>'
+        +(done?'<span class="tag pay">✅ Déployé dans ce pays (+'+Math.round(c.mkt*35)+' % de revenus)</span>'
+              :'<button class="btn sm'+(S.cash>=cost?"":" ghost")+'" '+(S.cash>=cost?"":"disabled")+' onclick="deployProduct('+p.id+',\''+k+'\')">Déployer · '+fmt(cost)+'</button>')
+        +'</div></div>';
+    });
+  }
+  $("cy-body").innerHTML=html;
+  nav("v-ctry");
+}
+
+/* ================= PRODUITS ================= */
+function openCatalog(){
+  let html='<div class="seg" id="cat-seg"></div><div id="cat-list"></div>';
+  $("md-ti").textContent="Développer un produit";
+  $("md-tx").textContent="Chaque produit demande un investissement et du temps de développement. Vos développeurs réduisent ce délai.";
+  $("md-body").style.display="block"; $("md-body").innerHTML=html;
+  $("md-input").style.display="none";
+  $("md-ok").style.display="none";
+  const cats=["Logiciel","Application","Site web","SaaS"];
+  $("cat-seg").innerHTML=cats.map((c,i)=>'<button class="'+(i===0?"on":"")+'" onclick="catTab(\''+c+'\',this)">'+c+'</button>').join("");
+  catTab("Logiciel");
+  $("modal-bg").classList.add("on");
+}
+function catTab(cat,el){
+  if(el){ document.querySelectorAll("#cat-seg button").forEach(b=>b.classList.remove("on")); el.classList.add("on"); }
+  $("cat-list").innerHTML = CATALOG.filter(p=>p.cat===cat).map(p=>{
+    const r=reqOf(p);
+    const studio=branches().find(b=>teamOk(r,b));
+    const money=S.cash>=p.c;
+    const ok=studio&&money;
+    let why;
+    if(!studio) why='<span style="color:var(--danger)">Équipe incomplète — il manque '+teamMissing(r,"ci")+'</span>';
+    else if(!money) why='<span style="color:var(--danger)">Trésorerie insuffisante ('+fmt(p.c)+')</span>';
+    else why='Investissement '+fmt(p.c)+' · '+p.d+' jours · ~'+fmt(p.rev)+' / jour';
+    const act = ok ? 'pickProduct(&quot;'+p.t+'&quot;)' : 'toast(&quot;Conditions non remplies pour ce produit&quot;)';
+    return '<button class="opt" style="opacity:'+(ok?1:.62)+'" onclick="'+act+'">'
+      +'<b>'+p.e+' '+p.t+'</b><small>'+why+'<br>Équipe requise : '+reqText(r)+'</small></button>';
+  }).join("");
+}
+function pickProduct(t){
+  const p=CATALOG.find(x=>x.t===t);
+  const r=reqOf(p);
+  const studios=branches().filter(b=>teamOk(r,b));
+  if(!studios.length){
+    toast("Aucune filiale n'a l'équipe requise : "+reqText(r)); return;
+  }
+  if(S.cash<p.c){ toast("Trésorerie insuffisante"); return; }
+  curStudio=studios[0];
+  $("md-ti").textContent=p.e+" "+p.t;
+  $("md-tx").textContent="Équipe mobilisée : "+reqText(r)+". Donnez un nom commercial au produit, choisissez la filiale qui le développe et son positionnement tarifaire.";
+  $("md-body").innerHTML='<label class="lbl">Nom du produit</label><input class="field" id="pn" maxlength="24" placeholder="Ex. : '+suggestName(p)+'">'
+    +'<label class="lbl">Filiale chargée du projet</label>'
+    +studios.map((b,i)=>'<button class="opt'+(i===0?" sel":"")+'" data-b="'+b+'" onclick="pickStudio(this)"><b>'+brName(b)+'</b><small>'+totalStaff(b)+' employé(s) · puissance de développement '+devPower(b)+'</small></button>').join("")
+    +'<label class="lbl">Positionnement</label>'
+    +TIERS.map((t2,i)=>'<button class="opt'+(i===1?" sel":"")+'" data-t="'+t2.k+'" onclick="pickTier(this)"><b>'+t2.t+'</b><small>'+t2.d+' · revenus ×'+t2.m+'</small></button>').join("");
+  $("md-ok").style.display="block";
+  $("md-ok").textContent="Lancer le développement · "+fmt(p.c);
+  $("md-ok").className="btn sm"; $("md-ok").style.background="";
+  $("md-ok").onclick=()=>launchProduct(p);
+}
+function suggestName(p){
+  const a=["Nova","Akwaba","Baobab","Lagune","Ivoire","Sahel","Zenith","Kora","Djolof","Harmattan"];
+  return a[Math.floor(Math.random()*a.length)]+" "+p.t.split(" ")[0];
+}
+let curTier="std", curStudio="ci";
+function pickTier(el){
+  document.querySelectorAll("#md-body .opt[data-t]").forEach(b=>b.classList.remove("sel"));
+  el.classList.add("sel"); curTier=el.dataset.t;
+}
+function pickStudio(el){
+  document.querySelectorAll("#md-body .opt[data-b]").forEach(b=>b.classList.remove("sel"));
+  el.classList.add("sel"); curStudio=el.dataset.b;
+}
+function launchProduct(p){
+  if(S.cash<p.c){ toast("Trésorerie insuffisante"); return; }
+  const nm=($("pn").value||"").trim() || suggestName(p);
+  const tier=TIERS.find(t=>t.k===curTier)||TIERS[1];
+  S.cash-=p.c; S.expenses+=p.c;
+  const dur=Math.max(18, Math.round(p.d*26/(1+devPower(curStudio)*0.22)));
+  S.products.push({id:S.nextId++, key:p.t, cat:p.cat, e:p.e, name:nm, cost:p.c, rev:Math.round(p.rev*tier.m),
+    tier:tier.k, started:Date.now(), dur:dur, live:false, deployed:[], studio:curStudio});
+  log(p.e,"Développement — "+nm+" ("+brName(curStudio)+")",-p.cost,"co");
+  closeModal(); saveGame(); render(); nav("v-prod");
+  toast("Développement lancé 🏭 "+dur+" s");
+}
+function tickProducts(){
+  (S.products||[]).forEach(p=>{
+    if(p.live) return;
+    const el=$("pd-"+p.id); if(!el) return;
+    const pr=Math.min(1,(Date.now()-p.started)/(p.dur*1000));
+    el.style.width=(pr*100)+"%";
+    const lb=$("pl-"+p.id);
+    if(lb) lb.textContent = pr<1 ? "Mise en ligne dans "+Math.ceil(p.dur-(Date.now()-p.started)/1000)+" s" : "Prêt à publier";
+    const bt=$("pb-"+p.id);
+    if(bt && pr>=1 && bt.dataset.ready!=="1"){ bt.dataset.ready="1"; bt.disabled=false; bt.className="btn green sm"; bt.textContent="🚀 Mettre en ligne"; }
+  });
+}
+function publish(id){
+  const p=S.products.find(x=>x.id===id); if(!p||p.live) return;
+  if(Date.now()-p.started < p.dur*1000) return;
+  p.live=true; S.rep=Math.min(100,S.rep+3);
+  log("🚀","Mise en ligne — "+p.name,0,"co");
+  addXp(160); burst(90); saveGame(); render();
+  toast(p.name+" est en ligne 🎉");
+}
+function deployProduct(id,k){
+  const p=S.products.find(x=>x.id===id); const c=CT(k);
+  if(!p||!c) return;
+  if(k!=="ci" && !licenseActive(k)){ toast("📜 Licence active obligatoire pour déployer dans ce pays"); return; }
+  const cost=Math.round(p.cost*0.35*c.mkt);
+  if(S.cash<cost){ toast("Trésorerie insuffisante"); return; }
+  S.cash-=cost; S.expenses+=cost; p.deployed.push(k);
+  log(c.f,"Déploiement — "+p.name+" ("+c.n+")",-cost,"co");
+  addXp(90); saveGame(); openCountry(k);
+  toast(p.name+" est disponible en "+c.n+" "+c.f);
+}
+function productIncome(filterAuto){
+  return (S.products||[]).filter(p=>p.live && (filterAuto===undefined || !!p.auto===filterAuto) && licenseActive(p.studio||"ci")).reduce((a,p)=>{
+    const mult = 1 + p.deployed.reduce((s,k)=>s+((CT(k)&&licenseActive(k))?CT(k).mkt*0.35:0),0);
+    return a + p.rev*mult*revBonus();
+  },0);
+}
+/* ---- studios automatiques : chaque filiale développe et publie seule ses produits ---- */
+const AUTO_CATALOG = [...CATALOG].sort((a,b)=>a.c-b.c);
+function autoSpeed(){ return 1 + Math.max(0,(S.autoTier||1)-1)*0.22; }
+/* ---- mise à niveau OPS illimitée : chaque palier coûte plus cher et ouvre 2 emplacements de plus ---- */
+function autoTierSpec(n){
+  return {
+    lvl: n<=1 ? 11 : Math.min(20, 11+(n-1)*2),
+    c: Math.round(2500000*Math.pow(1.55,n-1)),
+    d: Math.round(5+(n-1)*1.8),
+    slots: 1+2*(n-1)
+  };
+}
+function researchAutoUpgrade(){
+  const next=(S.autoTier||1)+1, spec=autoTierSpec(next);
+  if(S.autoUpgrade){ toast("Une mise à niveau OPS est déjà en cours"); return; }
+  if(S.level<spec.lvl){ toast("Niveau "+spec.lvl+" requis"); return; }
+  if(S.cash<spec.c){ toast("Trésorerie insuffisante"); return; }
+  S.cash-=spec.c; S.expenses+=spec.c;
+  S.autoUpgrade={tier:next, started:Date.now(), dur:spec.d};
+  log("🤖","Mise à niveau lancée — OPS-"+next,-spec.c,"co");
+  saveGame(); render();
+  toast("Mise à niveau OPS-"+next+" lancée");
+}
+function tickAutoUpgrade(){
+  if(!S.autoUpgrade) return;
+  const el=$("ops-up-prog"); if(!el) return;
+  const p=Math.min(1,(Date.now()-S.autoUpgrade.started)/(S.autoUpgrade.dur*1000));
+  el.style.width=(p*100)+"%";
+  const lb=$("ops-up-lbl");
+  if(lb) lb.textContent = p<1 ? "Déploiement dans "+Math.ceil(S.autoUpgrade.dur-(Date.now()-S.autoUpgrade.started)/1000)+" s" : "Prêt à activer";
+  const bt=$("ops-up-btn");
+  if(bt && p>=1 && bt.dataset.ready!=="1"){ bt.dataset.ready="1"; bt.disabled=false; bt.className="btn blue sm"; bt.textContent="⚡ Activer OPS-"+S.autoUpgrade.tier; }
+}
+function activateAutoUpgrade(){
+  if(!S.autoUpgrade || Date.now()-S.autoUpgrade.started<S.autoUpgrade.dur*1000) return;
+  S.autoTier=S.autoUpgrade.tier;
+  log("🤖","OPS-"+S.autoTier+" activé — automatisation illimitée",0,"co");
+  S.autoUpgrade=null;
+  addXp(300); burst(150); saveGame(); render();
+  toast("⚡ OPS-"+S.autoTier+" actif — "+autoSlots()+" filiales automatisables");
+}
+function ensureAutoStudio(bk,seed){
+  if(!S.autoStudio) S.autoStudio={};
+  if(!S.autoStudio[bk]) S.autoStudio[bk]={budget:seed||500000, idx:0, current:null};
+  return S.autoStudio[bk];
+}
+function autoName(item,bk){
+  const a=["Nova","Akwaba","Baobab","Lagune","Ivoire","Sahel","Zenith","Kora","Djolof","Harmattan","Savane","Lumen"];
+  return a[Math.floor(Math.random()*a.length)]+" "+item.t.split(" ")[0]+(bk!=="ci"?" "+CT(bk).n:"");
+}
+function tickAutoStudios(lines){
+  (S.autoDeployed||[]).forEach(bk=>{
+    const st=ensureAutoStudio(bk);
+    if(st.paused) return;
+    if(bk!=="ci" && !licenseActive(bk)) return; /* licence suspendue : la filiale est entièrement gelée */
+    /* 1. faire progresser le développement en cours */
+    if(st.current){
+      st.current.daysLeft--;
+      if(st.current.daysLeft<=0){
+        const item=AUTO_CATALOG[st.current.idx];
+        const prod={id:S.nextId++, key:item.t, cat:item.cat, e:item.e, name:autoName(item,bk), cost:item.c, rev:item.rev,
+          tier:"std", started:Date.now(), dur:1, live:true, deployed: bk!=="ci"?[bk]:[], studio:bk, auto:true};
+        S.products.push(prod);
+        log(item.e,"🤖 Studio automatique — \""+prod.name+"\" mis en ligne ("+brName(bk)+")",0,"auto");
+        spawnFloat("🚀 "+prod.name+" ("+brName(bk)+")","pos");
+        const ac=$("auto-card"); if(ac){ ac.classList.remove("ping"); void ac.offsetWidth; ac.classList.add("ping"); }
+        addXp(70);
+        lines.push(brName(bk)+" : "+prod.name+" mis en ligne automatiquement");
+        st.current=null;
+      }
+    }
+    /* 2. encaisser les revenus du jour des produits automatiques de cette filiale */
+    const rev = S.products.filter(p=>p.auto&&p.live&&p.studio===bk).reduce((a,p)=>{
+      const mult=1+p.deployed.reduce((s,k)=>s+((CT(k)&&licenseActive(k))?CT(k).mkt*0.35:0),0);
+      return a+p.rev*mult*revBonus();
+    },0);
+    if(rev>0){
+      const toBank=Math.round(rev*0.7), toBudget=Math.round(rev*0.3);
+      S.bank+=toBank; S.revenue+=toBank; st.budget+=toBudget;
+      log("🤖","Automatisation — "+brName(bk),toBank,"auto");
+    }
+    /* 3. lancer le prochain développement si le studio est libre et peut se le permettre */
+    if(!st.current){
+      let tries=0, i=st.idx;
+      while(tries<AUTO_CATALOG.length){
+        const item=AUTO_CATALOG[i%AUTO_CATALOG.length];
+        if(st.budget>=item.c){
+          st.budget-=item.c;
+          st.current={idx:i%AUTO_CATALOG.length, daysLeft:Math.max(1,Math.round(item.d/2/autoSpeed()))};
+          st.idx=(i%AUTO_CATALOG.length)+1;
+          log(item.e,"🤖 Studio automatique — développement lancé : "+item.t+" ("+brName(bk)+")",0,"auto");
+          break;
+        }
+        i++; tries++;
+      }
+    }
+  });
+}
+/* revenu automatique total estimé du jour, pour l'affichage */
+function autoIncome(){
+  return (S.autoDeployed||[]).reduce((a,bk)=>{
+    if(bk!=="ci" && !licenseActive(bk)) return a;
+    return a+S.products.filter(p=>p.auto&&p.live&&p.studio===bk).reduce((sum,p)=>{
+      const mult=1+p.deployed.reduce((x,k)=>x+((CT(k)&&licenseActive(k))?CT(k).mkt*0.35:0),0);
+      return sum+p.rev*mult*revBonus();
+    },0);
+  },0);
+}
+function deployAutomation(bk){
+  if(!hasTech("auto")){ toast("Recherchez d'abord le moteur OPS-1"); return; }
+  S.autoDeployed=S.autoDeployed||["ci"];
+  if(S.autoDeployed.indexOf(bk)>=0){ toast("Automatisation déjà active ici"); return; }
+  const slots=autoSlots();
+  if(S.autoDeployed.length>=slots){ toast("Slots d'automatisation pleins ("+S.autoDeployed.length+"/"+slots+") — améliorez OPS en Technologies"); return; }
+  const c=CT(bk); if(!c){ toast("Filiale invalide"); return; }
+  const d=cData(bk); if(!d.licensed || !licenseActive(bk)){ toast("📜 Licence active requise avant d'automatiser ce pays"); return; }
+  const cost=Math.round(1500000*c.mkt);
+  if(S.cash<cost){ toast("Trésorerie insuffisante — "+fmt(cost)+" requis"); return; }
+  S.cash-=cost; S.expenses+=cost;
+  S.autoDeployed.push(bk);
+  ensureAutoStudio(bk, Math.round(900000*c.mkt));
+  log("🤖","Déploiement de l'automatisation — "+c.n,-cost,"co");
+  addXp(150); burst(80); saveGame(); render();
+  toast("🤖 Automatisation déployée en "+c.n);
+}
+
+/* ================= EMPLOYÉS ================= */
+let curBranch="ci";
+function setBranch(k){ curBranch=k; render(); }
+function hire(k,bk){
+  bk=bk||curBranch;
+  const s=ROLE(k);
+  if(S.level<3 && !isExport()){ toast("Le recrutement s'ouvre au niveau 3"); return; }
+  const cost=Math.round(s.s*1.5);   /* frais de recrutement */
+  if(S.cash<cost){ toast("Prévoyez "+fmt(cost)+" de frais de recrutement"); return; }
+  S.cash-=cost; S.expenses+=cost;
+  const st=brStaff(bk); st[k]=(st[k]||0)+1; S.employees=1+totalStaff();
+  log(s.e,"Embauche — "+s.t+" ("+brName(bk)+")",-cost,"co");
+  addXp(60); saveGame(); render();
+  toast(s.t+" recruté — "+brName(bk));
+}
+function fire(k,bk){
+  bk=bk||curBranch;
+  const st=brStaff(bk); if(!st[k]) return;
+  st[k]--; if(!st[k]) delete st[k];
+  S.employees=1+totalStaff(); S.rep=Math.max(0,S.rep-1);
+  if(S.payDue && S.payDue.br[bk]){ S.payDue.br[bk]=payrollOf(bk); if(!S.payDue.br[bk]) delete S.payDue.br[bk]; }
+  log("📤","Départ d'un employé — "+brName(bk),0,"co");
+  saveGame(); render(); toast("Employé remercié");
+}
+
+/* ================= TECHNOLOGIES ================= */
+function research(k){
+  const t=TECHS.find(x=>x.k===k);
+  if(t.req && !hasTech(t.req)){ toast("Recherchez d'abord : "+TECHS.find(x=>x.k===t.req).t); return; }
+  if(S.level<t.lvl){ toast("Niveau "+t.lvl+" requis"); return; }
+  if(S.cash<t.c){ toast("Trésorerie insuffisante"); return; }
+  S.cash-=t.c; S.expenses+=t.c;
+  const dur=Math.max(30, Math.round(t.d*30/(1+resPower()*0.3)));
+  S.techs[k]={started:Date.now(),dur:dur,done:false};
+  log(t.e,"Recherche — "+t.t,-t.c,"co");
+  saveGame(); render(); toast("Recherche lancée 🧪");
+}
+function tickTechs(){
+  TECHS.forEach(t=>{
+    const st=S.techs[t.k]; if(!st||st.done) return;
+    const el=$("tc-"+t.k); if(!el) return;
+    const p=Math.min(1,(Date.now()-st.started)/(st.dur*1000));
+    el.style.width=(p*100)+"%";
+    const lb=$("tl-"+t.k);
+    if(lb) lb.textContent = p<1 ? "Disponible dans "+Math.ceil(st.dur-(Date.now()-st.started)/1000)+" s" : "Prêt à activer";
+    const bt=$("tb-"+t.k);
+    if(bt&&p>=1&&bt.dataset.ready!=="1"){ bt.dataset.ready="1"; bt.disabled=false; bt.className="btn blue sm"; bt.textContent="⚡ Activer"; }
+  });
+}
+function activate(k){
+  const st=S.techs[k]; const t=TECHS.find(x=>x.k===k);
+  if(!st||st.done||Date.now()-st.started<st.dur*1000) return;
+  st.done=true;
+  if(k==="auto"){ S.autoSince=S.day; S.autoDeployed=["ci"]; S.autoTier=1; ensureAutoStudio("ci",600000); }
+  log(t.e,"Technologie activée — "+t.t,0,"co");
+  addXp(300); burst(140); saveGame(); render();
+  toast(k==="auto" ? "🤖 La Côte d'Ivoire tourne désormais toute seule" : t.t+" activée ⚡");
+}
+
+/* ================= BANQUE ================= */
+function openAccount(){
+  const n=$("in-card").value.trim() || S.player;
+  if(n.length<2){toast("Indiquez le nom du titulaire");return;}
+  const g=()=>String(Math.floor(1000+Math.random()*9000));
+  const yr=new Date().getFullYear()+4;
+  S.account={holder:n.toUpperCase(), num:[g(),"XXXX","XXXX",g()].join("  "), exp:String(Math.ceil(Math.random()*12)).padStart(2,"0")+"/"+String(yr).slice(2)};
+  log("🏦","Ouverture du compte Tech Bank",0,"bank");
+  saveGame(); render(); burst(70);
+  toast("Compte ouvert ✅ Carte GOLD générée");
+}
+let moveDir="in";
+function askMove(dir){
+  if(!S.account){toast("Ouvrez d'abord votre compte");return;}
+  moveDir=dir;
+  const max = dir==="in" ? S.cash : S.bank;
+  $("md-ti").textContent = dir==="in" ? "➕ Déposer à la banque" : "➖ Retirer vers la trésorerie";
+  $("md-tx").textContent = dir==="in" ? "Disponible en trésorerie : "+fmt(S.cash) : "Disponible en banque : "+fmt(S.bank);
+  $("md-body").style.display="none";
+  $("md-input").style.display="block";
+  $("md-amount").value="";
+  $("md-quick").innerHTML = [0.25,0.5,1].map(f=>'<button onclick="document.getElementById(\'md-amount\').value='+Math.floor(max*f)+'">'+(f===1?"Tout":Math.round(f*100)+" %")+'</button>').join("");
+  $("md-ok").style.display="block"; $("md-ok").textContent="Confirmer";
+  $("md-ok").className="btn sm"; $("md-ok").style.background="";
+  $("md-ok").onclick=doMove;
+  $("modal-bg").classList.add("on");
+}
+function doMove(){
+  const a=Math.floor(Number($("md-amount").value));
+  if(!a || a<=0){toast("Montant invalide");return;}
+  if(moveDir==="in"){
+    if(a>S.cash){toast("Trésorerie insuffisante");return;}
+    S.cash-=a; S.bank+=a; log("➕","Dépôt",a,"bank");
+  }else{
+    if(a>S.bank){toast("Solde bancaire insuffisant");return;}
+    S.bank-=a; S.cash+=a; log("➖","Retrait",-a,"bank");
+  }
+  closeModal(); saveGame(); render();
+  toast(moveDir==="in"?"Dépôt effectué ✅":"Retrait effectué ✅");
+}
+function closeModal(){
+  $("modal-bg").classList.remove("on");
+  $("md-input").style.display="none";
+  $("md-body").style.display="none";
+  $("md-ok").style.display="block";
+}
+function log(em,label,amount,kind){
+  const d=new Date();
+  S.history.unshift({em,label,amount,kind,t:d.getDate().toString().padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+" · "+d.getHours().toString().padStart(2,"0")+"h"+d.getMinutes().toString().padStart(2,"0"),day:S.day});
+  if(S.history.length>200) S.history.pop();
+  if(amount) spawnFloat((amount>0?"+":"−")+fmt(Math.abs(amount))+" "+em, amount>0?"pos":"neg");
+}
+let floatQueue=0;
+function spawnFloat(text,cls){
+  const layer=$("float-layer"); if(!layer) return;
+  const el=document.createElement("div");
+  el.className="float-num "+cls;
+  el.textContent=text;
+  const jitter=(Math.random()-0.5)*70;
+  const stack=(floatQueue%5)*30;
+  el.style.left="calc(50% + "+jitter+"px)";
+  el.style.bottom=(104+stack)+"px";
+  floatQueue++;
+  layer.appendChild(el);
+  setTimeout(()=>{ el.remove(); },2000);
+}
+function loanOwedTotal(){ return (S.loans||[]).reduce((a,l)=>a+l.owed,0); }
+function takeLoan(i){
+  if((S.loans||[]).length>=3){ toast("Maximum 3 prêts actifs à la fois"); return; }
+  const o=LOAN_OFFERS[i];
+  S.cash+=o.amt;
+  S.loans.push({id:S.nextId++, amt:o.amt, rate:o.rate, dueDay:S.day+o.dur, owed:Math.round(o.amt*(1+o.rate)), late:false, lateDays:0});
+  log("🏦","Prêt Tech Bank obtenu",o.amt,"bank");
+  saveGame(); render();
+  toast("Prêt de "+fmt(o.amt)+" accordé ✅");
+}
+function repayLoan(id){
+  const l=(S.loans||[]).find(x=>x.id===id); if(!l) return;
+  if(S.cash+S.bank<l.owed){ toast("Fonds insuffisants — "+fmt(l.owed)+" nécessaires"); return; }
+  if(S.cash>=l.owed) S.cash-=l.owed; else { const r=l.owed-S.cash; S.cash=0; S.bank-=r; }
+  S.expenses+=l.owed;
+  log("🏦","Remboursement du prêt Tech Bank",-l.owed,"bank");
+  S.loans=S.loans.filter(x=>x.id!==id);
+  if(!loanOwedTotal()) S.rep=Math.min(100,S.rep+2);
+  saveGame(); render();
+  toast("Prêt remboursé ✅");
+}
+function repayAllLoans(){
+  (S.loans||[]).slice().forEach(l=>{ if(S.cash+S.bank>=l.owed) repayLoan(l.id); });
+}
+function processLoans(lines){
+  (S.loans||[]).forEach(l=>{
+    if(S.day<l.dueDay) return;
+    if(S.cash+S.bank>=l.owed){
+      const owed=l.owed;
+      if(S.cash>=owed) S.cash-=owed; else { const r=owed-S.cash; S.cash=0; S.bank-=r; }
+      S.expenses+=owed;
+      log("🏦","Prêt remboursé automatiquement",-owed,"bank");
+      S.loans=S.loans.filter(x=>x.id!==l.id);
+      lines.push("Prêt soldé automatiquement : −"+fmt(owed));
+      return;
+    }
+    l.lateDays=(l.lateDays||0)+1;
+    if(!l.late){
+      l.late=true;
+      l.owed=Math.round(l.owed*5);
+      lines.push("🚨 Prêt non remboursé à l'échéance : intérêts multipliés par 5 ("+fmt(l.owed)+" dus)");
+      S.loanAlertPending=true;
+    }else{
+      S.rep=Math.max(0,S.rep-0.8);
+      lines.push("⚠️ Prêt impayé depuis "+l.lateDays+" jour(s) : réputation en baisse");
+      S.loanAlertPending=true;
+    }
+  });
+}
+function bankTab(t,el){
+  document.querySelectorAll("#bank-tabs button").forEach(b=>b.classList.remove("on"));
+  if(el) el.classList.add("on");
+  $("bank-acc").style.display = t==="acc" ? "block":"none";
+  $("bank-loan").style.display = t==="loan" ? "block":"none";
+}
+function renderLoans(){
+  const owed=loanOwedTotal(), n=(S.loans||[]).length;
+  $("loan-badge").textContent = n ? "("+n+")" : "";
+  $("loan-count").textContent = n+" / 3";
+  const late=(S.loans||[]).some(l=>l.late);
+  $("loan-alert").style.display = late ? "block":"none";
+  if(late) $("loan-alert-tx").textContent = "Vous devez "+fmt(owed)+" à la Banque Nationale. Remboursez immédiatement pour stopper la chute de votre réputation.";
+  $("loan-active").innerHTML = n ? S.loans.map(l=>{
+    const left=l.dueDay-S.day;
+    return '<div class="mission"><div class="em">🏦</div><div class="bd"><div class="ti">Prêt '+fmt(l.amt)+(l.late?' <span class="tag cost">EN RETARD ×5</span>':'')+'</div>'
+      +'<div class="de">Taux '+Math.round(l.rate*100)+' % · '+(left>0?"échéance dans "+left+" jour(s)":"échéance dépassée")+'</div>'
+      +'<div class="tags"><span class="tag cost">À rembourser '+fmt(l.owed)+'</span></div>'
+      +'<button class="btn sm'+(S.cash+S.bank>=l.owed?"":" ghost")+'" '+(S.cash+S.bank>=l.owed?"":"disabled")+' onclick="repayLoan('+l.id+')">Rembourser</button></div></div>';
+  }).join("") : '<div class="empty">Aucun prêt en cours.</div>';
+  $("loan-offers").innerHTML = LOAN_OFFERS.map((o,i)=>{
+    const full=Math.round(o.amt*(1+o.rate));
+    const blocked=n>=3;
+    return '<div class="mission"><div class="em">💵</div><div class="bd"><div class="ti">'+fmt(o.amt)+'</div>'
+      +'<div class="de">Taux '+Math.round(o.rate*100)+' % · remboursement sous '+o.dur+' jours · total dû '+fmt(full)+'</div>'
+      +'<button class="btn'+(blocked?" ghost":" green")+' sm" '+(blocked?"disabled":"")+' onclick="takeLoan('+i+')">'+(blocked?"Limite de 3 prêts atteinte":"Emprunter")+'</button></div></div>';
+  }).join("");
+}
+function tryDeal(i){
+  const d=DEALS[i];
+  S.dealCooldown=S.dealCooldown||{};
+  S.governments=S.governments||{history:[],totalProjects:0};
+  COUNTRIES.forEach(c=>cData(c.k));
+  if(S.dealCooldown[i] && S.day<S.dealCooldown[i]){ toast("Verrouillé encore "+(S.dealCooldown[i]-S.day)+" jour(s)"); return; }
+  if(S.cash<d.amt){ toast("Trésorerie insuffisante — "+fmt(d.amt)+" requis"); return; }
+  S.cash-=d.amt; S.expenses+=d.amt;
+  S.dealCooldown[i]=S.day+d.cool;
+  log(d.e,"Investissement — "+d.t,-d.amt,"deal");
+  const win=Math.random()<d.chance;
+  if(win){
+    const gain=Math.round(d.amt*d.mult);
+    S.cash+=gain; S.revenue+=gain; S.rep=Math.min(100,S.rep+1);
+    log("💎","Marché réussi — "+d.t,gain,"deal");
+    addXp(Math.round(d.amt/15000));
+    burst(90);
+    toast("🎉 "+d.t+" réussi : +"+fmt(gain));
+  }else{
+    const back=Math.round(d.amt*0.15);
+    S.cash+=back;
+    log("💥","Marché perdu — "+d.t,back,"deal");
+    S.rep=Math.max(0,S.rep-2);
+    toast("💥 "+d.t+" a échoué. Récupéré seulement "+fmt(back));
+  }
+  saveGame(); render();
+}
+function renderDeals(){
+  const el=$("deals"); if(!el) return;
+  S.dealCooldown=S.dealCooldown||{};
+  el.innerHTML = DEALS.map((d,i)=>{
+    const lockedUntil=S.dealCooldown[i]||0, locked=S.day<lockedUntil;
+    const ok=!locked && S.cash>=d.amt;
+    return '<div class="mission"><div class="em">'+d.e+'</div><div class="bd"><div class="ti">'+d.t+(locked?' <span class="tag cost">🔒 '+(lockedUntil-S.day)+' j</span>':'')+'</div>'
+      +'<div class="de">Marché risqué : succès environ '+Math.round(d.chance*100)+' % de chances, gain '+Math.round((d.mult-1)*100)+' % en cas de réussite. En cas d\'échec, l\'essentiel de la mise est perdu.</div>'
+      +'<div class="tags"><span class="tag cost">Mise '+fmt(d.amt)+'</span><span class="tag pay">Gain potentiel '+fmt(Math.round(d.amt*d.mult))+'</span></div>'
+      +'<button class="btn'+(ok?"":" ghost")+' sm" '+(ok?"":"disabled")+' onclick="tryDeal('+i+')">'
+      +(locked?"Verrouillé — "+(lockedUntil-S.day)+" jour(s)":(S.cash>=d.amt?"Tenter le marché":"Trésorerie insuffisante"))+'</button></div></div>';
+  }).join("");
+}
+function companyValue(){
+  const prod=(S.products||[]).filter(p=>p.live).length;
+  const ctry=Object.values(S.countries||{}).filter(c=>c.licensed).length;
+  return Math.round(100000 + S.revenue*1.4 + S.bank*0.6 + S.rep*4200 + (S.level-1)*85000
+    + prod*1800000 + ctry*2600000 + productIncome()*20);
+}
+
+/* ================= RENDU ================= */
+let _lastCash=null,_lastBank=null;
+function pulseStat(id){
+  const el=$(id); if(!el) return;
+  el.classList.remove("pulse"); void el.offsetWidth; el.classList.add("pulse");
+}
+function render(){
+  const val=companyValue(), net=S.revenue-S.expenses, exp=isExport();
+  if(_lastCash!==null && S.cash!==_lastCash) pulseStat("st-cash");
+  if(_lastBank!==null && S.bank!==_lastBank) pulseStat("st-bank");
+  _lastCash=S.cash; _lastBank=S.bank;
+
+  $("hd-av").innerHTML = S.photo ? '<img src="'+S.photo+'">' : S.avatar;
+  $("hd-logo").innerHTML = S.logoImg ? '<img src="'+S.logoImg+'" style="width:14px;height:14px;border-radius:4px;object-fit:cover;vertical-align:-2px">' : S.logo;
+  $("hd-name").textContent=S.player; $("hd-co").textContent=S.company;
+  $("hd-lvl").textContent="⭐ Niveau "+S.level;
+  $("hd-day").textContent="Jour "+S.day;
+  const need=xpNeeded(S.level);
+  $("hd-xp").style.width=Math.min(100,(S.xp/need)*100)+"%";
+
+  $("st-cash").textContent=shortF(S.cash);
+  $("st-bank").textContent=shortF(S.bank);
+  $("st-val").textContent=shortF(val);
+  $("st-emp").textContent=S.employees;
+  $("st-emp-s").textContent = totalStaff()? "vous + "+totalStaff()+" recrue(s)" : "vous, le fondateur";
+  $("pill-status").textContent=LEVELS[S.level-1]+((S.loans||[]).some(l=>l.late)?" · 🚨 prêt en retard":"");
+
+  syncCI();
+  renderGovernment();
+  if(S.payDue){
+    $("pay-card").style.display="block";
+    $("pay-ti").textContent="💸 Salaires du mois "+S.payDue.month+" à payer";
+    $("pay-tx").textContent = fmt(dueTotal())+" dus sur "+Object.keys(S.payDue.br).length+" filiale(s)."
+      + (S.lateDays>1 ? " Retard de "+S.lateDays+" jours : votre réputation et votre popularité chutent chaque jour." : " Payez avant la fin de la journée pour éviter toute sanction.");
+  } else $("pay-card").style.display="none";
+  renderPay();
+  if(S.billsDue){
+    $("bills-card").style.display="block";
+    $("bills-ti").textContent="🧾 Charges du mois "+S.billsDue.month+" à régler";
+    $("bills-tx").textContent = fmt(billsTotalDue())+" dus (loyer, électricité, eau, impôts) sur "+Object.keys(S.billsDue.br).length+" filiale(s)."
+      + (S.billLateDays>1 ? " Retard de "+S.billLateDays+" jours : réputation en baisse."+(S.billLateDays>=5?" Studios automatiques en pause tant que ce n'est pas réglé.":"") : " Réglez avant la fin de la journée.");
+  } else $("bills-card").style.display="none";
+  renderCharges();
+
+  $("daily-card").style.display = S.lastDaily ? "block":"none";
+  if(S.lastDaily) $("daily-tx").textContent=S.lastDaily;
+
+  if(hasTech("auto")){
+    $("auto-card").style.display="block";
+    const dep=S.autoDeployed||["ci"];
+    $("auto-card").querySelector("h3").textContent = dep.length>1 ? "🤖 Studios automatiques ("+dep.length+" filiales)" : "🤖 Studio automatique — Côte d'Ivoire";
+    const nbAuto=S.products.filter(p=>p.auto&&p.live).length;
+    const statusTxt = dep.map(b=>{
+      const st=ensureAutoStudio(b);
+      return brName(b)+" : "+(st.current?"développe son prochain produit ("+st.current.daysLeft+" j restants)":"recherche son prochain produit");
+    }).join(" · ");
+    $("auto-tx").textContent = "Vos filiales automatisées développent et publient seules leurs produits, sans aucune action de votre part : "+nbAuto+" produit(s) déjà en ligne, pour environ "+fmt(autoIncome())+" par jour au total. "+statusTxt+".";
+  } else $("auto-card").style.display="none";
+  $("deals-block").style.display = exp ? "block":"none";
+  if(exp) renderDeals();
+
+  $("goal-tx").textContent = !S.account
+    ? "Encaissez vos premiers contrats freelance, puis ouvrez votre compte Tech Bank pour sécuriser vos bénéfices."
+    : (!exp ? "Devenez le numéro un ivoirien : atteignez le niveau "+CI_END_LEVEL+" pour ouvrir l'export vers l'Afrique de l'Ouest."
+      : (!Object.values(S.countries).some(c=>c.installed) ? "Choisissez un premier pays d'Afrique de l'Ouest et ouvrez-y un bureau."
+      : (!Object.values(S.countries).some(c=>c.licensed) ? "Gagnez en popularité dans votre pays d'accueil jusqu'à obtenir la licence d'exploitation."
+      : (!S.products.length ? "Développez votre premier produit technologique dans l'atelier."
+      : (!hasTech("auto") ? "Recherchez le moteur d'automatisation pour que la Côte d'Ivoire travaille sans vous."
+      : "Déployez vos produits dans toute la région et visez le niveau 20.")))));
+
+  /* contrats CI */
+  const showCI = !hasTech("auto");
+  $("ci-block").style.display = showCI ? "block":"none";
+  if(showCI){
+    $("ci-intro").textContent = exp
+      ? "Votre filiale d'Abidjan continue de signer des contrats. Tant que le moteur d'automatisation n'est pas activé, c'est vous qui devez les lancer et les livrer."
+      : "Avant les grands produits, on fait ce que tout le monde fait à Abidjan : on prend des contrats. Chaque contrat coûte un peu d'argent à démarrer et rapporte davantage à la livraison.";
+    $("pill-miss").textContent=S.missions.length+" dispo";
+    renderMissions();
+  }
+
+  /* entreprise */
+  $("co-logo").innerHTML = S.logoImg ? '<img src="'+S.logoImg+'">' : S.logo;
+  $("co-name").textContent=S.company;
+  $("co-sub").textContent="Fondée par "+S.player+" · Abidjan 🇨🇮"+(S.title?" · "+S.title:"");
+  $("co-lvl").textContent=S.level+" / 20";
+  $("co-val").textContent=shortF(val);
+  $("co-rep").textContent=Math.round(S.rep)+" / 100";
+  $("co-ca").textContent=shortF(S.revenue);
+  $("co-dep").textContent=shortF(S.expenses);
+  $("co-ben").textContent=shortF(net);
+  $("co-siege").textContent = S.level<3 ? "Un bureau partagé à Abidjan. Un ordinateur, une bonne connexion, beaucoup d'ambition."
+    : (S.level<8 ? "Un petit local à Cocody, deux postes de travail et un tableau blanc toujours plein."
+    : (S.level<11 ? "Un plateau entier dans une tour du Plateau, avec vue sur la lagune."
+    : "Un siège au Plateau, des filiales dans la région, et un logo qu'on reconnaît à l'aéroport."));
+  const inst=COUNTRIES.filter(c=>cData(c.k).installed);
+  $("co-intl").style.display = inst.length?"block":"none";
+  if(inst.length) $("co-intl-tx").innerHTML = inst.map(c=>c.f+" "+c.n+" — "+(cData(c.k).licensed?"licence obtenue ✅":"popularité "+Math.round(cData(c.k).pop)+" / "+c.seuil)).join("<br>");
+
+  /* produits */
+  $("prod-locked").style.display = exp?"none":"block";
+  $("prod-open").style.display = exp?"block":"none";
+  if(exp) renderProducts();
+
+  /* marché */
+  $("mkt-locked").style.display = exp?"none":"block";
+  $("mkt-open").style.display = exp?"block":"none";
+  if(exp){
+    const ciD=cData("ci");
+    $("mkt-ci").innerHTML = (hasTech("auto")
+      ? "Marché saturé, automatisé par le moteur OPS-1. Revenus versés automatiquement en banque : "+fmt(autoIncome())+" / jour."
+      : "Marché saturé : vous n'avez plus de concurrent. Vos contrats se signent encore à la main depuis le tableau de bord.")
+      + '<br>Popularité : <b>'+Math.round(ciD.pop)+' / 100</b> · '+totalStaff("ci")+' employé(s)'
+      + '<span class="popbar ok" style="display:block"><i style="width:'+Math.min(100,ciD.pop)+'%"></i></span>';
+    $("ctry-list").innerHTML = COUNTRIES.map(c=>{
+      const d=cData(c.k);
+      const st = !d.installed ? "Non implanté · marché ×"+c.mkt.toFixed(2)
+        : (d.licensed ? (licenseActive(c.k) ? "✅ Licence active · popularité "+Math.round(d.pop)+" / 100"
+                                            : "⛔ Licence suspendue · popularité trop basse")
+                      : "⚠️ Restrictions en vigueur · popularité "+Math.round(d.pop)+" / "+c.seuil);
+      return '<button class="ctry" onclick="openCountry(\''+c.k+'\')"><span class="fl">'+c.f+'</span><span class="bd">'
+        +'<span class="ti">'+c.n+(d.licensed?' <span class="tag pay">actif</span>':'')+'</span>'
+        +'<span class="de">'+st+'</span>'
+        +(d.installed?'<span class="popbar'+(d.pop>=c.seuil?" ok":"")+'"><i style="width:'+Math.min(100,d.pop)+'%"></i></span>':'')
+        +'</span><span class="ar">›</span></button>';
+    }).join("");
+  }
+
+  /* employés */
+  $("staff-locked").style.display="none";
+  $("staff-open").style.display="block";
+  $("pill-staff").textContent=S.employees+" pers.";
+  {
+    const bl=branches();
+    if(bl.indexOf(curBranch)<0) curBranch="ci";
+    $("staff-tabs").innerHTML = bl.map(b=>'<button class="'+(b===curBranch?"on":"")+'" onclick="setBranch(\''+b+'\')">'+brName(b)+'</button>').join("");
+    $("staff-br").textContent="💸 "+brName(curBranch)+" — masse salariale";
+    $("staff-pay").textContent = payrollOf(curBranch)
+      ? "Cette filiale coûte "+fmt(payrollOf(curBranch))+" par mois ("+MONTH+" jours de jeu). Total groupe : "+fmt(payroll())+" par mois."
+      : "Aucun employé dans cette filiale pour l'instant.";
+    $("staff-list").innerHTML = STAFF.map(s=>{
+      const n=staffCount(s.k,curBranch), cost=Math.round(s.s*1.5);
+      return '<div class="mission"><div class="em">'+s.e+'</div><div class="bd"><div class="ti">'+s.t+(n?' <span class="tag pay">×'+n+'</span>':'')+'</div>'
+        +'<div class="de">'+s.d+'</div><div class="tags"><span class="tag cost">Salaire '+fmt(s.s)+' / mois</span><span class="tag">Recrutement '+fmt(cost)+'</span></div>'
+        +'<div class="row"><button class="btn sm'+(S.cash>=cost?"":" ghost")+'" '+(S.cash>=cost?"":"disabled")+' onclick="hire(\''+s.k+'\')">Recruter ici</button>'
+        +(n?'<button class="btn ghost sm" onclick="fire(\''+s.k+'\')">Licencier</button>':'')+'</div></div></div>';
+    }).join("");
+  }
+
+  /* technologies */
+  $("tech-locked").style.display = exp?"none":"block";
+  $("tech-open").style.display = exp?"block":"none";
+  if(exp) renderTechs();
+
+  /* banque */
+  if(S.account){
+    $("bank-closed").style.display="none"; $("bank-open").style.display="block";
+    renderLoans();
+    $("bc-num").textContent=S.account.num; $("bc-name").textContent=S.account.holder; $("bc-exp").textContent=S.account.exp;
+    $("bc-tier").textContent = S.level>=15?"💠 PLATINE":(S.level>=11?"🖤 BLACK":"💳 GOLD");
+    $("bk-cash").textContent=shortF(S.cash); $("bk-bal").textContent=shortF(S.bank);
+    renderHist($("bank-hist"), S.history.filter(h=>h.kind==="bank"), "Aucune opération bancaire pour l'instant.");
+  }else{
+    $("bank-closed").style.display="block"; $("bank-open").style.display="none";
+    if(!$("in-card").value) $("in-card").value=S.player;
+  }
+
+  $("fi-rev").textContent=shortF(S.revenue);
+  $("fi-exp").textContent=shortF(S.expenses);
+  $("fi-net").textContent=shortF(net);
+  $("fi-tot").textContent=shortF(S.cash+S.bank);
+  renderHist($("fin-hist"), S.history, "Aucune opération enregistrée.");
+
+  $("pg-pill").textContent="Niveau "+S.level+" / 20";
+  $("pg-name").textContent="Niveau "+S.level+" — "+LEVELS[S.level-1];
+  $("pg-desc").textContent = S.level>=20 ? "🏆 Vous êtes devenu un véritable empire technologique." : "Prochain palier : "+LEVELS[S.level]+".";
+  $("pg-xp").style.width=Math.min(100,(S.xp/need)*100)+"%";
+  $("pg-xptx").textContent=Math.round(S.xp)+" / "+need+" XP";
+  $("pg-list").innerHTML = LEVELS.map((n,i)=>{
+    const cl = i+1<S.level ? "done" : (i+1===S.level ? "now" : "");
+    const mk = i+1<S.level ? "✓" : (i+1);
+    const zone = i+1<=CI_END_LEVEL ? "Côte d'Ivoire 🇨🇮" : "Afrique de l'Ouest 🌍";
+    return '<li class="'+cl+'"><span class="n">'+mk+'</span><span class="t">'+n+'<small>Niveau '+(i+1)+' · '+zone+'</small></span></li>';
+  }).join("");
+}
+function renderMissions(){
+  const w=$("missions");
+  if(!S.missions.length){ w.innerHTML='<div class="empty">Aucun contrat disponible pour l\'instant.</div>'; return; }
+  w.innerHTML = S.missions.map(m=>{
+    const running=!!m.started, done=running&&(Date.now()-m.started)>=m.dur*1000, canPay=S.cash>=m.c;
+    const rq=reqMission(m), tOk=teamOk(rq,"ci");
+    let btn;
+    if(!running) btn='<button class="btn sm'+(canPay&&tOk?"":" ghost")+'" onclick="startMission('+m.id+')" '+(canPay&&tOk?"":"disabled")+'>'
+      +(!tOk?"Équipe incomplète : "+teamMissing(rq,"ci"):(canPay?"Lancer le projet · "+fmt(m.c):"Trésorerie insuffisante"))+'</button>';
+    else if(done) btn='<button class="btn green sm" id="btn-'+m.id+'" data-ready="1" onclick="deliver('+m.id+')">✅ Livrer et encaisser</button>';
+    else btn='<button class="btn ghost sm" id="btn-'+m.id+'" disabled>En développement…</button>';
+    return '<div class="mission"><div class="em">'+m.e+'</div><div class="bd">'
+      +'<div class="ti">'+m.t+'</div><div class="de">'+m.d+'</div>'
+      +'<div class="tags"><span class="tag cost">Coût '+fmt(m.c)+'</span><span class="tag pay">Gain '+fmt(m.g)+'</span><span class="tag">+'+missionXp(m)+' XP</span><span class="tag">'+m.dur+' s</span><span class="tag b">'+reqText(reqMission(m))+'</span></div>'
+      +(running?'<div class="prog"><i id="prog-'+m.id+'" style="width:'+Math.min(100,(Date.now()-m.started)/(m.dur*10))+'%"></i></div><div class="de" id="lbl-'+m.id+'" style="margin-bottom:8px">'+(done?"Prêt à livrer":"Livraison en cours")+'</div>':'')
+      +btn+'</div></div>';
+  }).join("");
+}
+function renderProducts(){
+  const dev=S.products.filter(p=>!p.live), live=S.products.filter(p=>p.live);
+  $("pill-prod").textContent=live.length+" en ligne";
+  $("pill-rev").textContent=fmt(productIncome())+" / jour";
+  $("prod-dev").innerHTML = dev.length ? dev.map(p=>{
+    const done=(Date.now()-p.started)>=p.dur*1000;
+    return '<div class="mission"><div class="em">'+p.e+'</div><div class="bd"><div class="ti">'+p.name+'</div>'
+      +'<div class="de">'+p.cat+' · '+p.key+'</div>'
+      +'<div class="prog b"><i id="pd-'+p.id+'" style="width:'+Math.min(100,(Date.now()-p.started)/(p.dur*10))+'%"></i></div>'
+      +'<div class="de" id="pl-'+p.id+'" style="margin-bottom:8px">'+(done?"Prêt à publier":"Développement en cours")+'</div>'
+      +'<button class="btn '+(done?"green":"ghost")+' sm" id="pb-'+p.id+'" '+(done?'data-ready="1"':"disabled")+' onclick="publish('+p.id+')">'+(done?"🚀 Mettre en ligne":"En développement…")+'</button>'
+      +'</div></div>';
+  }).join("") : '<div class="empty">Aucun produit en cours de développement.</div>';
+  $("prod-live").innerHTML = live.length ? live.map(p=>{
+    const mult=1+p.deployed.reduce((s,k)=>s+(CT(k)?CT(k).mkt*0.35:0),0);
+    const tier=TIERS.find(t=>t.k===p.tier)||TIERS[1];
+    return '<div class="mission"><div class="em">'+p.e+'</div><div class="bd"><div class="ti">'+p.name+(p.auto?' <span class="tag b">🤖 Auto</span>':'')+'</div>'
+      +'<div class="de">'+p.cat+' · '+tier.t+(p.studio?' · développé par '+brName(p.studio):'')+'</div>'
+      +'<div class="tags"><span class="tag pay">'+fmt(p.rev*mult*revBonus())+' / jour</span>'
+      +'<span class="tag b">'+(p.deployed.length?p.deployed.map(k=>CT(k).f).join(" "):"🇨🇮 seulement")+'</span></div>'
+      +'<button class="btn ghost sm" onclick="nav(\'v-market\')">Déployer dans un pays</button></div></div>';
+  }).join("") : '<div class="empty">Aucun produit en ligne pour l\'instant.</div>';
+}
+function renderTechs(){
+  const slots=autoSlots(), dep=S.autoDeployed||[];
+  let head="";
+  if(hasTech("auto")){
+    const studioLines=dep.map(b=>{
+      const st=ensureAutoStudio(b);
+      const cur=st.current ? AUTO_CATALOG[st.current.idx].t+" ("+st.current.daysLeft+" j restants)" : "en recherche du prochain produit";
+      return "• "+brName(b)+" — budget "+fmt(st.budget)+" — "+cur;
+    }).join("<br>");
+    const nbAuto=S.products.filter(p=>p.auto&&p.live).length;
+    head='<div class="card auto"><h3>🤖 Réseau automatisé — OPS-'+(S.autoTier||1)+'</h3>'
+      +'<p>'+dep.length+' / '+slots+' filiale(s) automatisée(s). Chacune développe et publie seule ses produits, financés par ses propres revenus. '+nbAuto+' produit(s) déjà en ligne.'
+      +(dep.length<slots?" Ouvrez la fiche d'un pays sous licence, dans le Marché, pour y déployer un nouveau studio.":" Tous les emplacements sont occupés — améliorez OPS ci-dessous pour en libérer davantage.")
+      +'</p><p style="margin-top:8px">'+studioLines+'</p></div>';
+    const next=(S.autoTier||1)+1, spec=autoTierSpec(next);
+    if(S.autoUpgrade){
+      const st=S.autoUpgrade, done=(Date.now()-st.started)>=st.dur*1000;
+      head+='<div class="card auto"><h3>🤖 Mise à niveau OPS-'+st.tier+' en cours</h3>'
+        +'<p>Débloquera '+autoTierSpec(st.tier).slots+' emplacements d\'automatisation au total.</p>'
+        +'<div class="prog b"><i id="ops-up-prog" style="width:'+Math.min(100,(Date.now()-st.started)/(st.dur*10))+'%"></i></div>'
+        +'<div class="de" id="ops-up-lbl">'+(done?"Prêt à activer":"Déploiement en cours")+'</div>'
+        +'<button class="btn '+(done?"blue":"ghost")+' sm" id="ops-up-btn" '+(done?'data-ready="1"':"disabled")+' onclick="activateAutoUpgrade()">'+(done?"⚡ Activer OPS-"+st.tier:"Déploiement…")+'</button></div>';
+    }else{
+      const locked=S.level<spec.lvl;
+      head+='<div class="card"><h3>🤖 Mise à niveau OPS-'+next+'</h3>'
+        +'<p>Débloque '+spec.slots+' emplacements d\'automatisation au total (contre '+slots+' aujourd\'hui). Illimité : chaque palier suivant coûte plus cher mais ouvre toujours 2 emplacements de plus, sans plafond.</p>'
+        +'<div class="tags"><span class="tag cost">'+fmt(spec.c)+'</span><span class="tag">'+spec.d+' jours</span><span class="tag">Niveau '+spec.lvl+'</span></div>'
+        +'<button class="btn sm'+((!locked&&S.cash>=spec.c)?"":" ghost")+'" '+((!locked&&S.cash>=spec.c)?"":"disabled")+' onclick="researchAutoUpgrade()">'
+        +(locked?"Niveau "+spec.lvl+" requis":(S.cash>=spec.c?"Lancer la mise à niveau":"Trésorerie insuffisante"))+'</button></div>';
+    }
+  }
+  const cards = TECHS.map(t=>{
+    const st=S.techs[t.k];
+    const prereqOk = !t.req || hasTech(t.req);
+    const locked = S.level<t.lvl || !prereqOk;
+    let body;
+    if(st&&st.done) body='<span class="tag pay">✅ Active'+(t.k==="auto"?" depuis le jour "+S.autoSince+" · "+autoSlots()+" filiales max":"")+'</span>';
+    else if(st){
+      const done=(Date.now()-st.started)>=st.dur*1000;
+      body='<div class="prog b"><i id="tc-'+t.k+'" style="width:'+Math.min(100,(Date.now()-st.started)/(st.dur*10))+'%"></i></div>'
+        +'<div class="de" id="tl-'+t.k+'">'+(done?"Prêt à activer":"Recherche en cours")+'</div>'
+        +'<button class="btn '+(done?"blue":"ghost")+' sm" id="tb-'+t.k+'" '+(done?'data-ready="1"':"disabled")+' onclick="activate(\''+t.k+'\')">'+(done?"⚡ Activer":"Recherche…")+'</button>';
+    }
+    else{
+      const reason = !prereqOk ? "Nécessite d'abord : "+TECHS.find(x=>x.k===t.req).t
+        : (S.level<t.lvl ? "Niveau "+t.lvl+" requis" : (S.cash>=t.c?"Lancer la recherche":"Trésorerie insuffisante"));
+      body='<div class="tags"><span class="tag cost">'+fmt(t.c)+'</span><span class="tag">'+t.d+' jours</span><span class="tag">Niveau '+t.lvl+'</span>'+(t.slots?'<span class="tag b">'+t.slots+' filiales max</span>':'')+'</div>'
+        +'<button class="btn sm'+((!locked&&S.cash>=t.c)?"":" ghost")+'" '+((!locked&&S.cash>=t.c)?"":"disabled")+' onclick="research(\''+t.k+'\')">'+reason+'</button>';
+    }
+    return '<div class="card'+((t.k==="auto"&&(!st||!st.done))?" auto":"")+'"><h3>'+t.e+' '+t.t+'</h3><p>'+t.x+'</p><div style="height:12px"></div>'+body+'</div>';
+  }).join("");
+  $("tech-open").innerHTML = head+cards;
+}
+function renderCharges(){
+  $("pill-charges").textContent="Mois "+S.month;
+  const bl=branches();
+  if(!S.billsDue){
+    const next=MONTH-(S.day%MONTH);
+    $("charges-head-tx").textContent = "Loyer, électricité, eau et impôts se règlent à la fin de chaque mois de jeu ("+MONTH+" jours), pour chaque filiale. Prochaine échéance dans "+next+" jour(s).";
+    $("charges-list").innerHTML = bl.map(b=>{
+      const bl2=billsFor(b);
+      return '<div class="card"><h3>'+brName(b)+'</h3><p>🏠 Loyer '+fmt(bl2.loyer)+'<br>💡 Électricité '+fmt(bl2.elec)+'<br>🚰 Eau '+fmt(bl2.eau)+'<br>🏛️ Impôts '+fmt(bl2.impot)+'</p>'
+        +'<div class="tags" style="margin-top:10px"><span class="tag cost">Total '+fmt(bl2.total)+' / mois</span></div></div>';
+    }).join("");
+    return;
+  }
+  $("charges-head-tx").textContent = "Mois "+S.billsDue.month+" : "+fmt(billsTotalDue())+" à régler."
+    + (S.billLateDays>1 ? " ⚠️ Retard de "+S.billLateDays+" jours : réputation en baisse."+(S.billLateDays>=5?" Les studios automatiques concernés sont en pause.":"")
+                        : " Réglez les charges de chaque filiale avant la fin de la journée.");
+  let html='<div class="card hl"><h3>🧾 Tout régler</h3><p>Paie les charges de toutes les filiales en une seule opération.</p><div style="height:12px"></div>'
+    +'<button class="btn sm'+(S.cash+S.bank>=billsTotalDue()?"":" ghost")+'" '+(S.cash+S.bank>=billsTotalDue()?"":"disabled")+' onclick="payAllBills()">'
+    +(S.cash+S.bank>=billsTotalDue()?"Payer "+fmt(billsTotalDue()):"Fonds insuffisants · "+fmt(billsTotalDue()))+'</button></div>';
+  html += Object.keys(S.billsDue.br).map(b=>{
+    const bl2=S.billsDue.br[b];
+    const paused=ensureAutoStudio(b).paused;
+    return '<div class="card"><h3>'+brName(b)+(paused?' <span class="tag cost">⏸️ studio en pause</span>':'')+'</h3>'
+      +'<p>🏠 Loyer '+fmt(bl2.loyer)+'<br>💡 Électricité '+fmt(bl2.elec)+'<br>🚰 Eau '+fmt(bl2.eau)+'<br>🏛️ Impôts '+fmt(bl2.impot)+'</p>'
+      +'<div class="tags" style="margin-top:10px"><span class="tag cost">À payer '+fmt(bl2.total)+'</span></div>'
+      +'<button class="btn green sm'+(S.cash+S.bank>=bl2.total?"":" ghost")+'" '+(S.cash+S.bank>=bl2.total?"":"disabled")+' onclick="payBillsBranch(\''+b+'\')">Régler cette filiale</button></div>';
+  }).join("");
+  const paid=bl.filter(b=>!S.billsDue.br[b]);
+  if(paid.length) html+='<div class="card"><h3>✅ Déjà réglées ce mois</h3><p>'+paid.map(brName).join("<br>")+'</p></div>';
+  $("charges-list").innerHTML=html;
+}
+function renderPay(){
+  $("pill-pay").textContent="Mois "+S.month;
+  const bl=branches();
+  if(!S.payDue){
+    const next=MONTH-(S.day%MONTH);
+    $("pay-head-tx").textContent = payroll()
+      ? "Les salaires sont versés à la fin de chaque mois de jeu ("+MONTH+" jours). Prochaine paie dans "+next+" jour(s) : "+fmt(payroll())+" pour "+bl.length+" filiale(s)."
+      : "Aucun employé pour l'instant : rien à payer. Les salaires se règlent à la fin de chaque mois de jeu ("+MONTH+" jours).";
+    $("pay-list").innerHTML = bl.map(b=>{
+      const roles=STAFF.filter(s=>staffCount(s.k,b)>0);
+      if(!roles.length) return "";
+      return '<div class="card"><h3>'+brName(b)+'</h3><p>'+roles.map(s=>staffCount(s.k,b)+" × "+s.t+" — "+fmt(s.s*staffCount(s.k,b))+" / mois").join("<br>")
+        +'</p><div class="tags" style="margin-top:10px"><span class="tag cost">Total '+fmt(payrollOf(b))+' / mois</span></div></div>';
+    }).join("") || '<div class="empty">Aucun employé dans le groupe.</div>';
+    return;
+  }
+  $("pay-head-tx").textContent = "Mois "+S.payDue.month+" : "+fmt(dueTotal())+" à verser."
+    + (S.lateDays>1 ? " ⚠️ Retard de "+S.lateDays+" jours. Réputation −1,2 et popularité −1,6 par jour, démissions à partir de 10 jours."
+                    : " Réglez la paie de chaque filiale avant la fin de la journée.");
+  let html='<div class="card hl"><h3>💸 Tout payer</h3><p>Règle la paie de toutes les filiales en une seule opération.</p><div style="height:12px"></div>'
+    +'<button class="btn sm'+(S.cash+S.bank>=dueTotal()?"":" ghost")+'" '+(S.cash+S.bank>=dueTotal()?"":"disabled")+' onclick="payAll()">'
+    +(S.cash+S.bank>=dueTotal()?"Payer "+fmt(dueTotal()):"Fonds insuffisants · "+fmt(dueTotal()))+'</button></div>';
+  html += Object.keys(S.payDue.br).map(b=>{
+    const amt=S.payDue.br[b];
+    const roles=STAFF.filter(s=>staffCount(s.k,b)>0);
+    return '<div class="card"><h3>'+brName(b)+'</h3><p>'+roles.map(s=>staffCount(s.k,b)+" × "+s.t+" — "+fmt(s.s*staffCount(s.k,b))).join("<br>")+'</p>'
+      +'<div class="tags" style="margin-top:10px"><span class="tag cost">À payer '+fmt(amt)+'</span></div>'
+      +'<button class="btn green sm'+(S.cash+S.bank>=amt?"":" ghost")+'" '+(S.cash+S.bank>=amt?"":"disabled")+' onclick="payBranch(\''+b+'\')">Payer cette filiale</button></div>';
+  }).join("");
+  const paid=bl.filter(b=>payrollOf(b)>0 && !S.payDue.br[b]);
+  if(paid.length) html+='<div class="card"><h3>✅ Déjà payées ce mois</h3><p>'+paid.map(brName).join("<br>")+'</p></div>';
+  $("pay-list").innerHTML=html;
+}
+let histFilter="all";
+const HIST_TABS=[["all","Tout"],["auto","🤖 Automatisation"],["deal","💎 Grands contrats"],["co","🏢 Entreprise"],["bank","🏦 Banque & prêts"]];
+function histTab(k){ histFilter=k; renderFullHist(); }
+function renderFullHist(){
+  const tabsEl=$("hist-tabs");
+  if(tabsEl) tabsEl.innerHTML = HIST_TABS.map(t=>'<button class="'+(t[0]===histFilter?"on":"")+'" onclick="histTab(\''+t[0]+'\')">'+t[1]+'</button>').join("");
+  const list = histFilter==="all" ? S.history : S.history.filter(h=>h.kind===histFilter);
+  $("pill-hist").textContent=list.length;
+  renderHist($("hist-list"), list, "Aucune opération dans cette catégorie.");
+}
+function renderHist(el, list, emptyTx){
+  if(!list.length){ el.innerHTML='<div class="empty">'+emptyTx+'</div>'; return; }
+  el.innerHTML = list.slice(0,25).map(h=>
+    '<div class="it"><div class="em">'+h.em+'</div><div class="bd"><b>'+h.label+'</b><small>'+h.t+' · Jour '+(h.day||1)+'</small></div>'
+    +'<div class="am '+(h.amount>0?"pos":(h.amount<0?"neg":""))+'">'+(h.amount===0?"—":(h.amount>0?"+":"−")+fmt(Math.abs(h.amount)))+'</div></div>'
+  ).join("");
+}
+
+/* ================= NAVIGATION ================= */
+function buildNav(){
+  const items = isExport()
+    ? [["v-dash","🏠","Bureau"],["v-prod","💻","Produits"],["v-market","🌍","Marché"],["v-gov","🏛️","Gouv."],["v-bank","🏦","Banque"]]
+    : [["v-dash","🏠","Tableau"],["v-company","🏢","Entreprise"],["v-bank","🏦","Banque"],["v-prog","🏆","Niveaux"]];
+  $("nav").innerHTML = items.map((it,i)=>'<button data-v="'+it[0]+'" class="'+(i===0?"on":"")+'"><span class="e">'+it[1]+'</span>'+it[2]+'</button>').join("")
+    +'<button onclick="openSheet()"><span class="e">☰</span>Plus</button>';
+  document.querySelectorAll("nav.bottom button[data-v]").forEach(b=>b.onclick=()=>nav(b.dataset.v));
+
+  const m=[["v-dash","🏠","Tableau de bord"],["v-company","🏢","Entreprise"],["v-prod","💻","Produits"],["v-staff","👨‍💼","Employés"],
+    ["v-pay","💸","Paie"],["v-charges","🧾","Charges"],["v-bank","🏦","Banque"],["v-fin","📊","Finance"],["v-hist","🕘","Historique"],["v-tech","🧪","Technologies"],
+    ["v-market","🌍","Marché"],["v-gov","🏛️","Gouvernement"],["v-prog","🏆","Progression"],["v-set","⚙️","Paramètres"]];
+  $("menu").innerHTML = m.map(x=>{
+    const dis = !isExport() && ["v-prod","v-tech","v-market"].indexOf(x[0])>=0;
+    return '<button class="'+(dis?"dis":"")+'" onclick="nav(\''+x[0]+'\')"><span class="e">'+x[1]+'</span>'+x[2]+'</button>';
+  }).join("")+'<button onclick="soon(\'marketing\')" class="dis"><span class="e">📢</span>Marketing</button>'
+   +'<button onclick="soon(\'gaming\')" class="dis"><span class="e">🎮</span>Jeux vidéo</button>';
+}
+function nav(id){
+  const already = $(id) && $(id).classList.contains("on");
+  document.querySelectorAll(".sect").forEach(s=>s.classList.remove("on"));
+  $(id).classList.add("on");
+  document.querySelectorAll("nav.bottom button[data-v]").forEach(b=>b.classList.toggle("on", b.dataset.v===id));
+  closeSheet();
+  if(!already) window.scrollTo(0,0); /* ne pas faire remonter la page pour une simple mise à jour de la vue déjà ouverte */
+  if(id==="v-hist") renderFullHist();
+  if(id==="v-charges") renderCharges();
+  if(id==="v-gov") renderGovernment();
+  if(id!=="v-ctry") render();
+}
+function openSheet(){ $("sheet-bg").classList.add("on"); $("sheet").classList.add("on"); }
+function closeSheet(){ $("sheet-bg").classList.remove("on"); $("sheet").classList.remove("on"); }
+const SOON={
+  marketing:{e:"📢",h:"Marketing",p:"Campagnes publicitaires, budget de communication et notoriété par pays pour faire décoller vos ventes. Prévu pour la V3, avec les crédits bancaires et les événements aléatoires."},
+  gaming:{e:"🎮",h:"Jeux vidéo & consoles",p:"Studios de jeux Android, iOS, PC et console, puis votre propre machine : TEKBOX ONE, TEKBOX PRO et TEKBOX X. Prévu pour la V4, avec la fin de jeu au niveau 20."}
+};
+function soon(k){
+  const d=SOON[k];
+  $("soon-ti").textContent=d.h; $("soon-em").textContent=d.e; $("soon-h").textContent=d.h; $("soon-p").textContent=d.p;
+  nav("v-soon");
+}
+
+/* ================= SAUVEGARDE ================= */
+function saveGame(notify){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); if(notify) toast("Partie sauvegardée 💾"); }
+  catch(e){ if(notify) toast("Sauvegarde impossible sur cet appareil"); }
+}
+function resetGame(){
+  $("md-ti").textContent="Effacer la partie ?";
+  $("md-tx").textContent="Votre entreprise, vos produits, vos implantations et toute votre progression seront définitivement perdus.";
+  $("md-input").style.display="none"; $("md-body").style.display="none";
+  $("md-ok").style.display="block"; $("md-ok").textContent="Tout effacer"; $("md-ok").className="btn sm";
+  $("md-ok").style.background="linear-gradient(135deg,#FF4D5E,#C6233A)";
+  $("md-ok").onclick=()=>{ try{localStorage.removeItem(KEY);}catch(e){} location.reload(); };
+  $("modal-bg").classList.add("on");
+}
+
+/* ================= CONFETTIS ================= */
+function burst(n){
+  const cv=$("confetti"), ctx=cv.getContext("2d");
+  cv.width=innerWidth; cv.height=innerHeight; cv.classList.add("on");
+  const cols=["#FF7A18","#FFFFFF","#00A65A","#E8B93B"];
+  const ps=[];
+  for(let i=0;i<n;i++) ps.push({x:innerWidth/2+(Math.random()-.5)*160,y:innerHeight*0.42,vx:(Math.random()-.5)*9,vy:-Math.random()*13-4,s:4+Math.random()*6,c:cols[i%4],r:Math.random()*6});
+  let f=0;
+  (function loop(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    ps.forEach(p=>{ p.vy+=0.38; p.x+=p.vx; p.y+=p.vy; p.r+=0.1;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r); ctx.fillStyle=p.c; ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*1.6); ctx.restore(); });
+    if(++f<130) requestAnimationFrame(loop); else { ctx.clearRect(0,0,cv.width,cv.height); cv.classList.remove("on"); }
+  })();
+}
+
+/* ================= MUSIQUE D'AMBIANCE ================= */
+const MUSIC=(function(){
+  let ctx=null, master=null, filt=null, running=false, timer=null, chordIdx=0;
+  const CHORDS=[
+    [261.63,329.63,392.00,493.88],
+    [220.00,261.63,329.63,392.00],
+    [174.61,220.00,261.63,349.23],
+    [196.00,246.94,293.66,349.23]
+  ];
+  function ensureCtx(){
+    if(ctx) return;
+    try{
+      ctx=new (window.AudioContext||window.webkitAudioContext)();
+      master=ctx.createGain(); master.gain.value=(S&&S.musicMuted)?0:0.045;
+      filt=ctx.createBiquadFilter(); filt.type="lowpass"; filt.frequency.value=1100;
+      master.connect(filt); filt.connect(ctx.destination);
+    }catch(e){ ctx=null; }
+  }
+  function playChord(freqs,dur){
+    if(!ctx) return;
+    const now=ctx.currentTime;
+    freqs.forEach(f=>{
+      const osc=ctx.createOscillator(); osc.type="sine"; osc.frequency.value=f;
+      const g=ctx.createGain();
+      g.gain.setValueAtTime(0,now);
+      g.gain.linearRampToValueAtTime(0.7/freqs.length,now+1.4);
+      g.gain.linearRampToValueAtTime(0,now+dur);
+      osc.connect(g); g.connect(master);
+      osc.start(now); osc.stop(now+dur+0.1);
+    });
+  }
+  function loop(){
+    if(!running||!ctx) return;
+    const dur=6.5;
+    playChord(CHORDS[chordIdx%CHORDS.length],dur);
+    chordIdx++;
+    timer=setTimeout(loop,dur*1000*0.92);
+  }
+  return{
+    start(){ ensureCtx(); if(!ctx) return; if(ctx.state==="suspended") ctx.resume(); if(!running){ running=true; loop(); } },
+    pause(){ running=false; clearTimeout(timer); if(ctx&&ctx.state==="running") ctx.suspend(); },
+    resume(){ if(!ctx) return; if(ctx.state==="suspended") ctx.resume(); if(!running){ running=true; loop(); } },
+    setMuted(m){ if(master) master.gain.value=m?0:0.045; }
+  };
+})();
+function toggleMusic(){
+  S.musicMuted=!S.musicMuted;
+  MUSIC.setMuted(S.musicMuted);
+  $("btn-music").textContent = S.musicMuted ? "🔇 Réactiver la musique" : "🔊 Couper la musique";
+  saveGame();
+}
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden) MUSIC.pause();
+  else if(S && $("app") && $("app").classList.contains("on")) MUSIC.resume();
+});
+
+/* V2.8 — activation musique après interaction utilisateur (politique autoplay navigateur) */
+["pointerdown","keydown","touchstart"].forEach(ev=>document.addEventListener(ev,()=>{ try{ if(S && !S.musicMuted) MUSIC.start(); }catch(e){} },{once:false,passive:true}));
+
+/* ================= DÉMARRAGE ================= */
+function normalizeState(){
+  S.countries=S.countries||{}; S.products=S.products||[]; S.staff=S.staff||{}; S.techs=S.techs||{};
+  cData("ci");
+  /* reprise des anciennes parties : l'équipe globale devient celle du siège d'Abidjan */
+  if(S.staff && Object.keys(S.staff).length){
+    const st=brStaff("ci");
+    Object.keys(S.staff).forEach(k=>{ if(ROLE(k)) st[k]=(st[k]||0)+S.staff[k]; });
+    S.staff={};
+  }
+  S.month=S.month||1; S.lateDays=S.lateDays||0;
+  S.loans=S.loans||[]; S.loanAlertPending=!!S.loanAlertPending;
+  S.autoDeployed=S.autoDeployed||(hasTech("auto")?["ci"]:[]);
+  S.autoStudio=S.autoStudio||{};
+  (S.autoDeployed||[]).forEach(b=>ensureAutoStudio(b, b==="ci"?600000:900000));
+  S.dealCooldown=S.dealCooldown||{};
+  /* migration : anciens paliers OPS-2/3/4 -> palier dynamique équivalent */
+  if(S.autoTier===undefined || S.autoTier===0){
+    if(S.techs.auto4&&S.techs.auto4.done) S.autoTier=4;
+    else if(S.techs.auto3&&S.techs.auto3.done) S.autoTier=3;
+    else if(S.techs.auto2&&S.techs.auto2.done) S.autoTier=2;
+    else if(S.techs.auto&&S.techs.auto.done) S.autoTier=1;
+    else S.autoTier=0;
+  }
+  S.autoUpgrade=S.autoUpgrade||null;
+  S.billsDue=S.billsDue||null; S.billLateDays=S.billLateDays||0;
+  S.musicMuted=!!S.musicMuted;
+  S.governments=S.governments||{history:[],totalProjects:0};
+  Object.keys(S.countries||{}).forEach(k=>{ if(k!=="ci"){ const d=S.countries[k]; if(d && d.gov && d.gov.pending===undefined) d.gov.pending=null; } });
+  syncCI();
+  S.employees=1+totalStaff();
+}
+/* ================= EXPORT / IMPORT DE SAUVEGARDE ================= */
+function exportSave(){
+  try{
+    const data=JSON.stringify(S);
+    const blob=new Blob([data],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const safeName=(S.company||"partie").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9]+/g,"_").slice(0,30) || "partie";
+    const a=document.createElement("a");
+    a.href=url; a.download="tech-empire-"+safeName+"-niv"+S.level+".json";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),3000);
+    toast("💾 Sauvegarde exportée");
+  }catch(e){ toast("Échec de l'export de la sauvegarde"); }
+}
+function importSaveFile(input){
+  const file=input.files && input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      if(!data || typeof data!=="object" || !data.player || !data.company){ toast("Fichier de sauvegarde invalide"); return; }
+      S=Object.assign(blank(),data);
+      normalizeState();
+      saveGame();
+      toast("✅ Sauvegarde importée — "+S.company+" (niveau "+S.level+")");
+      if(S.tutoDone){ refillMissions(); if(S.level>=CI_END_LEVEL && !S.ceremony) showCeremony(); else startGame(); }
+      else go(S.company?"s-tuto":(S.player?"s-company":"s-profile"));
+    }catch(err){ toast("Impossible de lire ce fichier de sauvegarde"); }
+    finally{ input.value=""; }
+  };
+  reader.onerror=()=>{ toast("Impossible de lire ce fichier"); input.value=""; };
+  reader.readAsText(file);
+}
+
+(function init(){
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){}
+  S = saved && saved.player ? Object.assign(blank(),saved) : blank();
+  normalizeState();
+  buildPickers();
+  if(saved && saved.player){
+    $("btn-continue").style.display="block";
+    $("in-player").value=S.player; $("in-company").value=S.company||"";
+    $("prev-avatar").innerHTML = S.photo ? '<img src="'+S.photo+'">' : S.avatar;
+    $("prev-logo").innerHTML = S.logoImg ? '<img src="'+S.logoImg+'">' : S.logo;
+    if(S.tutoDone){ refillMissions(); if(S.level>=CI_END_LEVEL && !S.ceremony) showCeremony(); else startGame(); }
+  }
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape"){closeModal();closeSheet();} });
+})();
+</script>
+</body>
+</html>
