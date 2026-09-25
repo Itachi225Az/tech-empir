@@ -264,6 +264,11 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 #event-alert{position:fixed;right:18px;top:18px;z-index:120;display:none;align-items:center;gap:10px;max-width:360px;padding:13px 14px;border:1px solid rgba(255,77,94,.75);border-radius:16px;background:linear-gradient(145deg,rgba(255,77,94,.22),#1b212b 70%);box-shadow:0 16px 45px rgba(0,0,0,.45);cursor:pointer;animation:eventPulse 1.5s infinite}.event-alert-dot{color:#ff4d5e;font-size:20px;line-height:1}.event-alert-arrow{font-size:25px;margin-left:auto}.event-alert-tx{display:block;color:var(--txt2);font-size:12px;margin-top:2px}@keyframes eventPulse{0%,100%{box-shadow:0 16px 45px rgba(0,0,0,.45),0 0 0 rgba(255,77,94,0)}50%{box-shadow:0 16px 45px rgba(0,0,0,.45),0 0 0 8px rgba(255,77,94,.10)}}
 .event-bg{position:fixed;inset:0;background:rgba(5,8,12,.78);backdrop-filter:blur(8px);z-index:130;display:none;align-items:center;justify-content:center;padding:18px}.event-bg.on{display:flex}.event-card{width:min(620px,100%);max-height:90vh;overflow:auto;background:linear-gradient(155deg,#202936,#151a22);border:1px solid rgba(86,214,255,.28);border-radius:22px;padding:20px;box-shadow:0 28px 80px rgba(0,0,0,.55)}.event-head{display:flex;gap:12px;align-items:center}.event-head>span{font-size:38px}.event-kicker{font-size:10px;color:var(--bleu);font-weight:800;letter-spacing:1px}.event-dialogue{background:rgba(255,255,255,.035);border-left:3px solid var(--bleu);border-radius:10px;padding:12px;margin:14px 0;line-height:1.6;font-size:14px}.event-question{margin:10px 0;padding:11px;border-radius:12px;background:rgba(255,255,255,.04)}
 .hardware-card{border:1px solid rgba(255,122,24,.25);background:linear-gradient(145deg,rgba(255,122,24,.08),var(--card))}.component-list{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.component-list span{font-size:11px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--txt2)}
+
+/* V3.0+ */
+.hero-cover{position:relative;overflow:hidden;border-radius:22px;border:1px solid rgba(86,214,255,.24);background:#0b1118;box-shadow:0 18px 55px rgba(0,0,0,.35);margin-bottom:16px}.hero-cover img{display:block;width:100%;height:auto;aspect-ratio:3/1;object-fit:cover;object-position:left top}.hero-cover .hero-caption{position:absolute;left:16px;right:16px;bottom:14px;padding:10px 12px;border-radius:14px;background:linear-gradient(90deg,rgba(5,8,12,.86),rgba(5,8,12,.35));backdrop-filter:blur(5px)}
+.brand-logo-img{width:38px;height:38px;object-fit:cover;border-radius:10px;display:block}.invest-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.review-stars{color:#ffd34d;letter-spacing:2px}.review-card{padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.03);margin-top:8px}.cloud-card{border-color:rgba(86,214,255,.25);background:linear-gradient(145deg,rgba(86,214,255,.08),var(--card))}.cloud-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cloud-status{font-size:12px;color:var(--txt2);margin-top:8px}.chat-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.lock-note{border:1px solid rgba(255,77,94,.5);background:rgba(255,77,94,.08);border-radius:12px;padding:10px;font-size:12px;color:#ff8f99}
+@media(max-width:620px){.cloud-row{grid-template-columns:1fr}.hero-cover img{aspect-ratio:16/9}.hero-cover .hero-caption{font-size:11px}}
 </style>
 </head>
 <body>
@@ -360,7 +365,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
   <div class="event-head"><span id="ev-icon">🎤</span><div><div class="event-kicker" id="ev-kicker">ÉVÉNEMENT</div><h2 id="ev-title">Interview</h2></div></div>
   <p id="ev-intro"></p><div class="event-dialogue" id="ev-dialogue"></div>
   <textarea id="ev-answer" class="field" rows="4" placeholder="Écrivez votre réponse avec votre clavier..."></textarea>
-  <div class="row" style="margin-top:10px"><button class="btn ghost sm" onclick="closeEvent()">Plus tard</button><button class="btn sm" id="ev-send" onclick="submitEventAnswer()">Répondre →</button></div>
+  <div class="row" style="margin-top:10px"><button class="btn ghost sm" onclick="closeEvent()">Plus tard</button><button class="btn ghost sm" id="ev-ask" style="display:none" onclick="askInvestorQuestion()">💬 Poser une question</button><button class="btn sm" id="ev-send" onclick="submitEventAnswer()">Répondre →</button></div>
 </div></div>
 
 <!-- JEU -->
@@ -371,7 +376,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
         <div class="av" id="hd-av">👨🏿‍💻</div>
         <div style="min-width:0">
           <div class="nm" id="hd-name">Joueur</div>
-          <div class="co"><span id="hd-logo">💻</span><span id="hd-co">Entreprise</span></div>
+          <div class="co"><span id="hd-logo"><img class="brand-logo-img" src="assets/tech-empire-logo.webp" alt="Tech Empire"></span><span id="hd-co">Entreprise</span></div>
         </div>
         <div class="lvl">
           <b id="hd-lvl">⭐ Niveau 1</b>
@@ -385,6 +390,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
   <main>
     <!-- TABLEAU DE BORD -->
     <section class="sect on" id="v-dash">
+      <div class="hero-cover"><img src="assets/tech-empire-v3-cover.webp" alt="Tech Empire V3.0"><div class="hero-caption"><b>TECH EMPIRE V3.0</b> · Construisez aujourd'hui, dominez demain.</div></div>
       <div class="h"><h2>Tableau de bord</h2><span class="pill" id="pill-status">Startup</span></div>
       <div class="grid2" style="margin-bottom:14px">
         <div class="stat"><div class="k">💰 Trésorerie</div><div class="v o" id="st-cash">0</div><div class="s">disponible maintenant</div></div>
@@ -601,6 +607,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
           </div>
         </div>
         <div style="font-size:11px;color:var(--txt2);text-align:center;margin-bottom:16px">Carte fictive propre au jeu. Aucun système bancaire réel n'est connecté.</div>
+        <div class="card cloud-card" style="margin-bottom:14px"><h3>🔁 Transférer de l'argent à un joueur</h3><p>Transférez de l'argent fictif à un autre joueur connecté grâce à son identifiant Tech Empire.</p><div class="cloud-row"><input class="field" id="transfer-player" placeholder="Identifiant du joueur" autocomplete="off"><input class="field" id="transfer-amount" type="number" min="1" placeholder="Montant en FCFA"></div><div style="height:8px"></div><button class="btn sm" onclick="sendPlayerTransfer()">💸 Envoyer l'argent</button><div id="transfer-status" class="cloud-status"></div><div id="transfer-history" class="hist" style="margin-top:10px"></div></div>
         <div class="grid2" style="margin-bottom:12px">
           <div class="stat"><div class="k">💰 Trésorerie</div><div class="v o" id="bk-cash">0</div></div>
           <div class="stat"><div class="k">🏦 Solde bancaire</div><div class="v g" id="bk-bal">0</div></div>
@@ -639,6 +646,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
         <div class="stat"><div class="k">📊 Bénéfice net</div><div class="v o" id="fi-net">0</div><div class="s">revenus − dépenses</div></div>
         <div class="stat"><div class="k">🧮 Patrimoine</div><div class="v" id="fi-tot">0</div><div class="s">trésorerie + banque</div></div>
       </div>
+      <div class="card cloud-card"><h3>📈 Investissements</h3><p>Investissez dans des projets fictifs du jeu. Chaque investissement possède un coût, une durée et un rendement.</p><div id="investment-list" class="invest-grid"></div><div class="h" style="margin-top:14px"><h2 style="font-size:15px">Mes investissements</h2></div><div id="investment-active"></div></div>
       <div class="h"><h2 style="font-size:17px">🧾 Dernières opérations</h2></div>
       <div class="hist" id="fin-hist"></div>
     </section>
@@ -695,9 +703,10 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
     <!-- PARAMÈTRES -->
     <section class="sect" id="v-set">
       <div class="h"><h2>Paramètres</h2></div>
+      <div class="card cloud-card"><h3>☁️ Compte & sauvegarde en ligne</h3><p>Connectez votre compte pour retrouver votre partie sur plusieurs appareils et activer les transferts entre joueurs.</p><div class="cloud-row"><input class="field" id="cloud-email" type="email" placeholder="Email"><input class="field" id="cloud-password" type="password" placeholder="Mot de passe"></div><div class="chat-actions"><button class="btn sm" onclick="cloudSignUp()">Créer un compte</button><button class="btn ghost sm" onclick="cloudResendConfirmation()">Renvoyer la confirmation</button><button class="btn ghost sm" onclick="cloudSignIn()">Se connecter</button><button class="btn ghost sm" onclick="cloudSignOut()">Se déconnecter</button></div><div id="cloud-status" class="cloud-status">Supabase configuré · créez un compte pour activer la sauvegarde en ligne.</div></div>
       <div class="card">
         <h3>🎵 Musique d'ambiance</h3>
-        <p>Une musique douce joue pendant que vous gérez votre empire. Elle se coupe automatiquement dès que vous quittez l'onglet.</p>
+        <p>Une musique douce mais rythmée accompagne votre empire. Des sons courts signalent les paiements, investissements et réussites.</p>
         <div style="height:12px"></div>
         <button class="btn ghost sm" id="btn-music" onclick="toggleMusic()">🔊 Couper la musique</button>
       </div>
@@ -950,6 +959,14 @@ function billsFor(bk){
   return {loyer,elec,eau,impot,total:loyer+elec+eau+impot};
 }
 function billsTotalDue(){ return S.billsDue ? Object.keys(S.billsDue.br).reduce((a,k)=>a+S.billsDue.br[k].total,0) : 0; }
+const INVESTMENT_OPPS = [
+ {k:"datacenter",e:"🖥️",t:"Centre de données régional",d:"Construisez une infrastructure cloud qui verse un rendement quotidien.",cost:1200000,days:6,rate:0.16,lvl:11},
+ {k:"assembly",e:"🏭",t:"Usine d'assemblage au Kenya",d:"Participez à une chaîne de production de matériel technologique.",cost:950000,days:5,rate:0.15,lvl:21},
+ {k:"solar",e:"☀️",t:"Parc solaire en Tanzanie",d:"Investissement énergétique pour alimenter vos futures machines.",cost:700000,days:4,rate:0.12,lvl:21},
+ {k:"campus",e:"🎓",t:"Université technologique au Rwanda",d:"Financez la formation de développeurs et gagnez en réputation.",cost:1000000,days:7,rate:0.20,lvl:23},
+ {k:"logistics",e:"🚚",t:"Réseau logistique Afrique de l'Est",d:"Optimisez la distribution de vos produits et consoles.",cost:1800000,days:8,rate:0.24,lvl:25},
+ {k:"factory",e:"🎮",t:"Ligne de fabrication de consoles",d:"Accélérez la production de votre machine une fois le prototype validé.",cost:3200000,days:10,rate:0.30,lvl:28}
+];
 const DEALS = [
   {e:"🏗️",t:"Fonds d'investissement technologique",amt:1000000,chance:0.62,mult:1.8,cool:6},
   {e:"🛰️",t:"Contrat satellite régional",amt:2500000,chance:0.56,mult:1.85,cool:8},
@@ -986,7 +1003,7 @@ function blank(){
     governments:{history:[], totalProjects:0},
     month:1, payDue:null, lateDays:0,
     loans:[], loanAlertPending:false, autoDeployed:[], dealCooldown:{},
-    billsDue:null, billLateDays:0, musicMuted:false, autoTier:0, autoUpgrade:null, eastCeremonyPending:false, events:[], nextEventDay:7, activeEvent:null, eventHistory:[], marketing:[], hardwareBuilds:[], hardwareLive:[], marketingUnlocked:false, hardwareUnlocked:false
+    billsDue:null, billLateDays:0, musicMuted:false, autoTier:0, autoUpgrade:null, eastCeremonyPending:false, events:[], nextEventDay:7, activeEvent:null, eventHistory:[], marketing:[], hardwareBuilds:[], hardwareLive:[], investments:[], marketingUnlocked:false, hardwareUnlocked:false, publicId:"", cloudUserId:null
   };
 }
 const xpNeeded = l => Math.round(100 * Math.pow(1.38, l-1));
@@ -1206,6 +1223,7 @@ function payBranch(bk){
   if(S.cash+S.bank < amt){ toast("Fonds insuffisants — "+fmt(amt)+" nécessaires"); return; }
   if(S.cash>=amt) S.cash-=amt; else { const r=amt-S.cash; S.cash=0; S.bank-=r; }
   S.expenses+=amt;
+  playSfx('payment');
   log("💸","Salaires "+brName(bk)+" — mois "+S.payDue.month,-amt,"cash");
   delete S.payDue.br[bk];
   if(!Object.keys(S.payDue.br).length){
@@ -1227,6 +1245,7 @@ function payBillsBranch(bk){
   if(S.cash+S.bank < amt){ toast("Fonds insuffisants — "+fmt(amt)+" nécessaires"); return; }
   if(S.cash>=amt) S.cash-=amt; else { const r=amt-S.cash; S.cash=0; S.bank-=r; }
   S.expenses+=amt;
+  playSfx('payment');
   log("🧾","Charges "+brName(bk)+" — mois "+S.billsDue.month,-amt,"charges");
   delete S.billsDue.br[bk];
   const st=ensureAutoStudio(bk); if(st.paused){ st.paused=false; toast("▶️ Studio automatique de "+brName(bk)+" relancé"); }
@@ -1258,9 +1277,11 @@ function quitStaff(){
   toast("🚪 Un "+ROLE(k).t.toLowerCase()+" a démissionné : salaires impayés");
 }
 
+let _lightTick=0;
 function tickAll(){
   if(!S || !$("app").classList.contains("on")) return;
-  tickMissions(); tickProducts(); tickTechs(); tickAutoUpgrade(); if(S.hardwareBuilds&&S.hardwareBuilds.length&&$("v-hardware")&&$("v-hardware").classList.contains("on")) renderHardware();
+  tickMissions(); tickProducts(); tickTechs(); tickAutoUpgrade();
+  if(++_lightTick%3===0 && S.hardwareBuilds&&S.hardwareBuilds.length&&$("v-hardware")&&$("v-hardware").classList.contains("on")) renderHardware();
 }
 
 /* ================= CONTRATS CÔTE D'IVOIRE ================= */
@@ -1424,7 +1445,7 @@ function maybeGovernment(k,lines){
     g.request={scene:candidate.id,title:candidate.title,text:candidate.text,project:candidate.project||null,createdDay:S.day}; g.lastDay=S.day;
     S.governments=S.governments||{history:[],totalProjects:0};
   S.events=S.events||[]; S.eventHistory=S.eventHistory||[]; S.nextEventDay=S.nextEventDay||7; S.activeEvent=S.activeEvent||null;
-  S.hardwareBuilds=S.hardwareBuilds||[]; S.hardwareLive=S.hardwareLive||[]; S.marketing=S.marketing||[];
+  S.hardwareBuilds=S.hardwareBuilds||[]; S.hardwareBuilds.forEach(b=>{if(!b.stage)b.stage="prototype";}); S.hardwareLive=S.hardwareLive||[]; S.hardwareLive.forEach(h=>{h.reviews=h.reviews||[];}); S.marketing=S.marketing||[]; S.investments=S.investments||[]; S.publicId=S.publicId||makePlayerId(S.player||""); S.cloudUserId=S.cloudUserId||null;
   S.hardwareUnlocked=!!(S.hardwareUnlocked||S.level>=EAST_START_LEVEL); S.marketingUnlocked=!!(S.marketingUnlocked||S.level>=EAST_START_LEVEL);
     S.governments.history.unshift({day:S.day,country:k,type:"request",title:candidate.title,text:candidate.text});
     lines.push("🏛️ "+CT(k).n+" : nouvelle demande gouvernementale — "+candidate.title);
@@ -1938,10 +1959,10 @@ function doMove(){
   if(!a || a<=0){toast("Montant invalide");return;}
   if(moveDir==="in"){
     if(a>S.cash){toast("Trésorerie insuffisante");return;}
-    S.cash-=a; S.bank+=a; log("➕","Dépôt",a,"bank");
+    S.cash-=a; S.bank+=a; log("➕","Dépôt",a,"bank"); playSfx('payment');
   }else{
     if(a>S.bank){toast("Solde bancaire insuffisant");return;}
-    S.bank-=a; S.cash+=a; log("➖","Retrait",-a,"bank");
+    S.bank-=a; S.cash+=a; log("➖","Retrait",-a,"bank"); playSfx('payment');
   }
   closeModal(); saveGame(); render();
   toast(moveDir==="in"?"Dépôt effectué ✅":"Retrait effectué ✅");
@@ -1978,7 +1999,7 @@ function takeLoan(i){
   const o=LOAN_OFFERS[i];
   S.cash+=o.amt;
   S.loans.push({id:S.nextId++, amt:o.amt, rate:o.rate, dueDay:S.day+o.dur, owed:Math.round(o.amt*(1+o.rate)), late:false, lateDays:0});
-  log("🏦","Prêt Tech Bank obtenu",o.amt,"bank");
+  log("🏦","Prêt Tech Bank obtenu",o.amt,"bank"); playSfx('payment');
   saveGame(); render();
   toast("Prêt de "+fmt(o.amt)+" accordé ✅");
 }
@@ -1987,7 +2008,7 @@ function repayLoan(id){
   if(S.cash+S.bank<l.owed){ toast("Fonds insuffisants — "+fmt(l.owed)+" nécessaires"); return; }
   if(S.cash>=l.owed) S.cash-=l.owed; else { const r=l.owed-S.cash; S.cash=0; S.bank-=r; }
   S.expenses+=l.owed;
-  log("🏦","Remboursement du prêt Tech Bank",-l.owed,"bank");
+  log("🏦","Remboursement du prêt Tech Bank",-l.owed,"bank"); playSfx('payment');
   S.loans=S.loans.filter(x=>x.id!==id);
   if(!loanOwedTotal()) S.rep=Math.min(100,S.rep+2);
   saveGame(); render();
@@ -2261,6 +2282,7 @@ function render(){
     $("bc-tier").textContent = S.level>=15?"💠 PLATINE":(S.level>=11?"🖤 BLACK":"💳 GOLD");
     $("bk-cash").textContent=shortF(S.cash); $("bk-bal").textContent=shortF(S.bank);
     renderHist($("bank-hist"), S.history.filter(h=>h.kind==="bank"), "Aucune opération bancaire pour l'instant.");
+    renderTransferHistory();
   }else{
     $("bank-closed").style.display="block"; $("bank-open").style.display="none";
     if(!$("in-card").value) $("in-card").value=S.player;
@@ -2270,6 +2292,7 @@ function render(){
   $("fi-exp").textContent=shortF(S.expenses);
   $("fi-net").textContent=shortF(net);
   $("fi-tot").textContent=shortF(S.cash+S.bank);
+  renderInvestments();
   renderHist($("fin-hist"), S.history, "Aucune opération enregistrée.");
 
   $("pg-pill").textContent="Niveau "+S.level+" / "+MAX_LEVEL;
@@ -2465,7 +2488,7 @@ function renderHist(el, list, emptyTx){
 
 /* ================= V3.0 — HARDWARE / MARKETING / ÉVÉNEMENTS ================= */
 const HARDWARE_CATALOG=[
- {k:"console",e:"🎮",name:"TEKBOX ONE",type:"Console de jeu",cost:8500000,dur:12,rev:520000,components:["AMD Ryzen 7 9800X3D","AMD Radeon RX 9070 XT","32 Go DDR5","Samsung 990 PRO 2 To NVMe","Wi‑Fi 7","SSD M.2 PCIe 4.0","Refroidissement liquide AIO"]},
+ {k:"console",e:"🎮",name:"Xbox One — Prototype de référence",type:"Console de jeu",cost:8500000,dur:12,rev:520000,components:["AMD Ryzen 7 9800X3D","AMD Radeon RX 9070 XT","32 Go DDR5","Samsung 990 PRO 2 To NVMe","Wi‑Fi 7","SSD M.2 PCIe 4.0","Refroidissement liquide AIO"]},
  {k:"pro",e:"🖥️",name:"AfriTech Workstation X1",type:"Ordinateur professionnel",cost:9800000,dur:14,rev:610000,components:["AMD Ryzen 9 9950X","NVIDIA GeForce RTX 5070","64 Go DDR5","Samsung 990 PRO 2 To NVMe","Carte mère X870","Wi‑Fi 7","USB‑C 20 Gb/s"]},
  {k:"laptop",e:"💻",name:"AfriTech Book 15",type:"Ordinateur portable",cost:6200000,dur:10,rev:390000,components:["AMD Ryzen AI 9 HX 370","32 Go LPDDR5X","SSD NVMe 1 To","Écran OLED 15,6 pouces","Wi‑Fi 7","USB‑C","Batterie lithium‑ion"]},
  {k:"tablet",e:"📱",name:"AfriTab Pro 12",type:"Tablette",cost:4800000,dur:9,rev:310000,components:["SoC ARM moderne","12 Go LPDDR5X","OLED 12,1 pouces","UFS 256 Go","Wi‑Fi 7","USB‑C","Batterie lithium‑ion"]}
@@ -2481,22 +2504,34 @@ const EVENT_POOL=[
  {k:"press",e:"📰",title:"Des journalistes veulent vous interviewer",intro:"Des journalistes arrivent dans votre bureau. Ils veulent comprendre votre stratégie et votre vision.",questions:["Comment fonctionne votre entreprise et d'où vient votre modèle économique ?","Quel est votre prochain grand projet ?","Comment comptez-vous créer des emplois locaux ?"]},
  {k:"investor",e:"💼",title:"Rencontre avec un investisseur",intro:"Un investisseur régional souhaite comprendre votre groupe avant de proposer un partenariat.",questions:["Pourquoi devrait-il investir dans votre entreprise ?"]}
 ];
+function renderInvestments(){
+ const box=$("investment-list"), active=$("investment-active"); if(!box||!active)return;
+ box.innerHTML=INVESTMENT_OPPS.map(o=>{const locked=S.level<o.lvl;const running=S.investments.some(x=>x.k===o.k&&x.status==="running");return '<div class="mission"><div class="em">'+o.e+'</div><div class="bd"><div class="ti">'+o.t+'</div><div class="de">'+o.d+'</div><div class="tags"><span class="tag cost">'+fmt(o.cost)+'</span><span class="tag">'+o.days+' jours</span><span class="tag pay">+'+Math.round(o.rate*100)+'%</span></div><button class="btn sm" '+(locked||running||S.cash<o.cost?'disabled':'')+' onclick="makeInvestment(\''+o.k+'\')">'+(locked?'Niveau '+o.lvl:'Investir maintenant')+'</button></div></div>';}).join('');
+ active.innerHTML=S.investments.length?S.investments.slice().reverse().map(i=>{const o=INVESTMENT_OPPS.find(x=>x.k===i.k);if(!o)return '';const left=Math.max(0,(i.started+o.days*DAY_MS)-Date.now());const done=left<=0||i.status==='done';return '<div class="review-card"><b>'+o.e+' '+o.t+'</b><div class="de">'+(done?'✅ Rendement disponible : '+fmt(i.payout):'⏳ Encore '+Math.ceil(left/1000)+' s')+'</div>'+(done?'<button class="btn green sm" onclick="collectInvestment('+i.id+')">Encaisser</button>':'')+'</div>';}).join(''):'<div class="empty">Aucun investissement en cours.</div>';
+}
+function makeInvestment(k){const o=INVESTMENT_OPPS.find(x=>x.k===k);if(!o)return;if(S.level<o.lvl){toast('Niveau '+o.lvl+' requis');return;}if(S.investments.some(x=>x.k===k&&x.status==='running')){toast('Cet investissement est déjà en cours');return;}if(S.cash<o.cost){toast('Trésorerie insuffisante — '+fmt(o.cost));return;}S.cash-=o.cost;S.expenses+=o.cost;const payout=Math.round(o.cost*(1+o.rate));S.investments.push({id:S.nextId++,k,started:Date.now(),payout,status:'running'});log(o.e,'Investissement lancé — '+o.t,-o.cost,'co');playSfx('invest');saveGame();render();toast('📈 Investissement lancé');}
+function collectInvestment(id){const i=S.investments.find(x=>x.id===id);if(!i)return;const o=INVESTMENT_OPPS.find(x=>x.k===i.k);if(!o)return;if(Date.now()<i.started+o.days*DAY_MS){toast('Investissement encore en cours');return;}S.cash+=i.payout;S.revenue+=i.payout;S.investments=S.investments.filter(x=>x.id!==id);log(o.e,'Rendement encaissé — '+o.t,i.payout,'cash');S.rep=Math.min(100,S.rep+2);addXp(120);playSfx('payment');saveGame();render();toast('💰 Rendement encaissé : '+fmt(i.payout));}
+
+function hardwareBusy(){return (S.hardwareBuilds||[]).some(b=>b.stage!=="done");}
+function hardwareStageInfo(b){
+ const h=HARDWARE_CATALOG.find(x=>x.k===b.k); const stages={prototype:{label:"Prototype en construction",next:"Améliorer le prototype",dur:h.dur},improve:{label:"Amélioration du prototype",next:"Lancer la fabrication",dur:Math.max(8,Math.round(h.dur*.75))},manufacture:{label:"Fabrication industrielle",next:"Commercialiser",dur:Math.max(12,Math.round(h.dur*1.25))}};return stages[b.stage]||stages.prototype;
+}
 function renderHardware(){
  const unlocked=S.level>=EAST_START_LEVEL;$("hw-locked").style.display=unlocked?"none":"block";$("hw-open").style.display=unlocked?"block":"none";if(!unlocked)return;
- $("hw-catalog").innerHTML=HARDWARE_CATALOG.map(h=>'<div class="card hardware-card"><div class="h"><h3>'+h.e+' '+h.name+'</h3><span class="pill">'+h.type+'</span></div><p>'+h.components.join(" · ")+'</p><div class="tags"><span class="tag cost">Prototype '+fmt(h.cost)+'</span><span class="tag">'+h.dur+' s</span><span class="tag pay">+'+fmt(h.rev)+'/jour</span></div><button class="btn sm" '+(S.cash>=h.cost?'':'disabled')+' onclick="startHardware(\''+h.k+'\')">'+(S.cash>=h.cost?'Construire le prototype':'Trésorerie insuffisante')+'</button></div>').join("");
- $("hw-builds").innerHTML=S.hardwareBuilds.length?S.hardwareBuilds.map(b=>{const h=HARDWARE_CATALOG.find(x=>x.k===b.k),done=Date.now()-b.started>=h.dur*1000;return '<div class="mission"><div class="em">'+h.e+'</div><div class="bd"><div class="ti">'+h.name+'</div><div class="de">'+h.type+'</div><div class="component-list">'+h.components.map(c=>'<span>'+c+'</span>').join("")+'</div><div class="prog"><i style="width:'+Math.min(100,(Date.now()-b.started)/(h.dur*10))+'%"></i></div><p>'+(done?'Prototype prêt à être validé.':'Assemblage et tests en cours…')+'</p>'+(done?'<button class="btn green sm" onclick="releaseHardware('+b.id+')">🚀 Valider et commercialiser</button>':'')+'</div></div>';}).join(""):'<div class="empty">Aucune fabrication en cours.</div>';
- $("hw-live").innerHTML=S.hardwareLive.length?S.hardwareLive.map(h=>'<div class="mission"><div class="em">'+h.e+'</div><div class="bd"><div class="ti">'+h.name+' <span class="tag pay">Produit actif</span></div><div class="de">'+h.type+'</div><div class="component-list">'+h.components.map(c=>'<span>'+c+'</span>').join("")+'</div><div class="tags"><span class="tag pay">'+fmt(h.rev)+' / jour</span></div></div></div>').join(""):'<div class="empty">Aucune machine commercialisée.</div>';
+ const busy=hardwareBusy();
+ $("hw-catalog").innerHTML=HARDWARE_CATALOG.map(h=>{const blocked=busy||S.cash<h.cost;return '<div class="card hardware-card"><div class="h"><h3>'+h.e+' '+h.name+'</h3><span class="pill">'+h.type+'</span></div><p>'+h.components.join(" · ")+'</p><div class="tags"><span class="tag cost">Prototype '+fmt(h.cost)+'</span><span class="tag">'+h.dur+' s</span><span class="tag pay">+'+fmt(h.rev)+'/jour</span></div><button class="btn sm" '+(blocked?'disabled':'')+' onclick="startHardware(\''+h.k+'\')">'+(busy?'🔒 Fabrication en cours':(S.cash>=h.cost?'Construire le prototype':'Trésorerie insuffisante'))+'</button></div>';}).join("");
+ $("hw-builds").innerHTML=S.hardwareBuilds.length?S.hardwareBuilds.map(b=>{const h=HARDWARE_CATALOG.find(x=>x.k===b.k),st=hardwareStageInfo(b),done=Date.now()-b.started>=st.dur*1000;const pct=Math.min(100,(Date.now()-b.started)/(st.dur*10));let action='';if(done){if(b.stage==='prototype')action='<button class="btn green sm" onclick="advanceHardware('+b.id+',\'improve\')">🧪 Améliorer le prototype</button>';else if(b.stage==='improve')action='<button class="btn green sm" onclick="advanceHardware('+b.id+',\'manufacture\')">🏭 Lancer la fabrication</button>';else if(b.stage==='manufacture')action='<button class="btn green sm" onclick="releaseHardware('+b.id+')">🚀 Commercialiser</button>';}return '<div class="mission"><div class="em">'+h.e+'</div><div class="bd"><div class="ti">'+h.name+'</div><div class="de">'+st.label+'</div><div class="component-list">'+h.components.map(c=>'<span>'+c+'</span>').join("")+'</div><div class="prog"><i style="width:'+pct+'%"></i></div><p>'+(done?'Étape terminée — vous pouvez continuer.':'Progression : '+Math.round(pct)+' %')+'</p>'+action+'</div></div>';}).join(""):'<div class="empty">Aucune fabrication en cours.</div>';
+ $("hw-live").innerHTML=S.hardwareLive.length?S.hardwareLive.map(h=>{const reviews=h.reviews||[];const nm=encodeURIComponent(h.name);return `<div class="mission"><div class="em">${h.e}</div><div class="bd"><div class="ti">${h.name} <span class="tag pay">Produit actif</span></div><div class="de">${h.type}</div><div class="component-list">${h.components.map(c=>`<span>${c}</span>`).join("")}</div><div class="tags"><span class="tag pay">${fmt(h.rev)} / jour</span><span class="tag">Fabrication validée</span></div><div class="review-stars">${reviews.length?reviews.map(r=>'★'.repeat(r.rating)).join(' · '):'★★★★★'}</div><div class="review-card"><b>Avis clients & commentaires</b>${reviews.length?reviews.slice(-4).map(r=>`<div style="margin-top:7px"><b>${r.name}</b> · ${r.rating}/5<br><span style="color:var(--txt2)">${r.text}</span></div>`).join(''):'<br><span style="color:var(--txt2)">“Produit solide et fluide.” · “Très bonne expérience.”</span>'}</div><button class="btn ghost sm" onclick="addHardwareReview(decodeURIComponent('${nm}'))">⭐ Laisser un avis</button></div></div>`;}).join(""):'<div class="empty">Aucune machine commercialisée.</div>';
 }
-function startHardware(k){if(S.level<EAST_START_LEVEL){toast("🔒 Les machines se débloquent au niveau 21");return;}const h=HARDWARE_CATALOG.find(x=>x.k===k);if(!h)return;if(S.cash<h.cost){toast("Trésorerie insuffisante — "+fmt(h.cost));return;}S.cash-=h.cost;S.expenses+=h.cost;S.hardwareBuilds.push({id:S.nextId++,k,started:Date.now()});log(h.e,"Prototype lancé — "+h.name,-h.cost,"co");addXp(180);saveGame();render();toast("🧰 Prototype "+h.name+" en fabrication");}
-function releaseHardware(id){const b=S.hardwareBuilds.find(x=>x.id===id);if(!b)return;const h=HARDWARE_CATALOG.find(x=>x.k===b.k);if(!h)return;if(Date.now()-b.started<h.dur*1000){toast("Le prototype n'est pas encore terminé");return;}S.hardwareBuilds=S.hardwareBuilds.filter(x=>x.id!==id);S.hardwareLive.unshift({...h,launchDay:S.day});log(h.e,"Machine commercialisée — "+h.name,0,"co");addXp(300);burst(90);saveGame();render();toast("🚀 "+h.name+" est maintenant commercialisée");}
-function hardwareIncome(){return (S.hardwareLive||[]).reduce((a,h)=>a+h.rev,0);}
+function addHardwareReview(name){const h=S.hardwareLive.find(x=>x.name===name);if(!h)return;const text=prompt('Votre commentaire sur '+name+' :');if(!text||text.trim().length<3)return;let rating=Number(prompt('Note sur 5 (1 à 5) :','5'));if(!rating||rating<1)rating=1;rating=Math.min(5,Math.round(rating));h.reviews=h.reviews||[];h.reviews.push({name:S.player||'Joueur',rating,text:text.trim(),day:S.day});saveGame();render();toast('⭐ Avis ajouté');}
 function renderMarketing(){const unlocked=S.level>=EAST_START_LEVEL;$("mk-list").innerHTML=unlocked?MARKETING_CAMPAIGNS.map(m=>'<div class="mission"><div class="em">'+m.e+'</div><div class="bd"><div class="ti">'+m.t+'</div><div class="de">'+m.d+'</div><div class="tags"><span class="tag cost">'+fmt(m.c)+'</span><span class="tag pay">+'+m.pop+' popularité</span><span class="tag">+'+m.xp+' XP</span></div><button class="btn sm" '+(S.cash>=m.c?'':'disabled')+' onclick="runMarketing(\''+m.k+'\')">'+(S.cash>=m.c?'Lancer la campagne':'Trésorerie insuffisante')+'</button></div></div>').join(""):'<div class="locked"><div class="em">🔒</div><h3>Marketing verrouillé</h3><p>Débloqué au niveau 21.</p></div>';}
 function runMarketing(k){if(S.level<EAST_START_LEVEL){toast("🔒 Marketing débloqué au niveau 21");return;}const m=MARKETING_CAMPAIGNS.find(x=>x.k===k);if(!m||S.cash<m.c)return;const targets=COUNTRIES.filter(c=>cData(c.k).installed&&licenseActive(c.k));S.cash-=m.c;S.expenses+=m.c;S.rep=Math.min(100,S.rep+m.rep);targets.forEach(c=>{const d=cData(c.k);d.pop=Math.min(100,d.pop+m.pop*(c.region==="east"?1.05:0.8));});S.marketing.push({day:S.day,k});log(m.e,"Campagne marketing — "+m.t,-m.c,"co");addXp(m.xp);saveGame();render();toast("📢 Campagne lancée avec succès");}
 function showEventAlert(){const e=S.activeEvent;if(!e){$("event-alert").style.display="none";return;}$("event-alert-title").textContent=e.title;$("event-alert-tx").textContent="Cliquez pour participer maintenant.";$("event-alert").style.display="flex";}
-function maybeEvent(lines){if(S.activeEvent||S.day<(S.nextEventDay||7)||S.level<5)return;const pool=EVENT_POOL.filter(e=>!S.eventHistory.slice(-4).some(h=>h.k===e.k));const e=pool[Math.floor(Math.random()*pool.length)]||EVENT_POOL[0];S.activeEvent={...e,step:0,answers:[]};S.nextEventDay=S.day+5+Math.floor(Math.random()*6);S.events.push({day:S.day,k:e.k,title:e.title});lines.push("📣 "+e.title);showEventAlert();toast("🔴 "+e.title);}
+function maybeEvent(lines){if(S.activeEvent||S.day<(S.nextEventDay||7)||S.level<5)return;const pool=EVENT_POOL.filter(e=>!S.eventHistory.slice(-4).some(h=>h.k===e.k));const e=pool[Math.floor(Math.random()*pool.length)]||EVENT_POOL[0];S.activeEvent={...e,step:0,answers:[],chat:[]};S.nextEventDay=S.day+5+Math.floor(Math.random()*6);S.events.push({day:S.day,k:e.k,title:e.title});lines.push("📣 "+e.title);showEventAlert();toast("🔴 "+e.title);}
 function openCurrentEvent(){if(!S.activeEvent)return;const e=S.activeEvent;$("event-bg").classList.add("on");$("ev-icon").textContent=e.e;$("ev-kicker").textContent=e.k==="press"?"INTERVIEW PRESSE":"ÉVÉNEMENT PROFESSIONNEL";$("ev-title").textContent=e.title;$("ev-intro").textContent=e.intro;renderEventQuestion();}
-function renderEventQuestion(){const e=S.activeEvent;if(!e)return;const q=e.questions[e.step];$("ev-dialogue").innerHTML='<b>Journaliste / intervenant :</b><div class="event-question">'+q+'</div>'+(e.answers||[]).map(a=>'<div style="margin:8px 0;color:var(--txt2)"><b>Vous :</b> '+a+'</div>').join("");$("ev-answer").value="";$("ev-answer").focus();$("ev-send").textContent=e.step===e.questions.length-1?"Terminer l'entretien ✓":"Répondre →";}
-function submitEventAnswer(){const e=S.activeEvent;if(!e)return;const ans=$("ev-answer").value.trim();if(ans.length<8){toast("Écrivez une réponse un peu plus développée");return;}e.answers=e.answers||[];e.answers.push(ans);e.step++;if(e.step<e.questions.length){renderEventQuestion();return;}const score=Math.min(10,2+Math.floor(ans.length/40)+(ans.match(/emploi|jeune|local|Afrique|client|produit|innovation|technolog/gi)||[]).length);S.rep=Math.min(100,S.rep+score/2);addXp(100+score*20);S.eventHistory.unshift({day:S.day,k:e.k,title:e.title,answers:e.answers,score});log(e.e,e.title+" — entretien terminé",0,"co");S.activeEvent=null;$("event-bg").classList.remove("on");$("event-alert").style.display="none";saveGame();render();toast("🎤 Entretien terminé · réputation +"+(score/2).toFixed(1));}
+function renderEventQuestion(){const e=S.activeEvent;if(!e)return;const q=e.questions[e.step];const chat=e.chat||[];$("ev-dialogue").innerHTML='<b>'+(e.k==="investor"?"Investisseur":"Intervenant")+' :</b><div class="event-question">'+q+'</div>'+chat.map(a=>'<div style="margin:8px 0;color:var(--txt2)"><b>'+a.who+' :</b> '+a.text+'</div>').join("");$("ev-answer").value="";$("ev-answer").focus();$("ev-send").textContent=e.step===e.questions.length-1?"Terminer l'entretien ✓":"Répondre →";$("ev-ask").style.display=e.k==="investor"?"inline-flex":"none";}
+function askInvestorQuestion(){const e=S.activeEvent;if(!e||e.k!=="investor")return;const q=prompt("Votre question à l'investisseur :");if(!q||q.trim().length<3)return;e.chat=e.chat||[];e.chat.push({who:"Vous",text:q.trim()});const low=q.toLowerCase();let r="Je souhaite surtout comprendre votre modèle économique, votre capacité d'exécution et votre plan d'expansion.";if(low.includes("argent")||low.includes("montant")||low.includes("capital"))r="Je peux envisager un apport progressif si vos objectifs et vos indicateurs sont clairement définis.";else if(low.includes("pourquoi")||low.includes("intérêt"))r="Votre trajectoire régionale et vos produits matériels sont les points que je veux examiner avant de m'engager.";else if(low.includes("part")||low.includes("pourcentage"))r="La répartition dépendrait du montant investi, du risque et des conditions du partenariat.";e.chat.push({who:"Investisseur",text:r});renderEventQuestion();saveGame();}
+function submitEventAnswer(){const e=S.activeEvent;if(!e)return;const ans=$("ev-answer").value.trim();if(ans.length<8){toast("Écrivez une réponse un peu plus développée");return;}e.answers=e.answers||[];e.answers.push(ans);e.chat=e.chat||[];e.chat.push({who:"Vous",text:ans});e.step++;if(e.step<e.questions.length){renderEventQuestion();return;}const score=Math.min(10,2+Math.floor(ans.length/40)+(ans.match(/emploi|jeune|local|Afrique|client|produit|innovation|technolog/gi)||[]).length);S.rep=Math.min(100,S.rep+score/2);addXp(100+score*20);S.eventHistory.unshift({day:S.day,k:e.k,title:e.title,answers:e.answers,score});log(e.e,e.title+" — entretien terminé",0,"co");S.activeEvent=null;$("event-bg").classList.remove("on");$("event-alert").style.display="none";saveGame();render();toast("🎤 Entretien terminé · réputation +"+(score/2).toFixed(1));}
 function closeEvent(){if(!S.activeEvent){$("event-bg").classList.remove("on");return;}$("event-bg").classList.remove("on");showEventAlert();}
 
 /* ================= NAVIGATION ================= */
@@ -2535,9 +2570,31 @@ function soon(k){
   nav("v-soon");
 }
 
+/* ================= COMPTE CLOUD / MULTIJOUEUR ================= */
+const CLOUD_CONFIG=window.TECH_EMPIRE_CLOUD||{
+  url:"https://yndsgalkljtudhgufzpf.supabase.co",
+  anonKey:"sb_publishable_njNI7YKwisgz8WAt6kua7Q_5wFweBn8"
+};
+let cloudClient=null,cloudLoadPromise=null,cloudSaveTimer=null;
+function makePlayerId(name){const base=(name||"PLAYER").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9]/g,"").slice(0,8).toUpperCase()||"PLAYER";return "TE-"+base+"-"+Math.random().toString(36).slice(2,7).toUpperCase();}
+function cloudReady(){return !!(CLOUD_CONFIG.url&&CLOUD_CONFIG.anonKey);}
+async function loadSupabase(){if(cloudClient)return cloudClient;if(!cloudReady())throw new Error("Cloud non configuré");if(cloudLoadPromise)return cloudLoadPromise;cloudLoadPromise=new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';sc.onload=()=>{try{cloudClient=window.supabase.createClient(CLOUD_CONFIG.url,CLOUD_CONFIG.anonKey);resolve(cloudClient);}catch(e){reject(e);}};sc.onerror=()=>reject(new Error('Chargement Supabase impossible'));document.head.appendChild(sc);});return cloudLoadPromise;}
+function cloudStatus(t){const el=$("cloud-status");if(el)el.textContent=t;}
+function authRedirectUrl(){return window.location.origin+window.location.pathname;}
+async function cloudSignUp(){try{const email=$("cloud-email").value.trim(),password=$("cloud-password").value;if(!email||password.length<6){toast('Email et mot de passe (6 caractères minimum) requis');return;}const c=await loadSupabase();const {data,error}=await c.auth.signUp({email,password,options:{emailRedirectTo:authRedirectUrl()}});if(error)throw error;if(data.session&&data.user){S.cloudUserId=data.user.id;S.publicId=S.publicId||makePlayerId(S.player);normalizeState();await cloudSaveNow();cloudStatus('Compte créé et connecté · ID '+S.publicId);toast('☁️ Compte créé');}else{cloudStatus('Compte créé. Ouvrez le dernier email reçu pour confirmer. Si le lien est expiré, utilisez « Renvoyer la confirmation ».');toast('📧 Email de confirmation envoyé');}}catch(e){cloudStatus(cloudReady()?('Cloud : '+e.message):'Cloud non configuré : ajoutez votre URL Supabase et votre clé publishable dans CLOUD_CONFIG.');toast('Connexion cloud indisponible');}}
+async function cloudResendConfirmation(){try{const email=$("cloud-email").value.trim();if(!email){toast('Saisissez votre email');return;}const c=await loadSupabase();const {error}=await c.auth.resend({type:'signup',email,options:{emailRedirectTo:authRedirectUrl()}});if(error)throw error;cloudStatus('Nouvel email de confirmation envoyé à '+email+'. Utilisez uniquement le dernier lien reçu.');toast('📧 Confirmation renvoyée');}catch(e){cloudStatus('Impossible de renvoyer la confirmation : '+e.message);toast('Envoi impossible');}}
+function handleAuthCallback(){const hash=window.location.hash||'';if(hash.includes('error_code=otp_expired')||hash.includes('error=access_denied')){cloudStatus('Le lien de confirmation est expiré ou invalide. Demandez un nouvel email de confirmation.');history.replaceState({},document.title,window.location.pathname+window.location.search);return;}if(hash.includes('access_token=')||hash.includes('type=signup')||hash.includes('type=recovery')){history.replaceState({},document.title,window.location.pathname+window.location.search);}}
+
+async function cloudSignIn(){try{const email=$("cloud-email").value.trim(),password=$("cloud-password").value;if(!email||!password){toast('Saisissez votre email et votre mot de passe');return;}const c=await loadSupabase();const {data,error}=await c.auth.signInWithPassword({email,password});if(error)throw error;S.cloudUserId=data.user.id;const {data:row,error:re}=await c.from('player_saves').select('save_data,player_code').eq('user_id',data.user.id).maybeSingle();if(re)throw re;if(row&&row.save_data){S=Object.assign(blank(),row.save_data);S.cloudUserId=data.user.id;S.publicId=row.player_code||S.publicId||makePlayerId(S.player);normalizeState();saveGame();refillMissions();if(S.tutoDone)startGame();else resume();cloudStatus('Connecté · sauvegarde cloud chargée · ID '+S.publicId);toast('☁️ Partie restaurée');}else{S.cloudUserId=data.user.id;S.publicId=S.publicId||makePlayerId(S.player);normalizeState();await cloudSaveNow();cloudStatus('Compte connecté · nouvel emplacement cloud créé · ID '+S.publicId);toast('☁️ Compte connecté');}}catch(e){cloudStatus(cloudReady()?('Cloud : '+e.message):'Cloud non configuré.');toast('Connexion impossible');}}
+async function cloudSignOut(){try{if(cloudClient)await cloudClient.auth.signOut();}catch(e){}S.cloudUserId=null;cloudStatus('Déconnecté · sauvegarde locale active.');toast('Compte cloud déconnecté');}
+async function cloudSaveNow(){if(!cloudClient||!S.cloudUserId)return;const payload={user_id:S.cloudUserId,player_code:S.publicId||makePlayerId(S.player),save_data:S,updated_at:new Date().toISOString()};const {error}=await cloudClient.from('player_saves').upsert(payload,{onConflict:'user_id'});if(error)throw error;}
+function scheduleCloudSave(){if(!S.cloudUserId||!cloudClient)return;clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(()=>cloudSaveNow().catch(()=>{}),1800);}
+async function sendPlayerTransfer(){try{const code=$("transfer-player").value.trim().toUpperCase(),amt=Math.floor(Number($("transfer-amount").value));if(!code||!amt||amt<=0){toast('Identifiant et montant valides requis');return;}if(!S.cloudUserId){toast("Connectez-vous pour transférer de l'argent");return;}if(amt>S.bank){toast('Solde bancaire insuffisant');return;}const c=await loadSupabase();const {data,error}=await c.rpc('transfer_money',{p_recipient_code:code,p_amount:amt});if(error)throw error;S.bank-=amt;S.expenses=Math.max(0,S.expenses);log('💸','Transfert à '+code,-amt,'bank');playSfx('payment');saveGame();render();$("transfer-status").textContent='Transfert envoyé · '+fmt(amt)+' à '+code;toast('💸 Transfert effectué');}catch(e){$("transfer-status").textContent='Transfert refusé : '+e.message;toast('Transfert impossible');}}
+function renderTransferHistory(){if(!$("transfer-history"))return;if(!S.cloudUserId){$("transfer-history").innerHTML='';return;}$("transfer-history").innerHTML='<div class="review-card"><b>Identifiant joueur</b><br>'+S.publicId+'<br><small>Les transferts sont fictifs et utilisent uniquement la monnaie du jeu.</small></div>';}
+
 /* ================= SAUVEGARDE ================= */
 function saveGame(notify){
-  try{ localStorage.setItem(KEY, JSON.stringify(S)); if(notify) toast("Partie sauvegardée 💾"); }
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); scheduleCloudSave(); if(notify) toast("Partie sauvegardée 💾"); }
   catch(e){ if(notify) toast("Sauvegarde impossible sur cet appareil"); }
 }
 function resetGame(){
@@ -2549,6 +2606,8 @@ function resetGame(){
   $("md-ok").onclick=()=>{ try{localStorage.removeItem(KEY);}catch(e){} location.reload(); };
   $("modal-bg").classList.add("on");
 }
+
+handleAuthCallback();
 
 /* ================= CONFETTIS ================= */
 function burst(n){
@@ -2568,49 +2627,15 @@ function burst(n){
 
 /* ================= MUSIQUE D'AMBIANCE ================= */
 const MUSIC=(function(){
-  let ctx=null, master=null, filt=null, running=false, timer=null, chordIdx=0;
-  const CHORDS=[
-    [261.63,329.63,392.00,493.88],
-    [220.00,261.63,329.63,392.00],
-    [174.61,220.00,261.63,349.23],
-    [196.00,246.94,293.66,349.23]
-  ];
-  function ensureCtx(){
-    if(ctx) return;
-    try{
-      ctx=new (window.AudioContext||window.webkitAudioContext)();
-      master=ctx.createGain(); master.gain.value=(S&&S.musicMuted)?0:0.045;
-      filt=ctx.createBiquadFilter(); filt.type="lowpass"; filt.frequency.value=1100;
-      master.connect(filt); filt.connect(ctx.destination);
-    }catch(e){ ctx=null; }
-  }
-  function playChord(freqs,dur){
-    if(!ctx) return;
-    const now=ctx.currentTime;
-    freqs.forEach(f=>{
-      const osc=ctx.createOscillator(); osc.type="sine"; osc.frequency.value=f;
-      const g=ctx.createGain();
-      g.gain.setValueAtTime(0,now);
-      g.gain.linearRampToValueAtTime(0.7/freqs.length,now+1.4);
-      g.gain.linearRampToValueAtTime(0,now+dur);
-      osc.connect(g); g.connect(master);
-      osc.start(now); osc.stop(now+dur+0.1);
-    });
-  }
-  function loop(){
-    if(!running||!ctx) return;
-    const dur=6.5;
-    playChord(CHORDS[chordIdx%CHORDS.length],dur);
-    chordIdx++;
-    timer=setTimeout(loop,dur*1000*0.92);
-  }
-  return{
-    start(){ ensureCtx(); if(!ctx) return; if(ctx.state==="suspended") ctx.resume(); if(!running){ running=true; loop(); } },
-    pause(){ running=false; clearTimeout(timer); if(ctx&&ctx.state==="running") ctx.suspend(); },
-    resume(){ if(!ctx) return; if(ctx.state==="suspended") ctx.resume(); if(!running){ running=true; loop(); } },
-    setMuted(m){ if(master) master.gain.value=m?0:0.045; }
-  };
+  let ctx=null, master=null, running=false, timer=null, step=0;
+  const bpm=112, beat=60/bpm;
+  const chords=[[220,277.18,329.63],[196,246.94,293.66],[174.61,220,261.63],[196,246.94,329.63]];
+  function ensure(){if(ctx)return;try{ctx=new(window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=(S&&S.musicMuted)?0:0.055;master.connect(ctx.destination);}catch(e){ctx=null;}}
+  function tone(freq,dur,type='sawtooth',gain=.05,when=0){if(!ctx)return;const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0,ctx.currentTime+when);g.gain.linearRampToValueAtTime(gain,ctx.currentTime+when+.025);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+when+dur);o.connect(g);g.connect(master);o.start(ctx.currentTime+when);o.stop(ctx.currentTime+when+dur+.03);}
+  function loop(){if(!running||!ctx)return;const c=chords[step%chords.length];c.forEach((f,i)=>tone(f,.32,'triangle',.035,i*.02));tone(c[0]/2,.5,'sawtooth',.035,.02);tone(c[1]*2,.09,'square',.018,beat*.5);tone(c[2]*2,.08,'square',.015,beat*1.5);step++;timer=setTimeout(loop,beat*2000);}
+  return{start(){ensure();if(!ctx)return;if(ctx.state==='suspended')ctx.resume();if(!running){running=true;loop();}},pause(){running=false;clearTimeout(timer);if(ctx&&ctx.state==='running')ctx.suspend();},resume(){if(!ctx)return;if(ctx.state==='suspended')ctx.resume();if(!running){running=true;loop();}},setMuted(m){if(master)master.gain.value=m?0:.055;}};
 })();
+function playSfx(kind){try{if(!window.AudioContext&&!window.webkitAudioContext)return;let c=playSfx.ctx;if(!c)c=playSfx.ctx=new(window.AudioContext||window.webkitAudioContext)();if(c.state==='suspended')c.resume();const o=c.createOscillator(),g=c.createGain();let seq=kind==='payment'?[880,1174.66]:kind==='invest'?[392,523.25,659.25]:kind==='success'?[523.25,659.25,783.99]:[660,880];o.type=kind==='payment'?'square':'triangle';o.frequency.value=seq[0];g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(.08,c.currentTime+.01);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.16);o.connect(g);g.connect(c.destination);o.start();o.frequency.setValueAtTime(seq[0],c.currentTime);seq.slice(1).forEach((f,i)=>o.frequency.setValueAtTime(f,c.currentTime+.08*(i+1)));o.stop(c.currentTime+.25);}catch(e){}}
 function toggleMusic(){
   S.musicMuted=!S.musicMuted;
   MUSIC.setMuted(S.musicMuted);
