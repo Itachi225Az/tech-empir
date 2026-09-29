@@ -269,25 +269,58 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 .hero-cover{position:relative;overflow:hidden;border-radius:22px;border:1px solid rgba(86,214,255,.24);background:#0b1118;box-shadow:0 18px 55px rgba(0,0,0,.35);margin-bottom:16px}.hero-cover img{display:block;width:100%;height:auto;aspect-ratio:3/1;object-fit:cover;object-position:left top}.hero-cover .hero-caption{position:absolute;left:16px;right:16px;bottom:14px;padding:10px 12px;border-radius:14px;background:linear-gradient(90deg,rgba(5,8,12,.86),rgba(5,8,12,.35));backdrop-filter:blur(5px)}
 .brand-logo-img{width:38px;height:38px;object-fit:cover;border-radius:10px;display:block}.invest-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.review-stars{color:#ffd34d;letter-spacing:2px}.review-card{padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.03);margin-top:8px}.cloud-card{border-color:rgba(86,214,255,.25);background:linear-gradient(145deg,rgba(86,214,255,.08),var(--card))}.cloud-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cloud-status{font-size:12px;color:var(--txt2);margin-top:8px}.chat-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.lock-note{border:1px solid rgba(255,77,94,.5);background:rgba(255,77,94,.08);border-radius:12px;padding:10px;font-size:12px;color:#ff8f99}
 @media(max-width:620px){.cloud-row{grid-template-columns:1fr}.hero-cover img{aspect-ratio:16/9}.hero-cover .hero-caption{font-size:11px}}
+
+/* ===== COMPTE OBLIGATOIRE AU PREMIER LANCEMENT ===== */
+.auth-hero{width:100%;max-width:520px;margin:0 auto 18px;border-radius:22px;overflow:hidden;border:1px solid rgba(76,155,255,.35);background:#0b1118;box-shadow:0 18px 55px rgba(0,0,0,.4)}
+.auth-hero img{display:block;width:100%;aspect-ratio:16/6;object-fit:cover;object-position:center}
+.auth-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:999px;background:rgba(76,155,255,.12);border:1px solid rgba(76,155,255,.35);color:#8fc2ff;font-size:11px;font-weight:800;margin-bottom:10px}
+.auth-card{background:linear-gradient(150deg,rgba(76,155,255,.10),var(--card) 58%);border:1px solid rgba(76,155,255,.32);border-radius:20px;padding:18px}
+.auth-card .field{margin-bottom:0}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--txt2);font-size:11px}
+.auth-divider:before,.auth-divider:after{content:"";height:1px;background:var(--line);flex:1}
+.auth-note{font-size:11px;color:var(--txt2);line-height:1.5;margin-top:10px;text-align:center}
+.feature-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.feature-mini{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:10px 8px;text-align:center;font-size:11px;color:var(--txt2)}
+.feature-mini b{display:block;color:var(--txt);font-size:16px;margin-bottom:3px}
+@media(max-width:480px){.feature-strip{grid-template-columns:1fr 1fr}.auth-hero img{aspect-ratio:16/7}}
+
 </style>
 </head>
 <body>
 
-<!-- ÉCRAN 1 : BIENVENUE -->
+<!-- ÉCRAN 1 : COMPTE OBLIGATOIRE -->
 <section class="screen on" id="s-welcome">
   <div class="center">
-    <div class="brandmark">🚀</div>
-    <div class="tricolore"><i></i><i></i><i></i></div>
+    <div class="auth-hero">
+      <img src="assets/tech-empire-v3-cover.webp" alt="Tech Empire">
+    </div>
+    <div class="auth-badge">🔐 COMPTE TECH EMPIRE</div>
     <h1>Bienvenue dans<br>TECH EMPIRE 🇨🇮</h1>
-    <p class="lead">Construisez votre entreprise technologique, développez vos produits, gagnez de l'argent et devenez un grand groupe africain, de la Côte d'Ivoire à l'Afrique de l'Est.</p>
-    <button class="btn" onclick="go('s-profile')">🆕 CRÉER UNE NOUVELLE ENTREPRISE</button>
+    <p class="lead">Avant de commencer votre empire, créez votre compte. Votre progression pourra ensuite être sauvegardée en ligne et retrouvée sur vos appareils.</p>
+    <div class="auth-card">
+      <label class="lbl" style="margin-top:0">Prénom</label>
+      <input class="field" id="auth-name" placeholder="Ex. : Armel" maxlength="22" autocomplete="given-name">
+      <label class="lbl">Adresse e-mail</label>
+      <input class="field" id="cloud-email" type="email" placeholder="exemple@gmail.com" autocomplete="email">
+      <label class="lbl">Mot de passe</label>
+      <input class="field" id="cloud-password" type="password" placeholder="6 caractères minimum" minlength="6" autocomplete="new-password">
+      <div style="height:14px"></div>
+      <button class="btn blue" onclick="cloudCreateAccountAtStart()">🚀 CRÉER MON COMPTE ET COMMENCER</button>
+      <div class="auth-divider">OU</div>
+      <button class="btn ghost sm" onclick="cloudLoginAtStart()">🔐 J'AI DÉJÀ UN COMPTE — SE CONNECTER</button>
+      <div id="cloud-status" class="auth-note">Compte obligatoire pour commencer. Aucune confirmation e-mail n'est demandée dans cette version.</div>
+    </div>
+    <div class="feature-strip">
+      <div class="feature-mini"><b>☁️</b>Sauvegarde cloud</div>
+      <div class="feature-mini"><b>👥</b>Multijoueur</div>
+      <div class="feature-mini"><b>💰</b>Transferts fictifs</div>
+    </div>
     <div class="card" style="margin-top:12px;text-align:left">
-      <h3>💾 Vous avez déjà une sauvegarde ?</h3>
-      <p style="margin:0 0 12px;color:var(--txt2);font-size:13px">Importez votre sauvegarde Tech Empire ici. Votre progression, votre entreprise, votre niveau et vos pays seront restaurés directement, sans repasser par la création du joueur.</p>
+      <h3>💾 Ancienne sauvegarde locale ?</h3>
+      <p style="margin:0 0 12px;color:var(--txt2);font-size:13px">Connectez-vous d’abord, puis importez une sauvegarde JSON pour retrouver votre progression.</p>
       <button class="btn ghost sm" onclick="document.getElementById('f-welcome-import').click()">⬆️ IMPORTER MA SAUVEGARDE</button>
       <input type="file" id="f-welcome-import" accept="application/json,.json,.txt" hidden onchange="importSaveFile(this,true)">
     </div>
-    <button class="btn ghost sm" id="btn-continue" style="margin-top:10px;display:none" onclick="resume()">▶️ Reprendre la partie locale</button>
   </div>
 </section>
 
@@ -703,7 +736,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
     <!-- PARAMÈTRES -->
     <section class="sect" id="v-set">
       <div class="h"><h2>Paramètres</h2></div>
-      <div class="card cloud-card"><h3>☁️ Compte & sauvegarde en ligne</h3><p>Connectez votre compte pour retrouver votre partie sur plusieurs appareils et activer les transferts entre joueurs.</p><div class="cloud-row"><input class="field" id="cloud-email" type="email" placeholder="Email"><input class="field" id="cloud-password" type="password" placeholder="Mot de passe"></div><div class="chat-actions"><button class="btn sm" onclick="cloudSignUp()">Créer un compte</button><button class="btn ghost sm" onclick="cloudResendConfirmation()">Renvoyer la confirmation</button><button class="btn ghost sm" onclick="cloudSignIn()">Se connecter</button><button class="btn ghost sm" onclick="cloudSignOut()">Se déconnecter</button></div><div id="cloud-status" class="cloud-status">Supabase configuré · créez un compte pour activer la sauvegarde en ligne.</div></div>
+      <div class="card cloud-card"><h3>☁️ Compte & sauvegarde en ligne</h3><p>Votre compte est créé avant l'entrée dans le jeu. Ici, vous pouvez consulter votre identifiant joueur et vous déconnecter.</p><div class="card" style="margin-top:12px;margin-bottom:10px;background:rgba(255,255,255,.025)"><b id="settings-player-id">ID joueur : —</b><div id="settings-cloud-status" class="cloud-status">Connexion cloud active.</div></div><button class="btn ghost sm" onclick="cloudSignOut()">Se déconnecter</button></div>
       <div class="card">
         <h3>🎵 Musique d'ambiance</h3>
         <p>Une musique douce mais rythmée accompagne votre empire. Des sons courts signalent les paiements, investissements et réussites.</p>
@@ -1120,7 +1153,7 @@ function startGame(){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));
   $("app").classList.add("on");
   window.scrollTo(0,0);
-  buildNav(); render();
+  buildNav(); render(); setSettingsAccount();
   if(!clockOn) startClock();
   MUSIC.start();
   const bm=$("btn-music"); if(bm) bm.textContent = S.musicMuted ? "🔇 Réactiver la musique" : "🔊 Couper la musique";
@@ -2579,14 +2612,52 @@ let cloudClient=null,cloudLoadPromise=null,cloudSaveTimer=null;
 function makePlayerId(name){const base=(name||"PLAYER").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9]/g,"").slice(0,8).toUpperCase()||"PLAYER";return "TE-"+base+"-"+Math.random().toString(36).slice(2,7).toUpperCase();}
 function cloudReady(){return !!(CLOUD_CONFIG.url&&CLOUD_CONFIG.anonKey);}
 async function loadSupabase(){if(cloudClient)return cloudClient;if(!cloudReady())throw new Error("Cloud non configuré");if(cloudLoadPromise)return cloudLoadPromise;cloudLoadPromise=new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';sc.onload=()=>{try{cloudClient=window.supabase.createClient(CLOUD_CONFIG.url,CLOUD_CONFIG.anonKey);resolve(cloudClient);}catch(e){reject(e);}};sc.onerror=()=>reject(new Error('Chargement Supabase impossible'));document.head.appendChild(sc);});return cloudLoadPromise;}
-function cloudStatus(t){const el=$("cloud-status");if(el)el.textContent=t;}
+function cloudStatus(t){const el=$("cloud-status");if(el)el.textContent=t;const es=$("settings-cloud-status");if(es)es.textContent=t;}
+function setSettingsAccount(){const el=$("settings-player-id");if(el)el.textContent="ID joueur : "+(S.publicId||"—");}
 function authRedirectUrl(){return window.location.origin+window.location.pathname;}
-async function cloudSignUp(){try{const email=$("cloud-email").value.trim(),password=$("cloud-password").value;if(!email||password.length<6){toast('Email et mot de passe (6 caractères minimum) requis');return;}const c=await loadSupabase();const {data,error}=await c.auth.signUp({email,password,options:{emailRedirectTo:authRedirectUrl()}});if(error)throw error;if(data.session&&data.user){S.cloudUserId=data.user.id;S.publicId=S.publicId||makePlayerId(S.player);normalizeState();await cloudSaveNow();cloudStatus('Compte créé et connecté · ID '+S.publicId);toast('☁️ Compte créé');}else{cloudStatus('Compte créé. Ouvrez le dernier email reçu pour confirmer. Si le lien est expiré, utilisez « Renvoyer la confirmation ».');toast('📧 Email de confirmation envoyé');}}catch(e){cloudStatus(cloudReady()?('Cloud : '+e.message):'Cloud non configuré : ajoutez votre URL Supabase et votre clé publishable dans CLOUD_CONFIG.');toast('Connexion cloud indisponible');}}
-async function cloudResendConfirmation(){try{const email=$("cloud-email").value.trim();if(!email){toast('Saisissez votre email');return;}const c=await loadSupabase();const {error}=await c.auth.resend({type:'signup',email,options:{emailRedirectTo:authRedirectUrl()}});if(error)throw error;cloudStatus('Nouvel email de confirmation envoyé à '+email+'. Utilisez uniquement le dernier lien reçu.');toast('📧 Confirmation renvoyée');}catch(e){cloudStatus('Impossible de renvoyer la confirmation : '+e.message);toast('Envoi impossible');}}
-function handleAuthCallback(){const hash=window.location.hash||'';if(hash.includes('error_code=otp_expired')||hash.includes('error=access_denied')){cloudStatus('Le lien de confirmation est expiré ou invalide. Demandez un nouvel email de confirmation.');history.replaceState({},document.title,window.location.pathname+window.location.search);return;}if(hash.includes('access_token=')||hash.includes('type=signup')||hash.includes('type=recovery')){history.replaceState({},document.title,window.location.pathname+window.location.search);}}
-
-async function cloudSignIn(){try{const email=$("cloud-email").value.trim(),password=$("cloud-password").value;if(!email||!password){toast('Saisissez votre email et votre mot de passe');return;}const c=await loadSupabase();const {data,error}=await c.auth.signInWithPassword({email,password});if(error)throw error;S.cloudUserId=data.user.id;const {data:row,error:re}=await c.from('player_saves').select('save_data,player_code').eq('user_id',data.user.id).maybeSingle();if(re)throw re;if(row&&row.save_data){S=Object.assign(blank(),row.save_data);S.cloudUserId=data.user.id;S.publicId=row.player_code||S.publicId||makePlayerId(S.player);normalizeState();saveGame();refillMissions();if(S.tutoDone)startGame();else resume();cloudStatus('Connecté · sauvegarde cloud chargée · ID '+S.publicId);toast('☁️ Partie restaurée');}else{S.cloudUserId=data.user.id;S.publicId=S.publicId||makePlayerId(S.player);normalizeState();await cloudSaveNow();cloudStatus('Compte connecté · nouvel emplacement cloud créé · ID '+S.publicId);toast('☁️ Compte connecté');}}catch(e){cloudStatus(cloudReady()?('Cloud : '+e.message):'Cloud non configuré.');toast('Connexion impossible');}}
-async function cloudSignOut(){try{if(cloudClient)await cloudClient.auth.signOut();}catch(e){}S.cloudUserId=null;cloudStatus('Déconnecté · sauvegarde locale active.');toast('Compte cloud déconnecté');}
+function validateStartAuth(){
+  const name=$("auth-name").value.trim(),email=$("cloud-email").value.trim(),password=$("cloud-password").value;
+  if(name.length<2){toast("Entrez votre prénom");$("auth-name").focus();return null;}
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){toast("Entrez une adresse e-mail valide");$("cloud-email").focus();return null;}
+  if(password.length<6){toast("Le mot de passe doit contenir au moins 6 caractères");$("cloud-password").focus();return null;}
+  return {name,email,password};
+}
+async function cloudCreateAccountAtStart(){
+  const v=validateStartAuth();if(!v)return;
+  try{
+    cloudStatus("Création de votre compte…");
+    const c=await loadSupabase();
+    const {data,error}=await c.auth.signUp({email:v.email,password:v.password,options:{data:{first_name:v.name}}});
+    if(error)throw error;
+    if(!data.user)throw new Error("Le compte n'a pas pu être créé.");
+    if(!data.session)throw new Error("La confirmation e-mail Supabase est encore activée. Désactivez « Confirm email » dans Authentication > Providers > Email, puis recommencez.");
+    S.cloudUserId=data.user.id;S.player=v.name;S.publicId=S.publicId||makePlayerId(v.name);normalizeState();saveGame();await cloudSaveNow();setSettingsAccount();
+    cloudStatus("Compte créé et connecté · ID "+S.publicId);toast("☁️ Compte créé !");$("in-player").value=v.name;go("s-profile");
+  }catch(e){cloudStatus("Erreur : "+e.message);toast("Création du compte impossible");}
+}
+async function cloudLoginAtStart(){
+  const email=$("cloud-email").value.trim(),password=$("cloud-password").value;
+  if(!email||!password){toast("Saisissez votre e-mail et votre mot de passe");return;}
+  try{
+    cloudStatus("Connexion…");
+    const c=await loadSupabase();
+    const {data,error}=await c.auth.signInWithPassword({email,password});if(error)throw error;
+    S.cloudUserId=data.user.id;
+    const {data:row,error:re}=await c.from('player_saves').select('save_data,player_code').eq('user_id',data.user.id).maybeSingle();if(re)throw re;
+    if(row&&row.save_data){
+      S=Object.assign(blank(),row.save_data);S.cloudUserId=data.user.id;S.publicId=row.player_code||S.publicId||makePlayerId(S.player);normalizeState();saveGame();refillMissions();setSettingsAccount();
+      if(S.tutoDone)startGame();else resume();cloudStatus("Connecté · sauvegarde cloud chargée · ID "+S.publicId);toast("☁️ Partie restaurée");
+    }else{
+      const name=(data.user.user_metadata&&data.user.user_metadata.first_name)||$("auth-name").value.trim();
+      S.player=name||"Joueur";S.cloudUserId=data.user.id;S.publicId=S.publicId||makePlayerId(S.player);normalizeState();saveGame();await cloudSaveNow();setSettingsAccount();$("in-player").value=S.player;cloudStatus("Compte connecté · ID "+S.publicId);toast("☁️ Compte connecté");go("s-profile");
+    }
+  }catch(e){cloudStatus("Erreur : "+e.message);toast("Connexion impossible");}
+}
+async function cloudSignOut(){try{if(cloudClient)await cloudClient.auth.signOut();}catch(e){}S.cloudUserId=null;setSettingsAccount();toast("Compte cloud déconnecté");location.reload();}
+async function cloudSignUp(){await cloudCreateAccountAtStart();}
+async function cloudSignIn(){await cloudLoginAtStart();}
+async function cloudResendConfirmation(){toast("La confirmation e-mail est désactivée dans cette version.");}
+function handleAuthCallback(){const hash=window.location.hash||'';if(hash.includes('error_code=otp_expired')||hash.includes('error=access_denied')){history.replaceState({},document.title,window.location.pathname+window.location.search);return;}if(hash.includes('access_token=')||hash.includes('type=signup')||hash.includes('type=recovery'))history.replaceState({},document.title,window.location.pathname+window.location.search);}
 async function cloudSaveNow(){if(!cloudClient||!S.cloudUserId)return;const payload={user_id:S.cloudUserId,player_code:S.publicId||makePlayerId(S.player),save_data:S,updated_at:new Date().toISOString()};const {error}=await cloudClient.from('player_saves').upsert(payload,{onConflict:'user_id'});if(error)throw error;}
 function scheduleCloudSave(){if(!S.cloudUserId||!cloudClient)return;clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(()=>cloudSaveNow().catch(()=>{}),1800);}
 async function sendPlayerTransfer(){try{const code=$("transfer-player").value.trim().toUpperCase(),amt=Math.floor(Number($("transfer-amount").value));if(!code||!amt||amt<=0){toast('Identifiant et montant valides requis');return;}if(!S.cloudUserId){toast("Connectez-vous pour transférer de l'argent");return;}if(amt>S.bank){toast('Solde bancaire insuffisant');return;}const c=await loadSupabase();const {data,error}=await c.rpc('transfer_money',{p_recipient_code:code,p_amount:amt});if(error)throw error;S.bank-=amt;S.expenses=Math.max(0,S.expenses);log('💸','Transfert à '+code,-amt,'bank');playSfx('payment');saveGame();render();$("transfer-status").textContent='Transfert envoyé · '+fmt(amt)+' à '+code;toast('💸 Transfert effectué');}catch(e){$("transfer-status").textContent='Transfert refusé : '+e.message;toast('Transfert impossible');}}
@@ -2698,6 +2769,7 @@ function exportSave(){
 }
 function importSaveFile(input,fromWelcome){
   const file=input.files&&input.files[0];if(!file)return;
+  if(fromWelcome && !S.cloudUserId){toast("Connectez-vous d’abord à votre compte Tech Empire.");input.value="";return;}
   const reader=new FileReader();
   reader.onload=e=>{try{
     const data=JSON.parse(String(e.target.result||"").replace(/^\uFEFF/,""));
@@ -2714,17 +2786,16 @@ function importSaveFile(input,fromWelcome){
   let saved=null;
   try{ saved=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){}
   S = saved && saved.player ? Object.assign(blank(),saved) : blank();
-  normalizeState();
-  buildPickers();
+  normalizeState();buildPickers();
   if(saved && saved.player){
-    $("btn-continue").style.display="block";
-    $("in-player").value=S.player; $("in-company").value=S.company||"";
-    $("prev-avatar").innerHTML = S.photo ? '<img src="'+S.photo+'">' : S.avatar;
-    $("prev-logo").innerHTML = S.logoImg ? '<img src="'+S.logoImg+'">' : S.logo;
-    if(S.tutoDone){ refillMissions(); if(S.eastCeremonyPending || (S.level>=EAST_START_LEVEL && S.phase!=="east")){ S.eastCeremonyPending=true; showEastCeremony(); } else startGame(); }
+    $("in-player").value=S.player;$("in-company").value=S.company||"";
+    $("prev-avatar").innerHTML=S.photo?'<img src="'+S.photo+'">':S.avatar;
+    $("prev-logo").innerHTML=S.logoImg?'<img src="'+S.logoImg+'">':S.logo;
+    $("auth-name").value=S.player||"";
   }
-  document.addEventListener("keydown",e=>{ if(e.key==="Escape"){closeModal();closeSheet();} });
-})();
+  setSettingsAccount();
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeSheet();}});
+})();;
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}
 </script>
 </body>
