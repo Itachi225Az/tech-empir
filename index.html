@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#0E1117">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="512x512" href="./tech-empire-app-icon-512.png">
-<link rel="apple-touch-icon" href="./tech-empire-app-icon-512.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Tech Empire V3.0 — Afrique</title>
 <style>
@@ -272,69 +270,61 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 .brand-logo-img{width:38px;height:38px;object-fit:cover;border-radius:10px;display:block}.invest-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.review-stars{color:#ffd34d;letter-spacing:2px}.review-card{padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.03);margin-top:8px}.cloud-card{border-color:rgba(86,214,255,.25);background:linear-gradient(145deg,rgba(86,214,255,.08),var(--card))}.cloud-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cloud-status{font-size:12px;color:var(--txt2);margin-top:8px}.chat-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.lock-note{border:1px solid rgba(255,77,94,.5);background:rgba(255,77,94,.08);border-radius:12px;padding:10px;font-size:12px;color:#ff8f99}
 @media(max-width:620px){.cloud-row{grid-template-columns:1fr}.hero-cover img{aspect-ratio:16/9}.hero-cover .hero-caption{font-size:11px}}
 
-/* ===== COMPTE OBLIGATOIRE AU PREMIER LANCEMENT ===== */
-.auth-hero{width:100%;max-width:520px;margin:0 auto 18px;border-radius:22px;overflow:hidden;border:1px solid rgba(76,155,255,.35);background:#0b1118;box-shadow:0 18px 55px rgba(0,0,0,.4)}
-.auth-hero img{display:block;width:100%;aspect-ratio:16/6;object-fit:cover;object-position:center}
-.auth-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:999px;background:rgba(76,155,255,.12);border:1px solid rgba(76,155,255,.35);color:#8fc2ff;font-size:11px;font-weight:800;margin-bottom:10px}
-.auth-card{background:linear-gradient(150deg,rgba(76,155,255,.10),var(--card) 58%);border:1px solid rgba(76,155,255,.32);border-radius:20px;padding:18px}
-.auth-card .field{margin-bottom:0}
-.auth-divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--txt2);font-size:11px}
-.auth-divider:before,.auth-divider:after{content:"";height:1px;background:var(--line);flex:1}
-.auth-note{font-size:11px;color:var(--txt2);line-height:1.5;margin-top:10px;text-align:center}
-.feature-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
-.feature-mini{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:10px 8px;text-align:center;font-size:11px;color:var(--txt2)}
-.feature-mini b{display:block;color:var(--txt);font-size:16px;margin-bottom:3px}
-@media(max-width:480px){.feature-strip{grid-template-columns:1fr 1fr}.auth-hero img{aspect-ratio:16/7}}
+/* ===== TECH EMPIRE V3.0 — SIMULATION COMMAND CENTER ===== */
+.sim-command{position:relative;margin-bottom:16px;border:1px solid rgba(76,155,255,.35);border-radius:24px;overflow:hidden;background:linear-gradient(145deg,#0b1624 0%,#101b2a 45%,#0d121a 100%);box-shadow:0 24px 70px rgba(0,0,0,.38)}
+.sim-command:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 0%,rgba(76,155,255,.16),transparent 35%),radial-gradient(circle at 0% 100%,rgba(255,122,24,.12),transparent 32%);pointer-events:none}
+.sim-head{position:relative;padding:18px 18px 12px;display:flex;gap:12px;align-items:center}
+.sim-head .sim-mark{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#182c45,#101923);border:1px solid rgba(86,214,255,.35);font-size:25px;box-shadow:0 10px 28px rgba(0,0,0,.3)}
+.sim-head h2{font-size:19px;margin:0}.sim-head p{margin:3px 0 0;color:#91a6bd;font-size:12px}.sim-head .sim-live{margin-left:auto;font-size:10px;font-weight:800;color:#56d6a0;border:1px solid rgba(86,214,160,.35);background:rgba(86,214,160,.08);padding:5px 8px;border-radius:999px}
+.sim-grid{position:relative;padding:6px 10px 12px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.sim-card{position:relative;min-height:154px;border:1px solid rgba(255,255,255,.10);border-radius:18px;background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.018));overflow:hidden;text-align:left;color:var(--txt);transition:.18s;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.sim-card:hover{transform:translateY(-2px);border-color:rgba(86,214,255,.42);box-shadow:0 14px 30px rgba(0,0,0,.28)}
+.sim-card:active{transform:scale(.985)}
+.sim-card .sim-art{height:78px;position:relative;overflow:hidden;background:linear-gradient(135deg,#13263a,#0c1119)}
+.sim-card .sim-art:after{content:"";position:absolute;inset:auto -20px -38px auto;width:110px;height:70px;border-radius:50%;background:rgba(76,155,255,.16);filter:blur(3px)}
+.sim-card .sim-art svg{width:100%;height:100%;display:block}
+.sim-card .sim-info{padding:10px 11px 11px}.sim-card b{display:block;font-size:12px}.sim-card small{display:block;color:#8798ab;font-size:10px;line-height:1.35;margin-top:3px}.sim-card .go{position:absolute;right:9px;bottom:8px;width:23px;height:23px;border-radius:8px;display:grid;place-items:center;background:rgba(255,255,255,.07);font-size:13px;color:#b8c8d9}
+.sim-card.accent-orange .sim-art{background:linear-gradient(135deg,#2b1b10,#12161d)}
+.sim-card.accent-green .sim-art{background:linear-gradient(135deg,#10281f,#0d1515)}
+.sim-card.accent-purple .sim-art{background:linear-gradient(135deg,#21182f,#10151d)}
+.sim-card.accent-gold .sim-art{background:linear-gradient(135deg,#2a2512,#11161c)}
+.sim-card.accent-red .sim-art{background:linear-gradient(135deg,#32171d,#11161b)}
+.sim-card.accent-cyan .sim-art{background:linear-gradient(135deg,#102d34,#0e151a)}
+.sim-quick{position:relative;display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:9px;padding:0 10px 12px}
+.sim-quick button{min-height:44px;border-radius:13px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);color:var(--txt);font-size:11px;font-weight:800}.sim-quick button:first-child{background:linear-gradient(135deg,#1478ff,#1454c7);border-color:rgba(102,178,255,.45)}
+.sim-feed{position:relative;margin:0 10px 12px;padding:12px;border-radius:16px;border:1px solid rgba(255,77,94,.28);background:linear-gradient(135deg,rgba(255,77,94,.10),rgba(255,255,255,.025));display:flex;align-items:center;gap:10px}.sim-feed .feed-icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:rgba(255,77,94,.12);font-size:19px}.sim-feed b{font-size:12px}.sim-feed span{display:block;color:#9caabd;font-size:10px;margin-top:2px}.sim-feed button{margin-left:auto;width:auto;padding:8px 10px;border-radius:10px;background:#e83d4f;color:#fff;font-weight:800;font-size:10px}
+.sim-dialogue{margin:0 10px 12px;border-radius:18px;border:1px solid rgba(86,214,255,.24);background:linear-gradient(145deg,rgba(86,214,255,.08),rgba(255,255,255,.025));padding:13px}.sim-dialogue .person{display:flex;gap:10px;align-items:center}.sim-dialogue .portrait{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#263b55,#101722);display:grid;place-items:center;font-size:20px;border:1px solid rgba(255,255,255,.12)}.sim-dialogue b{font-size:12px}.sim-dialogue small{display:block;color:#8da1b6;font-size:10px;margin-top:2px}.sim-bubble{margin:10px 0 9px;padding:10px 11px;border-radius:13px 13px 13px 4px;background:rgba(255,255,255,.06);color:#dce7f2;font-size:11px;line-height:1.5}.sim-answer-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}.sim-answer-row button{padding:9px;border-radius:10px;background:#101a27;border:1px solid rgba(255,255,255,.09);color:#d7e5f2;font-size:10px;font-weight:700;text-align:left}.sim-answer-row button:hover{border-color:#4c9bff}
+@media(max-width:720px){.sim-grid{grid-template-columns:repeat(2,1fr)}.sim-card{min-height:146px}.sim-quick{grid-template-columns:1fr 1fr}.sim-quick button:first-child{grid-column:1/-1}}
+@media(max-width:430px){.sim-grid{gap:7px;padding:5px 7px 10px}.sim-card .sim-art{height:68px}.sim-card{min-height:135px}.sim-card .sim-info{padding:8px}.sim-head{padding:15px 14px 10px}}
 
 
-/* PWA INSTALL */
-.install-card{border:1px solid rgba(86,214,255,.38);background:linear-gradient(145deg,rgba(76,155,255,.12),var(--card));box-shadow:0 14px 35px rgba(0,0,0,.28);}
-.install-row{display:flex;gap:12px;align-items:center}.install-icon{width:52px;height:52px;border-radius:14px;object-fit:cover;border:1px solid rgba(255,255,255,.12);flex:0 0 auto}.install-copy{flex:1}.install-copy b{display:block;font-size:14px}.install-copy small{display:block;color:var(--txt2);font-size:11px;margin-top:3px;line-height:1.4}.install-help{font-size:11px;color:var(--txt2);margin-top:9px;line-height:1.45}
+/* PWA install banner */
+#install-banner{position:fixed;left:14px;right:14px;bottom:calc(86px + var(--sab));z-index:115;display:none;align-items:center;gap:10px;padding:12px 13px;border:1px solid rgba(86,214,255,.38);border-radius:17px;background:linear-gradient(145deg,#12283a,#121923);box-shadow:0 18px 50px rgba(0,0,0,.5)}
+#install-banner.on{display:flex;animation:fade .25s ease}
+#install-banner .pi{width:38px;height:38px;border-radius:11px;background:#0e1d2a;display:grid;place-items:center;font-size:19px;flex:0 0 auto}
+#install-banner .pt{flex:1;min-width:0}#install-banner b{font-size:12px}#install-banner span{display:block;color:#91a6bd;font-size:10px;margin-top:2px}
+#install-banner button{padding:9px 11px;border-radius:10px;background:#1684ff;color:#fff;font-size:10px;font-weight:800}
+#install-banner .close-install{background:transparent;color:#8fa1b4;font-size:18px;padding:4px}
+
 </style>
 </head>
 <body>
 
-<!-- ÉCRAN 1 : COMPTE OBLIGATOIRE -->
+<!-- ÉCRAN 1 : BIENVENUE -->
 <section class="screen on" id="s-welcome">
   <div class="center">
-    <div class="auth-hero">
-      <img src="./tech-empire-v3-cover.webp" alt="Tech Empire">
-    </div>
-    <div class="auth-badge">🔐 COMPTE TECH EMPIRE</div>
+    <div class="brandmark">🚀</div>
+    <div class="tricolore"><i></i><i></i><i></i></div>
     <h1>Bienvenue dans<br>TECH EMPIRE 🇨🇮</h1>
-    <p class="lead">Avant de commencer votre empire, créez votre compte. Votre progression pourra ensuite être sauvegardée en ligne et retrouvée sur vos appareils.</p>
-    <div class="auth-card">
-      <label class="lbl" style="margin-top:0">Prénom</label>
-      <input class="field" id="auth-name" placeholder="Ex. : Armel" maxlength="22" autocomplete="given-name">
-      <label class="lbl">Adresse e-mail</label>
-      <input class="field" id="cloud-email" type="email" placeholder="exemple@gmail.com" autocomplete="email">
-      <label class="lbl">Mot de passe</label>
-      <input class="field" id="cloud-password" type="password" placeholder="6 caractères minimum" minlength="6" autocomplete="new-password">
-      <div style="height:14px"></div>
-      <button class="btn blue" onclick="cloudCreateAccountAtStart()">🚀 CRÉER MON COMPTE ET COMMENCER</button>
-      <div class="auth-divider">OU</div>
-      <button class="btn ghost sm" onclick="cloudLoginAtStart()">🔐 J'AI DÉJÀ UN COMPTE — SE CONNECTER</button>
-      <div id="cloud-status" class="auth-note">Compte obligatoire pour commencer. Aucune confirmation e-mail n'est demandée dans cette version.</div>
-    </div>
-    <div class="feature-strip">
-      <div class="feature-mini"><b>☁️</b>Sauvegarde cloud</div>
-      <div class="feature-mini"><b>👥</b>Multijoueur</div>
-      <div class="feature-mini"><b>💰</b>Transferts fictifs</div>
-    </div>
-    <div class="card install-card" id="install-card" style="margin-top:12px;text-align:left">
-      <div class="install-row">
-        <img class="install-icon" src="./tech-empire-app-icon-512.png" alt="Icône Tech Empire">
-        <div class="install-copy"><b>📲 Installer Tech Empire</b><small>Installez le jeu comme une application sur votre appareil.</small></div>
-        <button class="btn blue xs" id="install-btn" onclick="installTechEmpire()">Installer</button>
-      </div>
-      <div class="install-help" id="install-help">Sur Chrome/Edge, l'installation peut apparaître automatiquement. Si le bouton n'est pas disponible, utilisez le menu ⋮ du navigateur puis « Installer Tech Empire » ou « Ajouter à l'écran d'accueil ».</div>
-    </div>
+    <p class="lead">Construisez votre entreprise technologique, développez vos produits, gagnez de l'argent et devenez un grand groupe africain, de la Côte d'Ivoire à l'Afrique de l'Est.</p>
+    <button class="btn" onclick="go('s-profile')">🆕 CRÉER UNE NOUVELLE ENTREPRISE</button>
     <div class="card" style="margin-top:12px;text-align:left">
-      <h3>💾 Ancienne sauvegarde locale ?</h3>
-      <p style="margin:0 0 12px;color:var(--txt2);font-size:13px">Connectez-vous d’abord, puis importez une sauvegarde JSON pour retrouver votre progression.</p>
+      <h3>💾 Vous avez déjà une sauvegarde ?</h3>
+      <p style="margin:0 0 12px;color:var(--txt2);font-size:13px">Importez votre sauvegarde Tech Empire ici. Votre progression, votre entreprise, votre niveau et vos pays seront restaurés directement, sans repasser par la création du joueur.</p>
       <button class="btn ghost sm" onclick="document.getElementById('f-welcome-import').click()">⬆️ IMPORTER MA SAUVEGARDE</button>
       <input type="file" id="f-welcome-import" accept="application/json,.json,.txt" hidden onchange="importSaveFile(this,true)">
     </div>
+    <button class="btn ghost sm" id="btn-continue" style="margin-top:10px;display:none" onclick="resume()">▶️ Reprendre la partie locale</button>
   </div>
 </section>
 
@@ -408,6 +398,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 
 <!-- ALERTES D'ÉVÉNEMENTS : aucune cloche, l'alerte apparaît directement à l'écran -->
 <div id="event-alert" onclick="openCurrentEvent()"><div class="event-alert-dot">●</div><div><b id="event-alert-title">Nouvel événement</b><span id="event-alert-tx">Cliquez pour participer.</span></div><span class="event-alert-arrow">›</span></div>
+<div id="install-banner"><div class="pi">📲</div><div class="pt"><b>Installer Tech Empire</b><span>Ajoutez le jeu à votre écran d'accueil pour un accès rapide.</span></div><button onclick="installPWA()">INSTALLER</button><button class="close-install" onclick="dismissInstall()">×</button></div>
 <div class="event-bg" id="event-bg"><div class="event-card">
   <div class="event-head"><span id="ev-icon">🎤</span><div><div class="event-kicker" id="ev-kicker">ÉVÉNEMENT</div><h2 id="ev-title">Interview</h2></div></div>
   <p id="ev-intro"></p><div class="event-dialogue" id="ev-dialogue"></div>
@@ -423,7 +414,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
         <div class="av" id="hd-av">👨🏿‍💻</div>
         <div style="min-width:0">
           <div class="nm" id="hd-name">Joueur</div>
-          <div class="co"><span id="hd-logo"><img class="brand-logo-img" src="./tech-empire-logo.webp" alt="Tech Empire"></span><span id="hd-co">Entreprise</span></div>
+          <div class="co"><span id="hd-logo"><img class="brand-logo-img" src="tech-empire-logo.webp" alt="Tech Empire"></span><span id="hd-co">Entreprise</span></div>
         </div>
         <div class="lvl">
           <b id="hd-lvl">⭐ Niveau 1</b>
@@ -437,7 +428,29 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
   <main>
     <!-- TABLEAU DE BORD -->
     <section class="sect on" id="v-dash">
-      <div class="hero-cover"><img src="./tech-empire-v3-cover.webp" alt="Tech Empire V3.0"><div class="hero-caption"><b>TECH EMPIRE V3.0</b> · Construisez aujourd'hui, dominez demain.</div></div>
+      <div class="sim-command">
+        <div class="sim-head">
+          <div class="sim-mark">👑</div>
+          <div><h2>Centre de commandement</h2><p>Votre empire technologique en un seul écran</p></div>
+          <span class="sim-live">● EN DIRECT</span>
+        </div>
+        <div class="sim-grid">
+          <button class="sim-card accent-cyan" onclick="nav('v-company')"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><defs><linearGradient id="c1" x1="0" x2="1"><stop stop-color="#183b57"/><stop offset="1" stop-color="#0c1823"/></linearGradient></defs><rect width="300" height="100" fill="url(#c1)"/><rect x="24" y="36" width="50" height="48" rx="4" fill="#315d7d"/><rect x="31" y="42" width="8" height="8" fill="#8ed7ff"/><rect x="44" y="42" width="8" height="8" fill="#8ed7ff"/><rect x="57" y="42" width="8" height="8" fill="#8ed7ff"/><rect x="88" y="20" width="65" height="64" rx="5" fill="#244863"/><rect x="98" y="31" width="10" height="10" fill="#56d6ff"/><rect x="116" y="31" width="10" height="10" fill="#56d6ff"/><rect x="134" y="31" width="10" height="10" fill="#56d6ff"/><path d="M175 76h94M192 76V47l19-17 19 17v29" stroke="#9fe6ff" stroke-width="4" fill="none"/><circle cx="211" cy="26" r="8" fill="#ffd34d"/></svg></div><div class="sim-info"><b>🏢 Entreprise</b><small>Siège, réputation, valeur et croissance</small></div><span class="go">›</span></button>
+          <button class="sim-card accent-green" onclick="nav('v-bank')"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><rect width="300" height="100" fill="#102b24"/><path d="M32 50h236M45 50V78M75 50V78M105 50V78M135 50V78M165 50V78M195 50V78M225 50V78M255 50V78M28 82h244" stroke="#79d9b0" stroke-width="6"/><path d="M35 42L150 12l115 30Z" fill="#1d5b4a" stroke="#9ee8c7" stroke-width="2"/><circle cx="150" cy="38" r="9" fill="#ffd34d"/></svg></div><div class="sim-info"><b>🏦 Finance</b><small>Trésorerie, banque, prêts et mouvements</small></div><span class="go">›</span></button>
+          <button class="sim-card accent-gold" onclick="nav('v-market')"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><rect width="300" height="100" fill="#25220f"/><circle cx="150" cy="50" r="34" fill="#204b3a" stroke="#6ee7b7" stroke-width="2"/><path d="M129 35c12-8 27-9 42 0l-3 25-15 14-19-12Z" fill="#3a8f68"/><path d="M150 16v68M112 50h76" stroke="#d5c27a" stroke-width="2" opacity=".7"/><path d="M47 74c30-19 55-24 76-8M177 69c25-19 49-20 75-7" stroke="#ffd34d" stroke-width="3" fill="none"/></svg></div><div class="sim-info"><b>🌍 Marchés</b><small>Pays, licences, popularité et expansion</small></div><span class="go">›</span></button>
+          <button class="sim-card accent-orange" onclick="nav('v-hardware')"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><rect width="300" height="100" fill="#2b1a0e"/><rect x="35" y="25" width="88" height="52" rx="8" fill="#121820" stroke="#ff9b4a" stroke-width="2"/><rect x="49" y="36" width="60" height="28" rx="4" fill="#274052"/><circle cx="215" cy="51" r="27" fill="#161d27" stroke="#ff9b4a" stroke-width="3"/><circle cx="205" cy="44" r="5" fill="#7ad5ff"/><circle cx="225" cy="44" r="5" fill="#7ad5ff"/><path d="M180 82h70" stroke="#ff9b4a" stroke-width="4"/></svg></div><div class="sim-info"><b>🎮 R&D & consoles</b><small>Prototype, amélioration, fabrication, vente</small></div><span class="go">›</span></button>
+          <button class="sim-card accent-purple" onclick="nav('v-marketing')"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><rect width="300" height="100" fill="#21152f"/><path d="M48 68l72-32 15 22-72 32Z" fill="#6d4aa5"/><path d="M118 37l20-10 19 27-20 10Z" fill="#b18cff"/><circle cx="201" cy="48" r="28" fill="#1a2434" stroke="#d2a8ff" stroke-width="3"/><path d="M201 33v30M186 48h30" stroke="#d2a8ff" stroke-width="5"/><path d="M240 28l28 8-12 13 13 10-31 7" fill="none" stroke="#ffd34d" stroke-width="3"/></svg></div><div class="sim-info"><b>📢 Marketing</b><small>Campagnes, presse, créateurs et lancement</small></div><span class="go">›</span></button>
+          <button class="sim-card accent-cyan" onclick="openCurrentEvent()"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><rect width="300" height="100" fill="#102a32"/><rect x="37" y="34" width="226" height="40" rx="9" fill="#183e49" stroke="#56d6ff"/><circle cx="67" cy="54" r="12" fill="#56d6ff"/><path d="M64 54h6M67 51v6" stroke="#09212a" stroke-width="3"/><rect x="91" y="46" width="100" height="7" rx="3" fill="#9cecff"/><rect x="91" y="59" width="67" height="5" rx="2" fill="#5c8491"/><path d="M223 23l13 13-13 13" fill="none" stroke="#ffd34d" stroke-width="4"/></svg></div><div class="sim-info"><b>🎤 Événements</b><small>Conférences, journalistes et décisions</small></div><span class="go">›</span></button>
+          <button class="sim-card accent-gold" onclick="nav('v-gov')"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><rect width="300" height="100" fill="#28220e"/><path d="M42 77h216M55 70V45M87 70V45M119 70V45M151 70V45M183 70V45M215 70V45M247 70V45" stroke="#f0d47b" stroke-width="8"/><path d="M40 39h220L150 14Z" fill="#8b712e" stroke="#ffe59b" stroke-width="2"/><circle cx="150" cy="50" r="9" fill="#fff0b1"/></svg></div><div class="sim-info"><b>🏛️ Gouvernement</b><small>Licences, projets publics et décisions</small></div><span class="go">›</span></button>
+          <button class="sim-card accent-red" onclick="nav('v-staff')"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><rect width="300" height="100" fill="#32171d"/><circle cx="105" cy="40" r="18" fill="#b9c7d6"/><circle cx="150" cy="35" r="18" fill="#d7e2ec"/><circle cx="195" cy="40" r="18" fill="#a9bbc9"/><path d="M74 78c5-20 57-20 62 0M119 78c5-22 57-22 62 0M164 78c5-20 57-20 62 0" fill="#31516a"/><path d="M137 20h26" stroke="#ff7380" stroke-width="5"/></svg></div><div class="sim-info"><b>👥 Équipe</b><small>Employés, recrutement et masse salariale</small></div><span class="go">›</span></button>
+          <button class="sim-card accent-green" onclick="nav('v-prod')"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><rect width="300" height="100" fill="#0e2a20"/><rect x="52" y="22" width="82" height="55" rx="8" fill="#1b2631" stroke="#66e5ae"/><rect x="66" y="34" width="54" height="29" rx="4" fill="#173d46"/><path d="M172 30h68v46h-68z" fill="#17332b" stroke="#66e5ae"/><path d="M184 42h44M184 52h33M184 62h22" stroke="#9ff2ca" stroke-width="4"/><circle cx="153" cy="55" r="10" fill="#ffd34d"/></svg></div><div class="sim-info"><b>💻 Produits</b><small>Développement, production et revenus</small></div><span class="go">›</span></button>
+          <button class="sim-card accent-purple" onclick="nav('v-fin')"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><rect width="300" height="100" fill="#21182f"/><path d="M42 72L78 58l31 9 38-28 31 13 39-33 40 18" fill="none" stroke="#8f7bff" stroke-width="5"/><path d="M42 78h220" stroke="#6d607e"/><circle cx="78" cy="58" r="5" fill="#ffd34d"/><circle cx="147" cy="39" r="5" fill="#ffd34d"/><circle cx="217" cy="19" r="5" fill="#ffd34d"/></svg></div><div class="sim-info"><b>📊 Performance</b><small>Chiffre d'affaires, bénéfices et valeur</small></div><span class="go">›</span></button>
+          <button class="sim-card accent-cyan" onclick="nav('v-hist')"><div class="sim-art"><svg viewBox="0 0 300 100" preserveAspectRatio="none"><rect width="300" height="100" fill="#102832"/><circle cx="150" cy="50" r="30" fill="#173d49" stroke="#7ce5ff" stroke-width="3"/><path d="M150 32v20l14 9" stroke="#7ce5ff" stroke-width="5" fill="none"/><path d="M75 50h32M193 50h32" stroke="#56d6ff" stroke-width="4"/><circle cx="58" cy="50" r="6" fill="#ffd34d"/><circle cx="242" cy="50" r="6" fill="#ffd34d"/></svg></div><div class="sim-info"><b>🕘 Historique</b><small>Chaque décision et chaque opération</small></div><span class="go">›</span></button>
+        </div>
+        <div class="sim-quick"><button onclick="nav('v-company')">🏢 Gérer l'entreprise</button><button onclick="nav('v-bank')">💰 Ouvrir la banque</button><button onclick="nav('v-market')">🌍 Explorer</button></div>
+        <div class="sim-feed"><div class="feed-icon">🔴</div><div><b>Centre des événements</b><span>Les conférences et opportunités apparaissent ici en temps réel.</span></div><button onclick="openCurrentEvent()">VOIR</button></div>
+        <div class="sim-dialogue"><div class="person"><div class="portrait">👨🏽‍💼</div><div><b>Lucas Moreau · GlobalTech Capital</b><small>Investisseur · intérêt élevé</small></div></div><div class="sim-bubble">Votre entreprise se développe rapidement. Quelle est votre stratégie pour les prochaines étapes de votre expansion africaine ?</div><div class="sim-answer-row"><button onclick="openCurrentEvent()">💬 Répondre dans le dialogue</button><button onclick="openCurrentEvent()">❓ Poser ma question</button></div></div>
+      </div>
       <div class="h"><h2>Tableau de bord</h2><span class="pill" id="pill-status">Startup</span></div>
       <div class="grid2" style="margin-bottom:14px">
         <div class="stat"><div class="k">💰 Trésorerie</div><div class="v o" id="st-cash">0</div><div class="s">disponible maintenant</div></div>
@@ -490,6 +503,9 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 
     <!-- ENTREPRISE -->
     <section class="sect" id="v-company">
+      <div class="sim-section-visual card" style="padding:0;overflow:hidden;background:linear-gradient(145deg,#102536,#121a23);border-color:rgba(86,214,255,.25)">
+        <svg viewBox="0 0 900 220" style="display:block;width:100%;height:auto"><defs><linearGradient id="coScene" x1="0" x2="1"><stop stop-color="#102f49"/><stop offset="1" stop-color="#10161e"/></linearGradient></defs><rect width="900" height="220" fill="url(#coScene)"/><circle cx="735" cy="50" r="90" fill="#1e5271" opacity=".35"/><rect x="70" y="72" width="210" height="108" rx="10" fill="#234a65"/><rect x="95" y="92" width="38" height="38" fill="#65d7ff" opacity=".8"/><rect x="148" y="92" width="38" height="38" fill="#65d7ff" opacity=".5"/><rect x="201" y="92" width="38" height="38" fill="#65d7ff" opacity=".8"/><path d="M350 178V72h180v106M365 88h150v20H365z" fill="#173248" stroke="#5bd7ff" stroke-width="2"/><path d="M610 170c-18-56 16-91 55-91s72 35 55 91" fill="#1b3f53" stroke="#7fe4ff" stroke-width="2"/><circle cx="665" cy="76" r="18" fill="#ffd34d"/><path d="M615 190h104" stroke="#ffd34d" stroke-width="5"/><text x="65" y="43" fill="#e8f7ff" font-size="24" font-weight="700">VOTRE EMPIRE TECHNOLOGIQUE</text></svg>
+      </div>
       <div class="h"><h2>Entreprise</h2></div>
       <div class="card" style="text-align:center;padding:24px 16px">
         <div class="logo-big" id="co-logo" style="width:74px;height:74px;font-size:34px;margin-bottom:12px">💻</div>
@@ -715,6 +731,8 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 
     <!-- FABRICATION & HARDWARE -->
     <section class="sect" id="v-hardware">
+      <div class="card" style="padding:0;overflow:hidden;background:linear-gradient(145deg,#25170c,#111821);border-color:rgba(255,148,69,.28)"><svg viewBox="0 0 900 190" style="display:block;width:100%;height:auto"><rect width="900" height="190" fill="#18130f"/><rect x="65" y="46" width="245" height="100" rx="14" fill="#202a34" stroke="#ff9b4a" stroke-width="3"/><rect x="90" y="65" width="195" height="62" rx="7" fill="#173947"/><circle cx="420" cy="96" r="58" fill="#111a24" stroke="#ff9b4a" stroke-width="4"/><circle cx="398" cy="80" r="8" fill="#6edbff"/><circle cx="442" cy="80" r="8" fill="#6edbff"/><path d="M383 112q37 25 74 0" stroke="#ff9b4a" stroke-width="5" fill="none"/><rect x="535" y="42" width="275" height="112" rx="12" fill="#172531" stroke="#56d6ff" stroke-width="2"/><rect x="560" y="62" width="225" height="58" rx="6" fill="#0c202c"/><path d="M578 83h65M578 98h110M704 83h60" stroke="#56d6ff" stroke-width="6"/><text x="65" y="30" fill="#fff" font-size="20" font-weight="700">LABORATOIRE HARDWARE · PROTOTYPE → FABRICATION</text></svg></div>
+    <section class="sect" id="v-hardware">
       <div class="h"><h2>🧰 Laboratoire matériel</h2><span class="pill g">Niveau 21+</span></div>
       <div id="hw-locked" class="locked"><div class="em">🔒</div><h3>Laboratoire verrouillé</h3><p>À partir du niveau 21, votre groupe peut concevoir ses propres consoles, ordinateurs, tablettes et machines.</p></div>
       <div id="hw-open" style="display:none"><div class="card hl"><h3>🏭 Construire un appareil</h3><p>Chaque machine utilise de vrais composants : processeur, RAM, GPU, SSD, écran, Wi‑Fi, batterie, carte mère et refroidissement.</p></div><div id="hw-catalog"></div><div class="h" style="margin-top:18px"><h2 style="font-size:17px">🔧 Fabrications en cours</h2></div><div id="hw-builds"></div><div class="h" style="margin-top:18px"><h2 style="font-size:17px">🟢 Machines commercialisées</h2></div><div id="hw-live"></div></div>
@@ -750,7 +768,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
     <!-- PARAMÈTRES -->
     <section class="sect" id="v-set">
       <div class="h"><h2>Paramètres</h2></div>
-      <div class="card cloud-card"><h3>☁️ Compte & sauvegarde en ligne</h3><p>Votre compte est créé avant l'entrée dans le jeu. Ici, vous pouvez consulter votre identifiant joueur et vous déconnecter.</p><div class="card" style="margin-top:12px;margin-bottom:10px;background:rgba(255,255,255,.025)"><b id="settings-player-id">ID joueur : —</b><div id="settings-cloud-status" class="cloud-status">Connexion cloud active.</div></div><button class="btn ghost sm" onclick="cloudSignOut()">Se déconnecter</button></div>
+      <div class="card cloud-card"><h3>☁️ Compte & sauvegarde en ligne</h3><p>Connectez votre compte pour retrouver votre partie sur plusieurs appareils et activer les transferts entre joueurs.</p><div class="cloud-row"><input class="field" id="cloud-email" type="email" placeholder="Email"><input class="field" id="cloud-password" type="password" placeholder="Mot de passe"></div><div class="chat-actions"><button class="btn sm" onclick="cloudSignUp()">Créer un compte</button><button class="btn ghost sm" onclick="cloudResendConfirmation()">Renvoyer la confirmation</button><button class="btn ghost sm" onclick="cloudSignIn()">Se connecter</button><button class="btn ghost sm" onclick="cloudSignOut()">Se déconnecter</button></div><div id="cloud-status" class="cloud-status">Supabase configuré · créez un compte pour activer la sauvegarde en ligne.</div></div>
       <div class="card">
         <h3>🎵 Musique d'ambiance</h3>
         <p>Une musique douce mais rythmée accompagne votre empire. Des sons courts signalent les paiements, investissements et réussites.</p>
@@ -1167,7 +1185,7 @@ function startGame(){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));
   $("app").classList.add("on");
   window.scrollTo(0,0);
-  buildNav(); render(); setSettingsAccount();
+  buildNav(); render();
   if(!clockOn) startClock();
   MUSIC.start();
   const bm=$("btn-music"); if(bm) bm.textContent = S.musicMuted ? "🔇 Réactiver la musique" : "🔊 Couper la musique";
@@ -2626,52 +2644,14 @@ let cloudClient=null,cloudLoadPromise=null,cloudSaveTimer=null;
 function makePlayerId(name){const base=(name||"PLAYER").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9]/g,"").slice(0,8).toUpperCase()||"PLAYER";return "TE-"+base+"-"+Math.random().toString(36).slice(2,7).toUpperCase();}
 function cloudReady(){return !!(CLOUD_CONFIG.url&&CLOUD_CONFIG.anonKey);}
 async function loadSupabase(){if(cloudClient)return cloudClient;if(!cloudReady())throw new Error("Cloud non configuré");if(cloudLoadPromise)return cloudLoadPromise;cloudLoadPromise=new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';sc.onload=()=>{try{cloudClient=window.supabase.createClient(CLOUD_CONFIG.url,CLOUD_CONFIG.anonKey);resolve(cloudClient);}catch(e){reject(e);}};sc.onerror=()=>reject(new Error('Chargement Supabase impossible'));document.head.appendChild(sc);});return cloudLoadPromise;}
-function cloudStatus(t){const el=$("cloud-status");if(el)el.textContent=t;const es=$("settings-cloud-status");if(es)es.textContent=t;}
-function setSettingsAccount(){const el=$("settings-player-id");if(el)el.textContent="ID joueur : "+(S.publicId||"—");}
+function cloudStatus(t){const el=$("cloud-status");if(el)el.textContent=t;}
 function authRedirectUrl(){return window.location.origin+window.location.pathname;}
-function validateStartAuth(){
-  const name=$("auth-name").value.trim(),email=$("cloud-email").value.trim(),password=$("cloud-password").value;
-  if(name.length<2){toast("Entrez votre prénom");$("auth-name").focus();return null;}
-  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){toast("Entrez une adresse e-mail valide");$("cloud-email").focus();return null;}
-  if(password.length<6){toast("Le mot de passe doit contenir au moins 6 caractères");$("cloud-password").focus();return null;}
-  return {name,email,password};
-}
-async function cloudCreateAccountAtStart(){
-  const v=validateStartAuth();if(!v)return;
-  try{
-    cloudStatus("Création de votre compte…");
-    const c=await loadSupabase();
-    const {data,error}=await c.auth.signUp({email:v.email,password:v.password,options:{data:{first_name:v.name}}});
-    if(error)throw error;
-    if(!data.user)throw new Error("Le compte n'a pas pu être créé.");
-    if(!data.session)throw new Error("La confirmation e-mail Supabase est encore activée. Désactivez « Confirm email » dans Authentication > Providers > Email, puis recommencez.");
-    S.cloudUserId=data.user.id;S.player=v.name;S.publicId=S.publicId||makePlayerId(v.name);normalizeState();saveGame();await cloudSaveNow();setSettingsAccount();
-    cloudStatus("Compte créé et connecté · ID "+S.publicId);toast("☁️ Compte créé !");$("in-player").value=v.name;go("s-profile");
-  }catch(e){cloudStatus("Erreur : "+e.message);toast("Création du compte impossible");}
-}
-async function cloudLoginAtStart(){
-  const email=$("cloud-email").value.trim(),password=$("cloud-password").value;
-  if(!email||!password){toast("Saisissez votre e-mail et votre mot de passe");return;}
-  try{
-    cloudStatus("Connexion…");
-    const c=await loadSupabase();
-    const {data,error}=await c.auth.signInWithPassword({email,password});if(error)throw error;
-    S.cloudUserId=data.user.id;
-    const {data:row,error:re}=await c.from('player_saves').select('save_data,player_code').eq('user_id',data.user.id).maybeSingle();if(re)throw re;
-    if(row&&row.save_data){
-      S=Object.assign(blank(),row.save_data);S.cloudUserId=data.user.id;S.publicId=row.player_code||S.publicId||makePlayerId(S.player);normalizeState();saveGame();refillMissions();setSettingsAccount();
-      if(S.tutoDone)startGame();else resume();cloudStatus("Connecté · sauvegarde cloud chargée · ID "+S.publicId);toast("☁️ Partie restaurée");
-    }else{
-      const name=(data.user.user_metadata&&data.user.user_metadata.first_name)||$("auth-name").value.trim();
-      S.player=name||"Joueur";S.cloudUserId=data.user.id;S.publicId=S.publicId||makePlayerId(S.player);normalizeState();saveGame();await cloudSaveNow();setSettingsAccount();$("in-player").value=S.player;cloudStatus("Compte connecté · ID "+S.publicId);toast("☁️ Compte connecté");go("s-profile");
-    }
-  }catch(e){cloudStatus("Erreur : "+e.message);toast("Connexion impossible");}
-}
-async function cloudSignOut(){try{if(cloudClient)await cloudClient.auth.signOut();}catch(e){}S.cloudUserId=null;setSettingsAccount();toast("Compte cloud déconnecté");location.reload();}
-async function cloudSignUp(){await cloudCreateAccountAtStart();}
-async function cloudSignIn(){await cloudLoginAtStart();}
-async function cloudResendConfirmation(){toast("La confirmation e-mail est désactivée dans cette version.");}
-function handleAuthCallback(){const hash=window.location.hash||'';if(hash.includes('error_code=otp_expired')||hash.includes('error=access_denied')){history.replaceState({},document.title,window.location.pathname+window.location.search);return;}if(hash.includes('access_token=')||hash.includes('type=signup')||hash.includes('type=recovery'))history.replaceState({},document.title,window.location.pathname+window.location.search);}
+async function cloudSignUp(){try{const email=$("cloud-email").value.trim(),password=$("cloud-password").value;if(!email||password.length<6){toast('Email et mot de passe (6 caractères minimum) requis');return;}const c=await loadSupabase();const {data,error}=await c.auth.signUp({email,password,options:{emailRedirectTo:authRedirectUrl()}});if(error)throw error;if(data.session&&data.user){S.cloudUserId=data.user.id;S.publicId=S.publicId||makePlayerId(S.player);normalizeState();await cloudSaveNow();cloudStatus('Compte créé et connecté · ID '+S.publicId);toast('☁️ Compte créé');}else{cloudStatus('Compte créé. Ouvrez le dernier email reçu pour confirmer. Si le lien est expiré, utilisez « Renvoyer la confirmation ».');toast('📧 Email de confirmation envoyé');}}catch(e){cloudStatus(cloudReady()?('Cloud : '+e.message):'Cloud non configuré : ajoutez votre URL Supabase et votre clé publishable dans CLOUD_CONFIG.');toast('Connexion cloud indisponible');}}
+async function cloudResendConfirmation(){try{const email=$("cloud-email").value.trim();if(!email){toast('Saisissez votre email');return;}const c=await loadSupabase();const {error}=await c.auth.resend({type:'signup',email,options:{emailRedirectTo:authRedirectUrl()}});if(error)throw error;cloudStatus('Nouvel email de confirmation envoyé à '+email+'. Utilisez uniquement le dernier lien reçu.');toast('📧 Confirmation renvoyée');}catch(e){cloudStatus('Impossible de renvoyer la confirmation : '+e.message);toast('Envoi impossible');}}
+function handleAuthCallback(){const hash=window.location.hash||'';if(hash.includes('error_code=otp_expired')||hash.includes('error=access_denied')){cloudStatus('Le lien de confirmation est expiré ou invalide. Demandez un nouvel email de confirmation.');history.replaceState({},document.title,window.location.pathname+window.location.search);return;}if(hash.includes('access_token=')||hash.includes('type=signup')||hash.includes('type=recovery')){history.replaceState({},document.title,window.location.pathname+window.location.search);}}
+
+async function cloudSignIn(){try{const email=$("cloud-email").value.trim(),password=$("cloud-password").value;if(!email||!password){toast('Saisissez votre email et votre mot de passe');return;}const c=await loadSupabase();const {data,error}=await c.auth.signInWithPassword({email,password});if(error)throw error;S.cloudUserId=data.user.id;const {data:row,error:re}=await c.from('player_saves').select('save_data,player_code').eq('user_id',data.user.id).maybeSingle();if(re)throw re;if(row&&row.save_data){S=Object.assign(blank(),row.save_data);S.cloudUserId=data.user.id;S.publicId=row.player_code||S.publicId||makePlayerId(S.player);normalizeState();saveGame();refillMissions();if(S.tutoDone)startGame();else resume();cloudStatus('Connecté · sauvegarde cloud chargée · ID '+S.publicId);toast('☁️ Partie restaurée');}else{S.cloudUserId=data.user.id;S.publicId=S.publicId||makePlayerId(S.player);normalizeState();await cloudSaveNow();cloudStatus('Compte connecté · nouvel emplacement cloud créé · ID '+S.publicId);toast('☁️ Compte connecté');}}catch(e){cloudStatus(cloudReady()?('Cloud : '+e.message):'Cloud non configuré.');toast('Connexion impossible');}}
+async function cloudSignOut(){try{if(cloudClient)await cloudClient.auth.signOut();}catch(e){}S.cloudUserId=null;cloudStatus('Déconnecté · sauvegarde locale active.');toast('Compte cloud déconnecté');}
 async function cloudSaveNow(){if(!cloudClient||!S.cloudUserId)return;const payload={user_id:S.cloudUserId,player_code:S.publicId||makePlayerId(S.player),save_data:S,updated_at:new Date().toISOString()};const {error}=await cloudClient.from('player_saves').upsert(payload,{onConflict:'user_id'});if(error)throw error;}
 function scheduleCloudSave(){if(!S.cloudUserId||!cloudClient)return;clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(()=>cloudSaveNow().catch(()=>{}),1800);}
 async function sendPlayerTransfer(){try{const code=$("transfer-player").value.trim().toUpperCase(),amt=Math.floor(Number($("transfer-amount").value));if(!code||!amt||amt<=0){toast('Identifiant et montant valides requis');return;}if(!S.cloudUserId){toast("Connectez-vous pour transférer de l'argent");return;}if(amt>S.bank){toast('Solde bancaire insuffisant');return;}const c=await loadSupabase();const {data,error}=await c.rpc('transfer_money',{p_recipient_code:code,p_amount:amt});if(error)throw error;S.bank-=amt;S.expenses=Math.max(0,S.expenses);log('💸','Transfert à '+code,-amt,'bank');playSfx('payment');saveGame();render();$("transfer-status").textContent='Transfert envoyé · '+fmt(amt)+' à '+code;toast('💸 Transfert effectué');}catch(e){$("transfer-status").textContent='Transfert refusé : '+e.message;toast('Transfert impossible');}}
@@ -2783,7 +2763,6 @@ function exportSave(){
 }
 function importSaveFile(input,fromWelcome){
   const file=input.files&&input.files[0];if(!file)return;
-  if(fromWelcome && !S.cloudUserId){toast("Connectez-vous d’abord à votre compte Tech Empire.");input.value="";return;}
   const reader=new FileReader();
   reader.onload=e=>{try{
     const data=JSON.parse(String(e.target.result||"").replace(/^\uFEFF/,""));
@@ -2800,45 +2779,22 @@ function importSaveFile(input,fromWelcome){
   let saved=null;
   try{ saved=JSON.parse(localStorage.getItem(KEY)||"null"); }catch(e){}
   S = saved && saved.player ? Object.assign(blank(),saved) : blank();
-  normalizeState();buildPickers();
+  normalizeState();
+  buildPickers();
   if(saved && saved.player){
-    $("in-player").value=S.player;$("in-company").value=S.company||"";
-    $("prev-avatar").innerHTML=S.photo?'<img src="'+S.photo+'">':S.avatar;
-    $("prev-logo").innerHTML=S.logoImg?'<img src="'+S.logoImg+'">':S.logo;
-    $("auth-name").value=S.player||"";
+    $("btn-continue").style.display="block";
+    $("in-player").value=S.player; $("in-company").value=S.company||"";
+    $("prev-avatar").innerHTML = S.photo ? '<img src="'+S.photo+'">' : S.avatar;
+    $("prev-logo").innerHTML = S.logoImg ? '<img src="'+S.logoImg+'">' : S.logo;
+    if(S.tutoDone){ refillMissions(); if(S.eastCeremonyPending || (S.level>=EAST_START_LEVEL && S.phase!=="east")){ S.eastCeremonyPending=true; showEastCeremony(); } else startGame(); }
   }
-  setSettingsAccount();
-  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeSheet();}});
-})();;
-
-// ===== PWA INSTALLATION =====
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape"){closeModal();closeSheet();} });
+})();
 let deferredInstallPrompt=null;
-function isStandalone(){return window.matchMedia && window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;}
-function refreshInstallUI(){
-  const card=document.getElementById('install-card');
-  const btn=document.getElementById('install-btn');
-  const help=document.getElementById('install-help');
-  if(!card)return;
-  if(isStandalone()){card.style.display='none';return;}
-  card.style.display='block';
-  if(deferredInstallPrompt){btn.disabled=false;btn.textContent='Installer';help.textContent='Votre navigateur est prêt à installer Tech Empire. Cliquez sur « Installer ». ';}
-  else {btn.disabled=false;btn.textContent='Installer';}
-}
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;refreshInstallUI();});
-window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;refreshInstallUI();toast('📲 Tech Empire est installé !');});
-async function installTechEmpire(){
-  if(deferredInstallPrompt){
-    deferredInstallPrompt.prompt();
-    const result=await deferredInstallPrompt.userChoice;
-    deferredInstallPrompt=null;
-    refreshInstallUI();
-    return;
-  }
-  const help=document.getElementById('install-help');
-  if(help)help.textContent='Le navigateur ne peut pas ouvrir la fenêtre d’installation maintenant. Vérifiez que vous êtes sur la version HTTPS publique du jeu, puis utilisez le menu ⋮ > Installer Tech Empire / Ajouter à l’écran d’accueil.';
-  toast('📲 Ouvrez le menu du navigateur pour installer le jeu');
-}
-
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstallPrompt=e;setTimeout(()=>{const b=$("install-banner");if(b)b.classList.add("on")},900)});
+window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;const b=$("install-banner");if(b)b.classList.remove("on");toast("📲 Tech Empire est installé sur votre appareil");});
+function installPWA(){if(!deferredInstallPrompt){toast("📲 Utilisez le menu du navigateur pour installer l'application");return;}deferredInstallPrompt.prompt();deferredInstallPrompt.userChoice.then(()=>{deferredInstallPrompt=null;const b=$("install-banner");if(b)b.classList.remove("on")}).catch(()=>{});}
+function dismissInstall(){const b=$("install-banner");if(b)b.classList.remove("on");try{sessionStorage.setItem("te_install_dismissed","1")}catch(e){}}
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}
 </script>
 </body>
