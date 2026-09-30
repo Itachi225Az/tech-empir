@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#0E1117">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="512x512" href="./tech-empire-app-icon-512.png">
+<link rel="apple-touch-icon" href="./tech-empire-app-icon-512.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Tech Empire V3.0 — Afrique</title>
 <style>
@@ -284,6 +286,10 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 .feature-mini b{display:block;color:var(--txt);font-size:16px;margin-bottom:3px}
 @media(max-width:480px){.feature-strip{grid-template-columns:1fr 1fr}.auth-hero img{aspect-ratio:16/7}}
 
+
+/* PWA INSTALL */
+.install-card{border:1px solid rgba(86,214,255,.38);background:linear-gradient(145deg,rgba(76,155,255,.12),var(--card));box-shadow:0 14px 35px rgba(0,0,0,.28);}
+.install-row{display:flex;gap:12px;align-items:center}.install-icon{width:52px;height:52px;border-radius:14px;object-fit:cover;border:1px solid rgba(255,255,255,.12);flex:0 0 auto}.install-copy{flex:1}.install-copy b{display:block;font-size:14px}.install-copy small{display:block;color:var(--txt2);font-size:11px;margin-top:3px;line-height:1.4}.install-help{font-size:11px;color:var(--txt2);margin-top:9px;line-height:1.45}
 </style>
 </head>
 <body>
@@ -292,7 +298,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
 <section class="screen on" id="s-welcome">
   <div class="center">
     <div class="auth-hero">
-      <img src="assets/tech-empire-v3-cover.webp" alt="Tech Empire">
+      <img src="./tech-empire-v3-cover.webp" alt="Tech Empire">
     </div>
     <div class="auth-badge">🔐 COMPTE TECH EMPIRE</div>
     <h1>Bienvenue dans<br>TECH EMPIRE 🇨🇮</h1>
@@ -314,6 +320,14 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
       <div class="feature-mini"><b>☁️</b>Sauvegarde cloud</div>
       <div class="feature-mini"><b>👥</b>Multijoueur</div>
       <div class="feature-mini"><b>💰</b>Transferts fictifs</div>
+    </div>
+    <div class="card install-card" id="install-card" style="margin-top:12px;text-align:left">
+      <div class="install-row">
+        <img class="install-icon" src="./tech-empire-app-icon-512.png" alt="Icône Tech Empire">
+        <div class="install-copy"><b>📲 Installer Tech Empire</b><small>Installez le jeu comme une application sur votre appareil.</small></div>
+        <button class="btn blue xs" id="install-btn" onclick="installTechEmpire()">Installer</button>
+      </div>
+      <div class="install-help" id="install-help">Sur Chrome/Edge, l'installation peut apparaître automatiquement. Si le bouton n'est pas disponible, utilisez le menu ⋮ du navigateur puis « Installer Tech Empire » ou « Ajouter à l'écran d'accueil ».</div>
     </div>
     <div class="card" style="margin-top:12px;text-align:left">
       <h3>💾 Ancienne sauvegarde locale ?</h3>
@@ -409,7 +423,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
         <div class="av" id="hd-av">👨🏿‍💻</div>
         <div style="min-width:0">
           <div class="nm" id="hd-name">Joueur</div>
-          <div class="co"><span id="hd-logo"><img class="brand-logo-img" src="assets/tech-empire-logo.webp" alt="Tech Empire"></span><span id="hd-co">Entreprise</span></div>
+          <div class="co"><span id="hd-logo"><img class="brand-logo-img" src="./tech-empire-logo.webp" alt="Tech Empire"></span><span id="hd-co">Entreprise</span></div>
         </div>
         <div class="lvl">
           <b id="hd-lvl">⭐ Niveau 1</b>
@@ -423,7 +437,7 @@ nav.bottom button.on .e{filter:none;transform:translateY(-2px)}
   <main>
     <!-- TABLEAU DE BORD -->
     <section class="sect on" id="v-dash">
-      <div class="hero-cover"><img src="assets/tech-empire-v3-cover.webp" alt="Tech Empire V3.0"><div class="hero-caption"><b>TECH EMPIRE V3.0</b> · Construisez aujourd'hui, dominez demain.</div></div>
+      <div class="hero-cover"><img src="./tech-empire-v3-cover.webp" alt="Tech Empire V3.0"><div class="hero-caption"><b>TECH EMPIRE V3.0</b> · Construisez aujourd'hui, dominez demain.</div></div>
       <div class="h"><h2>Tableau de bord</h2><span class="pill" id="pill-status">Startup</span></div>
       <div class="grid2" style="margin-bottom:14px">
         <div class="stat"><div class="k">💰 Trésorerie</div><div class="v o" id="st-cash">0</div><div class="s">disponible maintenant</div></div>
@@ -2796,6 +2810,35 @@ function importSaveFile(input,fromWelcome){
   setSettingsAccount();
   document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeSheet();}});
 })();;
+
+// ===== PWA INSTALLATION =====
+let deferredInstallPrompt=null;
+function isStandalone(){return window.matchMedia && window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;}
+function refreshInstallUI(){
+  const card=document.getElementById('install-card');
+  const btn=document.getElementById('install-btn');
+  const help=document.getElementById('install-help');
+  if(!card)return;
+  if(isStandalone()){card.style.display='none';return;}
+  card.style.display='block';
+  if(deferredInstallPrompt){btn.disabled=false;btn.textContent='Installer';help.textContent='Votre navigateur est prêt à installer Tech Empire. Cliquez sur « Installer ». ';}
+  else {btn.disabled=false;btn.textContent='Installer';}
+}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;refreshInstallUI();});
+window.addEventListener('appinstalled',()=>{deferredInstallPrompt=null;refreshInstallUI();toast('📲 Tech Empire est installé !');});
+async function installTechEmpire(){
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    const result=await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt=null;
+    refreshInstallUI();
+    return;
+  }
+  const help=document.getElementById('install-help');
+  if(help)help.textContent='Le navigateur ne peut pas ouvrir la fenêtre d’installation maintenant. Vérifiez que vous êtes sur la version HTTPS publique du jeu, puis utilisez le menu ⋮ > Installer Tech Empire / Ajouter à l’écran d’accueil.';
+  toast('📲 Ouvrez le menu du navigateur pour installer le jeu');
+}
+
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}
 </script>
 </body>
