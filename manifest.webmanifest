@@ -1,14 +1,14 @@
 {
-  "id": "./",
-  "name": "Tech Empire V3.0",
+  "name": "Tech Empire V3.0 — Simulation Afrique",
   "short_name": "Tech Empire",
+  "description": "Jeu de simulation et de gestion d'entreprise technologique africaine.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0E1117",
   "theme_color": "#0E1117",
-  "description": "Tech Empire V3.0 — construisez votre empire technologique africain.",
   "icons": [
-    {"src":"./tech-empire-app-icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+    {"src":"tech-empire-app-icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ]
 }
